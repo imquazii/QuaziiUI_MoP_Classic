@@ -14,9 +14,6 @@ embedded-libraries:
   - libdbicon-1-0
   - libsharedmedia-3-0
 
-tools-used:
-  - libdatabroker-1-1
-
 ignore:
   # Folders to Ignore
   - imports         
