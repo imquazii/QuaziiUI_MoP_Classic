@@ -1,0 +1,12 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.blizzard.com/wow/ui/..\FrameXML\UI.xsd">
+	<Script file="WelcomePage.lua"/>	
+	<Script file="CVarSetPage.lua"/>
+	<Script file="AddonCheckPage.lua"/>
+	<Script file="ElvUIImportPage.lua"/>
+	<Script file="WeakAurasImportPage.lua"/>
+	<Script file="DetailsImportPage.lua"/>
+	<Script file="PlaterImportPage.lua"/>
+	<Script file="BigWigsImportPage.lua"/>
+	<Script file="OmniCDImportPage.lua"/>
+	<Script file="DonePage.lua"/>
+</Ui>

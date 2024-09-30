@@ -1,0 +1,59 @@
+{
+    "addons": {
+        "elvui": {
+            "tank": {
+                "path": "elvui/tank.txt",
+                "checksum": ""
+            },
+            "healer": {
+                "path": "elvui/healer.txt",
+                "checksum": ""
+            },
+            "healer_cell": {
+                "path": "elvui/healer_cell.txt",
+                "checksum": ""
+            }
+        },
+        "details": {
+            "path": "details.txt",
+            "checksum": ""
+        },  
+        "plater": {
+            "path": "plater.txt",
+            "checksum": ""
+        },
+        "bigwigs": {
+            "path": "bigwigs.txt",
+            "checksum": ""
+        },
+        "omnicd": {
+            "path": "omnicd.txt",
+            "checksum": ""
+        }
+    },
+    "weakauras": {
+        "non-class": {
+            "interrupt": { "path": "non-class/interrupt.txt", "checksum": "" },
+            "healer_mana": { "path": "non-class/healer_mana.txt", "checksum": "" },
+            "battle_res_tracker": { "path": "non-class/battle_res_tracker.txt", "checksum": "" },
+            "racial_health_pots": { "path": "non-class/racial_health_pots.txt", "checksum": "" },
+            "talent_check": { "path": "non-class/talent_check.txt", "checksum": "" },
+            "castbar": { "path": "non-class/castbar.txt", "checksum": "" }
+        },
+        "class": {
+            "dh": { "path": "class/dh.txt", "checksum": "" },
+            "dk": { "path": "class/dk.txt", "checksum": "" },
+            "druid": { "path": "class/druid.txt", "checksum": "" },
+            "evoker": { "path": "class/evoker.txt", "checksum": "" },
+            "hunter": { "path": "class/hunter.txt", "checksum": "" },
+            "mage": { "path": "class/mage.txt", "checksum": "" },
+            "monk": { "path": "class/monk.txt", "checksum": "" },
+            "paladin": { "path": "class/paladin.txt", "checksum": "" },
+            "priest": { "path": "class/priest.txt", "checksum": "" },
+            "rogue": { "path": "class/rogue.txt", "checksum": "" },
+            "shaman": { "path": "class/shaman.txt", "checksum": "" },
+            "warlock": { "path": "class/warlock.txt", "checksum": "" },
+            "warrior": { "path": "class/warrior.txt", "checksum": "" }
+        }
+    }
+}

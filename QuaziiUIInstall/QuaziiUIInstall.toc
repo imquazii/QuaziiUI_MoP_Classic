@@ -1,0 +1,17 @@
+## Interface: 110002
+## Title: Quazii UI Install (Retail)
+## Author: Chats
+## Version: 0.5
+## DefaultState: Enabled
+## LoadOnDemand: 0
+## SavedVariables: QuaziiUIDB
+## SavedVariablesPerCharacter: QuaziiUICDB
+## OptionalDeps: BigWigs, OmniCD, WeakAuras, Details, Plater
+## IconTexture: Interface\AddOns\MeeresAssets\assets\icons\quaziiLogo.tga
+
+importData.lua
+
+libs\loadLibs.xml
+pages\loadPages.xml
+
+main.lua
