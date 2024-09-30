@@ -9,9 +9,14 @@
 ## OptionalDeps: BigWigs, OmniCD, WeakAuras, Details, Plater
 ## IconTexture: Interface\AddOns\MeeresAssets\assets\icons\quaziiLogo.tga
 
-importData.lua
+## X-Credits: Dark(Inspiration for Addon), Quazii(Maker of UI and WAs)
+## X-Wago-ID: QKywmlN7
+## X-License: GPLv3
+## X-Website: https://quazii.com
 
-libs\loadLibs.xml
-pages\loadPages.xml
+imports.lua
+
+libs\libs.xml
+pages\pages.xml
 
 main.lua
