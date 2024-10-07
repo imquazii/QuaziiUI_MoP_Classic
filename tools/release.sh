@@ -2632,7 +2632,7 @@ if [ -f "$pkgmeta_file" ]; then
 fi
 
 ###
-### Create the final zipfile for the addon.
+### Create the final zipfile for the QUI.
 ###
 
 if [ -z "$skip_zipfile" ]; then

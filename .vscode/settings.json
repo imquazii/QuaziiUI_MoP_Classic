@@ -49,6 +49,18 @@
         "FAILED",
         "INTERRUPTED",
         "ReloadUI",
-        "DetailsFramework"
+        "DetailsFramework",
+        "BigWigsAPI",
+        "BigWigs3DB",
+        "ElvUI",
+        "Details",
+        "DetailsFrameworkPrompt",
+        "OmniCD",
+        "Plater",
+        "PlaterOptionsPanelFrame",
+        "PlaterOptionsPanelContainer",
+        "WeakAuras",
+        "MDT",
+        "message"
     ]
 }

@@ -1,0 +1,73 @@
+-- Localization file for english/United States
+local L = LibStub("AceLocale-3.0"):NewLocale("QuaziiUI", "enUS", true, true)
+
+-- Generic
+L["AddonName"] = "Quazii's UI Installer"
+L["Tank"] = "Tank"
+L["DPS"] = "DPS"
+L["Healer"] = "Healer"
+L["Import"] = "Import"
+L["Imports"] = "Imports"
+L["Next"] = "Next"
+L["Prev"] = "Prev" --Shorthand for Previous
+L["Icon"] = "Icon"
+L["Name"] = "Name"
+L["Version"] = "Version"
+L["NA"] = "N/A"
+L["True"] = "True"
+L["False"] = "False"
+
+-- Import Frame
+L["ImportProfileText"] = " Profile:"
+L["ImportLastImportText"] = "Last Import Time:"
+
+
+-- Addons
+L["ElvUI"] = "ElvUI"
+L["Cell"] = "Cell"
+L["Details"] = "Details!"
+L["BigWigs"] = "BigWigs"
+L["OmniCD"] = "OmniCD"
+L["WeakAuras"] = "WeakAuras"
+L["MDT"] = "MDT"
+
+-- Welcome Page
+L["WelcomeHeader"] = "Quazii's UI Installer"
+L["WelcomeText1"] = "This installer will take you through the steps needed to import and install all aspects of Quazii's UI."
+L["WelcomeText2"] = "Each step can be considered optional, however, it is recommended to at least use ElvUI and Weakauras."
+L["WelcomeText3"] = "Let's get started!"
+
+-- Supported Addon Check
+L["SupportedAddonsHeader"] = "Supported Addons"
+L["SupportedAddonsText"] = "Here you will see what addon profiles are supported by this installer."
+L["SupportedAddonsTable1stHeader"] = "Supported|r Addons"
+L["SupportedAddonsTable2ndHeader"] = "Enabled"
+L["SupportedAddonsTable3rdHeader"] = "Installed Version"
+
+
+-- ElvUI / UI Scale
+L["ElvUIHeader"] = "ElvUI Imports"
+L["ElvUIText"] = "Here you can import or update any of |cQHCHQuazii's|r ElvUI Profiles.\n|cQHCHNOTE:|r If you import multiple profiles, you can switch in ElvUI's profile settings."
+L["UIScaleHeader"] = "UI Scale"
+L["UIScaleText"] = "Adjust your UI Scaling below.\nIf the UI looks off or too big/small, you may wish to try a different setting."
+L["CurrentUIScale"] = "Current UI Scale"
+L["ScaleButtonAuto"] = "Auto"
+L["ScaleButtonSmall"] = "Small"
+L["ScaleButtonMedium"] = "Medium"
+L["ScaleButtonLarge"] = "Large"
+
+-- Other Addons
+-- No strings need to be translated for this page
+
+-- WeakAuras
+L["WeakAuraText"] = "Here you can choose which WAs you would like to import or update."
+L["NonClassWA"] = "Non-Class WeakAuras"
+L["ClassWA"] = "Class WeakAuras"
+-- All WA names are pulled from the import string, so cannot be translated
+
+-- MDT
+L["MDTHeader"] = "MDT Route Import"
+L["MDTText"] = "Here you can choose which MDT Routes you would like to import."
+L["MDTNotLoaded"] = "MDT Addon not loaded"
+L["PUG 'Push W' Routes"] = true
+-- All MDT Names are pulled from the import string, so cannot be translated

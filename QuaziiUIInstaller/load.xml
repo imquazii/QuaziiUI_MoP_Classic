@@ -1,0 +1,8 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.blizzard.com/wow/ui/..\FrameXML\UI.xsd">
+    <Include file="libs\libs.xml"/> <!-- Load Libs First -->
+    <Include file="locales\locales.xml"/> <!-- Localalization Files -->
+    <Include file="utils\utils.xml" /> <!-- Util Files -->
+    <Include file="imports.lua" /> <!-- Addon and WA Imports -->
+    <Include file="pages\pages.xml"/> <!-- Installer Pages -->
+    <Include file="main.lua"/> <!-- Main Program -->
+</Ui>

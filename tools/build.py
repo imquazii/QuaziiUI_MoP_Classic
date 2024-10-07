@@ -2,7 +2,7 @@ from pathlib import Path
 import json
 
 
-def getImportsPath() -> Path:
+def getToolsPath() -> Path:
     """
 
     returns: pathlib.WindowsPath -> File path to imports folder.
@@ -10,7 +10,7 @@ def getImportsPath() -> Path:
     base_dir: Path = Path.cwd()
     while not base_dir.as_posix().endswith("QuaziiUI"):
         base_dir: Path = base_dir.parents[0]
-    imports_dir: Path = base_dir.joinpath("imports")
+    imports_dir: Path = base_dir.joinpath("tools")
     return imports_dir
 
 
@@ -20,7 +20,7 @@ def getChecksums(base_dir: Path) -> dict:
     return checksums
 
 
-imports_dir: Path = getImportsPath()
+imports_dir: Path = getToolsPath()
 checksums: dict = getChecksums(imports_dir)
 addons = checksums["addons"]
 weakauras = checksums["weakauras"]
