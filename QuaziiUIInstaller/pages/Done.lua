@@ -1,5 +1,6 @@
 local addonName, QUI = ...
 local DF = _G["DetailsFramework"]
+local L = QUI.L
 QUI.pagePrototypes = QUI.pagePrototypes or {}
 local page = {}
 table.insert(QUI.pagePrototypes, page)
@@ -7,10 +8,9 @@ function page:Create(parent)
     local frame = CreateFrame("Frame", nil, parent.frameContent)
     frame:SetAllPoints()
     local header = DF:CreateLabel(frame, "|c" .. QUI.highlightColorHex ..
-                                      "Congratulations!|r", 18)
+                                      L["FinishHeader"] .. "|r", 18)
     header:SetPoint("TOPLEFT", frame, "TOPLEFT")
-    local textString =
-        "You have reached the end of the installation!\nHave fun with your new UI!"
+    local textString = L["FinishedText"]
     local text = DF:CreateLabel(frame, textString, 16)
     text:SetPoint("TOPLEFT", frame, "TOPLEFT", 0, -30)
     text:SetPoint("BOTTOMRIGHT", frame, "BOTTOMRIGHT")

@@ -8,33 +8,11 @@ QUI.pagePrototypes = QUI.pagePrototypes or {}
 local page = {}
 table.insert(QUI.pagePrototypes, page)
 local currentCategory = 1
-local LibDeflate = LibStub:GetLibrary("LibDeflate")
-local Serializer = LibStub:GetLibrary("AceSerializer-3.0")
-local LibSerializer = LibStub("LibSerialize")
-local function decodeWAPacket(importString)
-    local _, _, encodeVersion, encoded = importString:find("^(!WA:%d+!)(.+)$")
-    if encodeVersion then
-        encodeVersion = tonumber(encodeVersion:match("%d+"))
-    else
-        encoded, encodeVersion = importString:gsub("^%!", "")
-    end
-    if encoded then
-        local decoded = LibDeflate:DecodeForPrint(encoded)
-        local decompressed = LibDeflate:DecompressDeflate(decoded or "")
-        local deserialized
-        if encodeVersion == 2 then
-            _, deserialized = LibSerializer:Deserialize(decompressed)
-        else
-            _, deserialized = Serializer:Deserialize(decompressed or "")
-        end
-        return deserialized
-    end
-    return nil
-end
+
 local function fillWAFromCategoryIndex(index)
     local data = {}
     for _, importString in ipairs(QUI.imports.WAStrings[index].WAs) do
-        local waTable = decodeWAPacket(importString)
+        local waTable = QUI.decodeWAPacket(importString)
         if waTable then
             local icon = waTable.d.groupIcon or waTable.d.displayIcon or
                              "Interface\\AddOns\\QuaziiUIInstaller\\assets\\quaziiLogo.tga"

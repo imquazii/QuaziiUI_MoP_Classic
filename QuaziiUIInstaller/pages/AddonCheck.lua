@@ -71,7 +71,8 @@ function page:Create(parent)
     description:SetJustifyV("TOP")
     local headerTable = {
         {
-            text = "|c" .. QUI.highlightColorHex .. L["SupportedAddonsTable1stHeader"],
+            text = "|c" .. QUI.highlightColorHex ..
+            L["SupportedAddonsTable1stHeader"],
             width = 331,
             offset = 2
         }, {text = L["SupportedAddonsTable2ndHeader"], width = 71},
