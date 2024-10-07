@@ -1,5 +1,11 @@
-local _, QUI = ...
+---@type string
+local addonName = ...
+---@class QUI
+local QUI = select(2, ...)
+local L = QUI.L
+
 QUI.imports = {}
+
 local function GetClassColor(class)
     if C_ClassColor then
         return C_ClassColor.GetClassColor(class):GenerateHexColor()
@@ -9,118 +15,129 @@ local function GetClassColor(class)
         return RAID_CLASS_COLORS[class]:GenerateHexColor()
     end
 end
+
+QUI.imports.MDT = {
+    [1] = {
+        name = L["PUG 'Push W' Routes"],
+        Routes = {
+            "{MDT_ROUTES}"
+        }
+    }
+}
+
 QUI.imports.ElvUI = {
     healer = {
         cell = {
-            data = "{HEALER_CELL_IMPORT_STRING}"
+            data = "{HEALER_CELL_IMPORT}"
         },
         normal = {
-            data = "{HEALER_NON_CELL_IMPORT_STRING}"
+            data = "{HEALER_NON_CELL_IMPORT}"
         }
         
     },
     tankdps = {
-        data = "{TANK_DPS_IMPORT_STRING}"
+        data = "{TANK_DPS_IMPORT}"
     }
 }
 QUI.imports.WAStrings = {
     [1] = {
-        name = "Non-Class Weakauras",
+        name = L["NonClassWA"],
         WAs = {
             "{INTERRUPT_BARS}",
             "{GROUP_HEALER_MANA}",
             "{BATTLE_RES_TRACKER}",
             "{QUAZII_RACIALS_HS_POTS}",
             "{TALENT_CHECK}",
+            "{REROLL_KEY}",
             "{CASTBAR}"
         }
     },
     [2] = {
-        name = "Hunter",
+        name = GetClassInfo(3),
         color = GetClassColor("HUNTER"),
         WAs = {
             "{HUNTER}"
         }
     },
     [3] = {
-        name = "Druid",
+        name = GetClassInfo(11),
         color = GetClassColor("DRUID"),
         WAs = {
             "{DRUID}"
         }
     },
     [4] = {
-        name = "Monk",
+        name = GetClassInfo(10),
         color = GetClassColor("MONK"),
         WAs = {
             "{MONK}"
         }
     },
     [5] = {
-        name = "Rogue",
+        name = GetClassInfo(4),
         color = GetClassColor("ROGUE"),
         WAs = {
             "{ROGUE}"
         }
     },
     [6] = {
-        name = "Death Knight",
+        name = GetClassInfo(6),
         color = GetClassColor("DEATHKNIGHT"),
         WAs = {
             "{DK}"
         }
     },
     [7] = {
-        name = "Demon Hunter",
+        name = GetClassInfo(12),
         color = GetClassColor("DEMONHUNTER"),
         WAs = {
             "{DH}"
         }
     },
     [8] = {
-        name = "Mage",
+        name = GetClassInfo(8),
         color = GetClassColor("MAGE"),
         WAs = {
             "{MAGE}"
         }
     },
     [9] = {
-        name = "Priest",
+        name = GetClassInfo(5),
         color = GetClassColor("PRIEST"),
         WAs = {
             "{PRIEST}"
         }
     },
     [10] = {
-        name = "Warlock",
+        name = GetClassInfo(9),
         color = GetClassColor("WARLOCK"),
         WAs = {
             "{WARLOCK}"
         }
     },
     [11] = {
-        name = "Paladin",
+        name = GetClassInfo(2),
         color = GetClassColor("PALADIN"),
         WAs = {
             "{PALADIN}"
         }
     },
     [12] = {
-        name = "Warrior",
+        name = GetClassInfo(1),
         color = GetClassColor("WARRIOR"),
         WAs = {
             "{WARRIOR}"
         }
     },
     [13] = {
-        name = "Shaman",
+        name = GetClassInfo(7),
         color = GetClassColor("SHAMAN"),
         WAs = {
             "{SHAMAN}"
         }
     },
     [14] = {
-        name = "Evoker",
+        name = GetClassInfo(13),
         color = GetClassColor("EVOKER"),
         WAs = {
             "{EVOKER}"
@@ -939,4 +956,7 @@ QUI.imports.Details = {
 }
 QUI.imports.Plater = {
     data = "{PLATER}"
+}
+QUI.imports.Cell = {
+    data = "{CELL}"
 }
