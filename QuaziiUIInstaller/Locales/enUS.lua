@@ -71,3 +71,7 @@ L["MDTText"] = "Here you can choose which MDT Routes you would like to import."
 L["MDTNotLoaded"] = "MDT Addon not loaded"
 L["PUG 'Push W' Routes"] = true
 -- All MDT Names are pulled from the import string, so cannot be translated
+
+-- Finish Page
+L["FinishHeader"] = "Congratulations!"
+L["FinishedText"] = "You have reached the end of the installation!\nHave fun with your new UI!"

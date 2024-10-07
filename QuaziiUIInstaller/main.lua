@@ -159,7 +159,7 @@ function QUI:CreateImportFrame(parentPanel, addonName, importLabel, addonLogo,
 
         if (not addonLoaded) then
             importProfileButton:Disable();
-            importProfileButton:SetText("N/A");
+            importProfileButton:SetText(L["NA"]);
         else
             importProfileButton:Enable();
             importProfileButton:SetText("Import");
