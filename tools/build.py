@@ -1,29 +1,53 @@
 from pathlib import Path
-import json
+import os
+from json import load
+
+raw_import_data = {}
 
 
-def getToolsPath() -> Path:
-    """
+def get_import_files():
+    path = "./tools/imports"
+    for subdir, dirs, files in os.walk(path):
+        for file in files:
+            if file.endswith(".txt"):
+                txt_path = os.path.join(subdir, file)
+                txt_base = txt_path.replace("./src/data/json", "")
+                txt_base = txt_base.replace("/", "_")
+                txt_base = txt_base.replace("\\", "_")[1:]
+                txt_split = txt_base.split(".")[0][1:]
+                txt_split = (
+                    txt_base.replace("tools_", "")
+                    .replace("imports_", "")
+                    .replace("addons_", "")
+                    .replace("weakauras_class_", "")
+                    .replace("elvui_", "")
+                    .replace("weakauras_non-class_", "")
+                )[1:][:-4]
+                with open(txt_path, "r", encoding="utf-8") as import_file:
+                    raw_import_data[txt_split] = import_file.read().strip()
 
-    returns: pathlib.WindowsPath -> File path to imports folder.
-    """
-    base_dir: Path = Path.cwd()
-    while not base_dir.as_posix().endswith("QuaziiUI"):
-        base_dir: Path = base_dir.parents[0]
-    imports_dir: Path = base_dir.joinpath("tools")
-    return imports_dir
+
+def get_template():
+    path: Path = Path.cwd().joinpath("tools/imports_template.lua")
+    with path.open() as template:
+        return template.read()
 
 
-def getChecksums(base_dir: Path) -> dict:
-    with open(base_dir.joinpath("checksums.json")) as f:
-        checksums = json.load(f)
-    return checksums
+def write_template(input):
+    path: Path = Path.cwd().joinpath("tools/imports.lua")
+    with open(path, "w") as template:
+        template.write(input)
 
 
-imports_dir: Path = getToolsPath()
-checksums: dict = getChecksums(imports_dir)
-addons = checksums["addons"]
-weakauras = checksums["weakauras"]
+def process_temple():
+    template = get_template()
+    for k, v in raw_import_data.items():
+        replace_string = "{" + k + "}"
+        value_string = v
+        template = template.replace(replace_string, value_string)
+    write_template(template)
 
-print(addons)
-print(weakauras)
+
+get_import_files()
+
+process_temple()
