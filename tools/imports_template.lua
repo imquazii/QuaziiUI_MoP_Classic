@@ -46,7 +46,7 @@ QUI.imports.WAStrings = {
             "{INTERRUPT_BARS}",
             "{GROUP_HEALER_MANA}",
             "{BATTLE_RES_TRACKER}",
-            "{QUAZII_RACIALS_HS_POTS}",
+            "{CONSUMABLES}",
             "{TALENT_CHECK}",
             "{REROLL_KEY}",
             "{CASTBAR}"
