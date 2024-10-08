@@ -6,16 +6,6 @@ local L = QUI.L
 
 QUI.imports = {}
 
-local function GetClassColor(class)
-    if C_ClassColor then
-        return C_ClassColor.GetClassColor(class):GenerateHexColor()
-    elseif class == "EVOKER" then
-        return "#33937F"
-    else
-        return RAID_CLASS_COLORS[class]:GenerateHexColor()
-    end
-end
-
 QUI.imports.MDT = {
     [1] = {
         name = L["PUG 'Push W' Routes"],
@@ -33,7 +23,6 @@ QUI.imports.ElvUI = {
         normal = {
             data = "{HEALER_NON_CELL_IMPORT}"
         }
-        
     },
     tankdps = {
         data = "{TANK_DPS_IMPORT}"
@@ -41,6 +30,24 @@ QUI.imports.ElvUI = {
 }
 QUI.imports.WAStrings = {
     [1] = {
+        name = L["ClassWA"],
+        WAs = {
+            "{DK}",
+            "{DH}",
+            "{DRUID}",
+            "{EVOKER}",
+            "{HUNTER}",
+            "{MAGE}",
+            "{MONK}",
+            "{PALADIN}",
+            "{PRIEST}",
+            "{ROGUE}",
+            "{SHAMAN}",
+            "{WARLOCK}",
+            "{WARRIOR}"
+        }
+    },
+    [2] = {
         name = L["NonClassWA"],
         WAs = {
             "{INTERRUPT_BARS}",
@@ -50,97 +57,6 @@ QUI.imports.WAStrings = {
             "{TALENT_CHECK}",
             "{REROLL_KEY}",
             "{CASTBAR}"
-        }
-    },
-    [2] = {
-        name = GetClassInfo(3),
-        color = GetClassColor("HUNTER"),
-        WAs = {
-            "{HUNTER}"
-        }
-    },
-    [3] = {
-        name = GetClassInfo(11),
-        color = GetClassColor("DRUID"),
-        WAs = {
-            "{DRUID}"
-        }
-    },
-    [4] = {
-        name = GetClassInfo(10),
-        color = GetClassColor("MONK"),
-        WAs = {
-            "{MONK}"
-        }
-    },
-    [5] = {
-        name = GetClassInfo(4),
-        color = GetClassColor("ROGUE"),
-        WAs = {
-            "{ROGUE}"
-        }
-    },
-    [6] = {
-        name = GetClassInfo(6),
-        color = GetClassColor("DEATHKNIGHT"),
-        WAs = {
-            "{DK}"
-        }
-    },
-    [7] = {
-        name = GetClassInfo(12),
-        color = GetClassColor("DEMONHUNTER"),
-        WAs = {
-            "{DH}"
-        }
-    },
-    [8] = {
-        name = GetClassInfo(8),
-        color = GetClassColor("MAGE"),
-        WAs = {
-            "{MAGE}"
-        }
-    },
-    [9] = {
-        name = GetClassInfo(5),
-        color = GetClassColor("PRIEST"),
-        WAs = {
-            "{PRIEST}"
-        }
-    },
-    [10] = {
-        name = GetClassInfo(9),
-        color = GetClassColor("WARLOCK"),
-        WAs = {
-            "{WARLOCK}"
-        }
-    },
-    [11] = {
-        name = GetClassInfo(2),
-        color = GetClassColor("PALADIN"),
-        WAs = {
-            "{PALADIN}"
-        }
-    },
-    [12] = {
-        name = GetClassInfo(1),
-        color = GetClassColor("WARRIOR"),
-        WAs = {
-            "{WARRIOR}"
-        }
-    },
-    [13] = {
-        name = GetClassInfo(7),
-        color = GetClassColor("SHAMAN"),
-        WAs = {
-            "{SHAMAN}"
-        }
-    },
-    [14] = {
-        name = GetClassInfo(13),
-        color = GetClassColor("EVOKER"),
-        WAs = {
-            "{EVOKER}"
         }
     }
 }
@@ -270,7 +186,9 @@ QUI.imports.BigWigsColors = {
         ["BigWigs_Bosses_Hackclaw's War-Band"] = {
             [381694] = {0.09803922474384308, 1, 0},
             [381444] = {
-                0.250980406999588, 0.3294117748737335, 0.6784313917160034
+                0.250980406999588,
+                0.3294117748737335,
+                0.6784313917160034
             },
             [377827] = {1, 0.6470588445663452, 0},
             [378029] = {0.9490196704864502, 0, 1},
@@ -345,7 +263,9 @@ QUI.imports.BigWigsColors = {
             [407069] = {1, 0, 0},
             [403326] = {0.9490196704864502, 0, 1},
             [407196] = {
-                0.250980406999588, 0.3294117748737335, 0.6784313917160034
+                0.250980406999588,
+                0.3294117748737335,
+                0.6784313917160034
             }
         },
         BigWigs_Bosses_Rezan = {[255371] = {0.1843137294054031, 1, 0}},
@@ -436,7 +356,9 @@ QUI.imports.BigWigsColors = {
             [350365] = {0.9882352941176471, 1, 0},
             [350286] = {0, 1, 0.996078431372549},
             [350687] = {
-                0.6784313725490196, 0.2509803921568627, 0.2509803921568627
+                0.6784313725490196,
+                0.2509803921568627,
+                0.2509803921568627
             },
             [350475] = {0.1843137254901961, 1, 0}
         },
@@ -687,7 +609,9 @@ QUI.imports.BigWigsColors = {
         },
         ["BigWigs_Bosses_Chrono-Lord Deios"] = {
             [375727] = {
-                0.250980406999588, 0.3294117748737335, 0.6784313917160034
+                0.250980406999588,
+                0.3294117748737335,
+                0.6784313917160034
             },
             [376208] = {0.01568627543747425, 1, 0},
             [376049] = {1, 0, 0},
@@ -727,13 +651,17 @@ QUI.imports.BigWigsColors = {
             [410966] = {1, 0, 0},
             [407790] = {0.1843137294054031, 1, 0},
             [402115] = {
-                0.250980406999588, 0.3294117748737335, 0.6784313917160034
+                0.250980406999588,
+                0.3294117748737335,
+                0.6784313917160034
             },
             [401998] = {0.1843137294054031, 1, 0},
             [407917] = {1, 0, 0},
             [407221] = {0.9490196704864502, 0, 1},
             [405433] = {
-                0.250980406999588, 0.3294117748737335, 0.6784313917160034
+                0.250980406999588,
+                0.3294117748737335,
+                0.6784313917160034
             }
         },
         ["BigWigs_Bosses_Artificer Xy'mox v2"] = {
@@ -853,7 +781,9 @@ QUI.imports.BigWigsColors = {
         },
         ["BigWigs_Bosses_The Tarragrue"] = {
             [347269] = {
-                0.5529411764705883, 0.2509803921568627, 0.6784313725490196
+                0.5529411764705883,
+                0.2509803921568627,
+                0.6784313725490196
             },
             [346985] = {0.1843137294054031, 1, 0},
             [346986] = {0.1843137254901961, 1, 0},
