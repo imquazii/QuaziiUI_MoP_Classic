@@ -200,9 +200,9 @@ function page:CreateAddonList(frame)
     frame.addonHeader:SetPoint("TOPLEFT", self.description.widget, "BOTTOMLEFT", -2, -10)
 
     local addonScrollBox =
-        DF:CreateScrollBox(frame, nil, addonScrollBoxUpdate, {}, 557, 288, 0, 40, createAddonButton, true)
+        DF:CreateScrollBox(frame, nil, addonScrollBoxUpdate, {}, 557, 281, 0, 34, createAddonButton, true)
     addonScrollBox:SetPoint("TOPLEFT", frame.addonHeader, "BOTTOMLEFT", 0, 0)
-    addonScrollBox:SetPoint("TOPLEFT", frame.addonHeader, "BOTTOMLEFT", 0, 0)
+    addonScrollBox.ScrollBar.scrollStep = 34
     DF:ReskinSlider(addonScrollBox)
     addonScrollBox:SetData(QUI.supportedAddons)
     addonScrollBox:Refresh()
