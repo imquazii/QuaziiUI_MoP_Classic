@@ -3,6 +3,7 @@ import os
 from json import load
 
 raw_import_data = {}
+mdt_routes_string = []
 
 
 def get_import_files():
@@ -24,7 +25,12 @@ def get_import_files():
                     .replace("weakauras_non-class_", "")
                 )[1:][:-4]
                 with open(txt_path, "r", encoding="utf-8") as import_file:
-                    raw_import_data[txt_split] = import_file.read().strip()
+                    if "routes" in txt_path:
+                        mdt_routes_string.append(
+                            import_file.read().strip().join(('"', '"'))
+                        )
+                    else:
+                        raw_import_data[txt_split] = import_file.read().strip()
 
 
 def get_template():
@@ -41,6 +47,8 @@ def write_template(input):
 
 def process_temple():
     template = get_template()
+    routes_string = ",\n            ".join(mdt_routes_string)
+    template = template.replace('"{MDT_ROUTES}"', routes_string)
     for k, v in raw_import_data.items():
         replace_string = "{" + k + "}"
         value_string = v
