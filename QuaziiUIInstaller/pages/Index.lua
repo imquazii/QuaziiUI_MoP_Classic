@@ -12,11 +12,11 @@ table.insert(QUI.pagePrototypes, page)
 QUI.supportedAddons = {
     "ElvUI",
     "WeakAuras",
-    "MythicDungeonTools",
+    "Details",
     "Plater",
     "BigWigs",
-    "Details",
-    -- "Cell",
+    "MythicDungeonTools",
+    "Cell",
     "OmniCD"
 }
 
