@@ -8,18 +8,34 @@ QUI.pagePrototypes = QUI.pagePrototypes or {}
 local page = {}
 table.insert(QUI.pagePrototypes, page)
 local currentCategory = 1
+local GameTooltip = GameTooltip
 
 local function fillWAFromCategoryIndex(index)
     local data = {}
     for _, importString in ipairs(QUI.imports.WAStrings[index].WAs) do
         local waTable = QUI.decodeWAPacket(importString)
         if waTable then
+            local isWAInstalled = WeakAuras.GetData(waTable.d.id)
+            local installedWAVersion, needsUpdate
+            if isWAInstalled then
+                installedWAVersion = isWAInstalled.version
+                if (waTable.d.version or 0) > (installedWAVersion or 0) then
+                    print("WA NEEDS UPDATE")
+                    needsUpdate = "|cFFbc1f00Yes|r"
+                else
+                    print("WA NO NEEDS UPDATE")
+                    needsUpdate = "|cFF28bc00No|r"
+                end
+            else
+                needsUpdate = "N/A"
+            end
+
             local icon = waTable.d.groupIcon or waTable.d.displayIcon or
                              "Interface\\AddOns\\QuaziiUIInstaller\\assets\\quaziiLogo.tga"
             table.insert(data, {
                 icon = icon,
-                name = waTable.d.id,
-                version = waTable.d.version
+                name = waTable.d.id:gsub("%[READ%sINFORMATION%sTAB%]", ""),
+                update = needsUpdate
             })
         end
     end
@@ -48,7 +64,18 @@ local function waScrollBoxUpdate(self, data, offset, totalLines)
         if info then
             local line = self:GetLine(i)
             line.nameLabel:SetText(info.name)
-            line.versionLabel:SetText(info.version)
+            
+            line.updateLabel:SetText(info.update)
+            if info.update == "N/A" then
+                line.updateLabel:SetScript("onEnter", function(self)
+                    GameTooltip:SetOwner(self, "ANCHOR_CURSOR_RIGHT")
+                    GameTooltip:AddLine("Weakaura not installed or has been renamed")
+                    GameTooltip:Show()
+                end)
+                line.updateLabel:SetScript("onLeave", function()
+                    GameTooltip:Hide()
+                end)
+            end
             line.icon:SetTexture(info.icon)
             if not WeakAuras then
                 line.importButton:Disable()
@@ -78,24 +105,24 @@ local function createWAButton(self, index)
 
     local icon = line:CreateTexture(nil, "OVERLAY")
     icon:SetSize(42, 42)
-    local nameLabel = DF:CreateLabel(line, "", 18)
-    local versionLabel = DF:CreateLabel(line, "", 18)
+    local nameLabel = DF:CreateLabel(line, "", 16)
+    local updateLabel = DF:CreateLabel(line, "", 16)
     nameLabel:SetSize(318, self.LineHeight / 2)
 
-    versionLabel:SetSize(68, self.LineHeight / 2)
-    versionLabel:SetJustifyH("CENTER")
+    updateLabel:SetSize(68, self.LineHeight / 2)
+    updateLabel:SetJustifyH("CENTER")
 
     local importButton = DF:CreateButton(line, nil, 110, 30, "Import", nil, nil,
                                          nil, nil, nil, nil, QUI.ODT)
-    importButton.text_overlay:SetFont(importButton.text_overlay:GetFont(), 18)
+    importButton.text_overlay:SetFont(importButton.text_overlay:GetFont(), 16)
     line:AddFrameToHeaderAlignment(icon)
     line:AddFrameToHeaderAlignment(nameLabel)
-    line:AddFrameToHeaderAlignment(versionLabel)
+    line:AddFrameToHeaderAlignment(updateLabel)
     line:AddFrameToHeaderAlignment(importButton)
     line:AlignWithHeader(self:GetParent().addonHeader, "LEFT")
     line.icon = icon
     line.nameLabel = nameLabel
-    line.versionLabel = versionLabel
+    line.updateLabel = updateLabel
     line.importButton = importButton
     return line
 end
@@ -120,7 +147,7 @@ function page:Create(parent)
     selectionDropdown.label:SetFont(selectionDropdown.label:GetFont(), 16)
     local headerTable = {
         {text = "Icon", width = 50, offset = 1}, {text = "Name", width = 317},
-        {text = "Version", width = 67}, {text = "Import", width = 117}
+        {text = "Update?", width = 67}, {text = "Import", width = 117}
     }
     local options = {text_size = 16}
     frame.addonHeader = DF:CreateHeader(frame, headerTable, options,
