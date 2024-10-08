@@ -4079,8 +4079,8 @@ function DF:CreateBorder(parent, alpha1, alpha2, alpha3)
 
 	do
 		local leftBorder1 = parent:CreateTexture(nil, "background")
-		PixelUtil.SetPoint(leftBorder1, "topleft", parent, "topleft", -1, 1)
-		PixelUtil.SetPoint(leftBorder1, "bottomleft", parent, "bottomleft", -1, -1)
+		PixelUtil.SetPoint(leftBorder1, "topleft", parent, "topleft", -1.5, 1.5)
+		PixelUtil.SetPoint(leftBorder1, "bottomleft", parent, "bottomleft", -1,5, -1,5)
 		leftBorder1:SetColorTexture(0, 0, 0, alpha1 or default_border_color1)
 
 		local leftBorder2 = parent:CreateTexture(nil, "background")
@@ -4100,8 +4100,8 @@ function DF:CreateBorder(parent, alpha1, alpha2, alpha3)
 
 	do
 		local topBorder1 = parent:CreateTexture(nil, "background")
-		PixelUtil.SetPoint(topBorder1, "topleft", parent, "topleft", 0, 1)
-		PixelUtil.SetPoint(topBorder1, "topright", parent, "topright", 1, 1)
+		PixelUtil.SetPoint(topBorder1, "topleft", parent, "topleft", 0.5, 1.5)
+		PixelUtil.SetPoint(topBorder1, "topright", parent, "topright", 1.5, 1.5)
 		topBorder1:SetColorTexture(0, 0, 0, alpha1 or default_border_color1)
 
 		local topBorder2 = parent:CreateTexture(nil, "background")
@@ -4121,8 +4121,8 @@ function DF:CreateBorder(parent, alpha1, alpha2, alpha3)
 
 	do
 		local rightBorder1 = parent:CreateTexture(nil, "background")
-		PixelUtil.SetPoint(rightBorder1, "topright", parent, "topright", 1, 0)
-		PixelUtil.SetPoint(rightBorder1, "bottomright", parent, "bottomright", 1, -1)
+		PixelUtil.SetPoint(rightBorder1, "topright", parent, "topright", 1.5, 0.5)
+		PixelUtil.SetPoint(rightBorder1, "bottomright", parent, "bottomright", 1.5, -1.5)
 		rightBorder1:SetColorTexture(0, 0, 0, alpha1 or default_border_color1)
 
 		local rightBorder2 = parent:CreateTexture(nil, "background")
@@ -4142,8 +4142,8 @@ function DF:CreateBorder(parent, alpha1, alpha2, alpha3)
 
 	do
 		local bottomBorder1 = parent:CreateTexture(nil, "background")
-		PixelUtil.SetPoint(bottomBorder1, "bottomleft", parent, "bottomleft", 0, -1)
-		PixelUtil.SetPoint(bottomBorder1, "bottomright", parent, "bottomright", 0, -1)
+		PixelUtil.SetPoint(bottomBorder1, "bottomleft", parent, "bottomleft", 0.5, -1.5)
+		PixelUtil.SetPoint(bottomBorder1, "bottomright", parent, "bottomright", 0.5, -1.5)
 		bottomBorder1:SetColorTexture(0, 0, 0, alpha1 or default_border_color1)
 
 		local bottomBorder2 = parent:CreateTexture(nil, "background")
