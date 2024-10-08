@@ -19,25 +19,44 @@ end
 local function getWAUpdateStatus(waTable)
     local isWAInstalled = WeakAuras.GetData(waTable.d.id)
     if not isWAInstalled then
-        return "N/A"
+        return L["NA"]
     end
 
     local installedVersion = isWAInstalled.version
     local newVersion = waTable.d.version or 0
-    return newVersion > (installedVersion or 0) and "|cFFbc1f00Yes|r" or "|cFF28bc00No|r"
+    return newVersion > (installedVersion or 0) and "|cFFbc1f00" .. L["Yes"] .. "|r" or "|cFF28bc00" .. L["No"] .. "|r"
 end
 
-local function fillWAFromCategoryIndex(index)
+
+
+local function parseWAData(index)
     local data = {}
     for _, importString in ipairs(QUI.imports.WAStrings[index].WAs) do
         local waTable = decodeWAPacket(importString)
         if waTable then
-            table.insert(data, {
-                icon = waTable.d.groupIcon or waTable.d.displayIcon or "Interface\\AddOns\\QuaziiUIInstaller\\assets\\quaziiLogo.tga",
-                name = waTable.d.id:gsub("%[READ%sINFORMATION%sTAB%]", ""),
-                update = getWAUpdateStatus(waTable)
-            })
+            table.insert(
+                data,
+                {
+                    icon = waTable.d.groupIcon or waTable.d.displayIcon or
+                        "Interface\\AddOns\\QuaziiUIInstaller\\assets\\quaziiLogo.png",
+                    name = waTable.d.id:gsub("%[READ%sINFORMATION%sTAB%]", ""),
+                    update = getWAUpdateStatus(waTable)
+                }
+            )
         end
+    end
+    return data
+end
+
+local classData = parseWAData(1)
+local nonClassData = parseWAData(2)
+
+local function fillWAFromCategoryIndex(index)
+    local data = {}
+    if index == 1 then
+        data = classData
+    else
+        data = nonClassData
     end
     page.waScrollBox:SetData(data)
     page.waScrollBox:Refresh()
@@ -66,13 +85,16 @@ local function waScrollBoxUpdate(self, data, offset, totalLines)
             line.nameLabel:SetText(info.name)
             line.updateLabel:SetText(info.update)
             line.icon:SetTexture(info.icon)
-            
+
             if info.update == "N/A" then
-                line.updateLabel:SetScript("OnEnter", function(self)
-                    GameTooltip:SetOwner(self, "ANCHOR_CURSOR_RIGHT")
-                    GameTooltip:AddLine("WeakAura not installed or has been renamed")
-                    GameTooltip:Show()
-                end)
+                line.updateLabel:SetScript(
+                    "OnEnter",
+                    function(self)
+                        GameTooltip:SetOwner(self, "ANCHOR_CURSOR_RIGHT")
+                        GameTooltip:AddLine(L["WeakAuraNotFound"])
+                        GameTooltip:Show()
+                    end
+                )
                 line.updateLabel:SetScript("OnLeave", GameTooltip_Hide)
             else
                 line.updateLabel:SetScript("OnEnter", nil)
@@ -81,11 +103,13 @@ local function waScrollBoxUpdate(self, data, offset, totalLines)
 
             if not WeakAuras then
                 line.importButton:Disable()
-                line.importButton:SetText("Load WAs")
+                line.importButton:SetText(L["NA"])
             else
-                line.importButton:SetClickFunction(function()
-                    WeakAuras.Import(QUI.imports.WAStrings[currentCategory].WAs[index])
-                end)
+                line.importButton:SetClickFunction(
+                    function()
+                        WeakAuras.Import(QUI.imports.WAStrings[currentCategory].WAs[index])
+                    end
+                )
             end
         end
     end
@@ -96,11 +120,13 @@ local function createWAButton(self, index)
     line:SetClipsChildren(true)
     line:SetPoint("TOPLEFT", self, "TOPLEFT", 1, -((index - 1) * (self.LineHeight + 1)) - 1)
     line:SetSize(555, self.LineHeight)
-    line:SetBackdrop({
-        bgFile = "Interface\\Tooltips\\UI-Tooltip-Background",
-        tileSize = 64,
-        tile = true
-    })
+    line:SetBackdrop(
+        {
+            bgFile = "Interface\\Tooltips\\UI-Tooltip-Background",
+            tileSize = 64,
+            tile = true
+        }
+    )
     line:SetBackdropColor(0.8, 0.8, 0.8, 0.2)
     DF:Mixin(line, DF.HeaderFunctions)
 
@@ -109,15 +135,15 @@ local function createWAButton(self, index)
     line.nameLabel = DF:CreateLabel(line, "", 16)
     line.updateLabel = DF:CreateLabel(line, "", 16)
     line.nameLabel:SetSize(318, self.LineHeight / 2)
-    line.updateLabel:SetSize(68, self.LineHeight / 2)
-    line.updateLabel:SetJustifyH("CENTER")
+    --line.updateLabel:SetSize(68, self.LineHeight / 2)
+    --line.updateLabel:SetJustifyH("CENTER")
 
-    line.importButton = DF:CreateButton(line, nil, 110, 30, "Import", nil, nil, nil, nil, nil, nil, QUI.ODT)
+    line.importButton = DF:CreateButton(line, nil, 105, 30, L["Import"], nil, nil, nil, nil, nil, nil, QUI.ODT)
     line.importButton.text_overlay:SetFont(line.importButton.text_overlay:GetFont(), 16)
 
     line:AddFrameToHeaderAlignment(line.icon)
     line:AddFrameToHeaderAlignment(line.nameLabel)
-    line:AddFrameToHeaderAlignment(line.updateLabel)
+    --line:AddFrameToHeaderAlignment(line.updateLabel)
     line:AddFrameToHeaderAlignment(line.importButton)
     line:AlignWithHeader(self:GetParent().addonHeader, "LEFT")
 
@@ -138,7 +164,12 @@ function page:Create(parent)
 end
 
 function page:CreateHeader(frame)
-    local header = DF:CreateLabel(frame, "|c" .. QUI.highlightColorHex .. L["WeakAuras"] .. " " .. L["Imports"] .. "|r", QUI.PageHeaderSize)
+    local header =
+        DF:CreateLabel(
+        frame,
+        "|c" .. QUI.highlightColorHex .. L["WeakAuras"] .. " " .. L["Imports"] .. "|r",
+        QUI.PageHeaderSize
+    )
     header:SetPoint("TOP", frame, "TOP", 0, -10)
 end
 
@@ -160,30 +191,30 @@ end
 
 function page:CreateWAList(frame)
     local headerTable = {
-        {text = "Icon", width = 50, offset = 1},
-        {text = "Name", width = 317},
-        {text = "Update?", width = 67},
-        {text = "Import", width = 117}
+        {text = L["Icon"], width = 50, canSort = false},
+        {text = L["Name"], width = 391, canSort = false}, --284 w/ Update Enabled
+        --{text = L["Update"], width = 107, canSort = false},
+        {text = L["Import"], width = 110, canSort = false}
     }
     local options = {text_size = 16}
     frame.addonHeader = DF:CreateHeader(frame, headerTable, options, "QuaziiUIInstallWAHeader")
     frame.addonHeader:SetPoint("TOPLEFT", self.descriptionText.widget, "BOTTOMLEFT", -2, -35)
 
-    local waScrollBox = DF:CreateScrollBox(frame, nil, waScrollBoxUpdate, {}, 557, 271, 0, 44, createWAButton, true)
+    local waScrollBox = DF:CreateScrollBox(frame, nil, waScrollBoxUpdate, {}, 557, 288, 0, 40, createWAButton, true)
     waScrollBox:SetPoint("TOPLEFT", frame.addonHeader, "BOTTOMLEFT", 0, 0)
-    waScrollBox.ScrollBar.scrollStep = 44
+    waScrollBox.ScrollBar.scrollStep = 40
     DF:ReskinSlider(waScrollBox)
     self.waScrollBox = waScrollBox
 end
 
-function page:ShouldShow() 
-    return true 
+function page:ShouldShow()
+    return true
 end
 
-function page:Show() 
-    self.rootFrame:Show() 
+function page:Show()
+    self.rootFrame:Show()
 end
 
-function page:Hide() 
-    self.rootFrame:Hide() 
+function page:Hide()
+    self.rootFrame:Hide()
 end
