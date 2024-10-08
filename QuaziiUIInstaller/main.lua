@@ -108,13 +108,13 @@ local function selectNextPage()
     QuaziiUI_CDB.openPage = nil
 end
 
+local function selectIndexPage()
+    QUI.selectPage(2)
+end
+
 local function selectPreviousPage()
-    if (QuaziiUI_CDB.selectedPage == 1) then
-        return
-    elseif QuaziiUI_CDB.selectedPage > 2 then
-        QUI.selectPage(2)
-    else
-        QUI.selectPage(1)
+    if QuaziiUI_CDB.selectedPage > 1 then
+        QUI.selectPage(QuaziiUI_CDB.selectedPage - 1)
     end
 end
 
@@ -201,6 +201,14 @@ local function createPanel()
     previousButton:SetPoint("BOTTOMLEFT", panel, "BOTTOMLEFT", 10, 5) -- Anchor Button to Bottom Left of Panel, with 5 pixel buffer
     previousButton.text_overlay:SetFont(previousButton.text_overlay:GetFont(), 18) -- Set Font Size
     previousButton:SetTextColor(unpack(QUI.textColorRGBA)) -- Set Text to Text Color
+
+    -- Index Button
+    local indexButton =
+        DF:CreateButton(panel, selectIndexPage, 90, 40, "- " .. L["Index"] .. " -", nil, nil, nil, nil, nil, nil, QUI.ODT)
+    indexButton:SetPoint("BOTTOM", panel, "BOTTOM", 0, 5) -- Anchor Button to Bottom Left of Panel, with 5 pixel buffer
+    indexButton.text_overlay:SetFont(indexButton.text_overlay:GetFont(), 18) -- Set Font Size
+    indexButton:SetTextColor(unpack(QUI.textColorRGBA)) -- Set Text to Text Color
+
     -- Next Button
     local nextButton =
         DF:CreateButton(panel, selectNextPage, 90, 40, L["Next"] .. " ->", nil, nil, nil, nil, nil, nil, QUI.ODT)
