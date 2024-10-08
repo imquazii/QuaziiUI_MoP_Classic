@@ -9,6 +9,7 @@ L["Healer"] = "Healer"
 L["Import"] = "Import"
 L["Imports"] = "Imports"
 L["Next"] = "Next"
+L["Index"] = "Index"
 L["Prev"] = "Prev" --Shorthand for Previous
 L["Back"] = "Back" 
 L["Icon"] = "Icon"
@@ -44,8 +45,8 @@ L["WelcomeText2"] =
 L["WelcomeText3"] = "Let's get started!"
 
 -- Supported Addon Check
-L["SupportedAddonsHeader"] = "Supported Addons"
-L["SupportedAddonsText"] = "Here you will see what addon profiles are supported by this installer.\n\n"
+L["SupportedAddonsHeader"] = "Addon Index"
+L["SupportedAddonsText"] = "Here you will see what addon profiles are supported by this installer, and be able to import or go to the addon specific page.\n"
 L["SupportedAddonsTable1stHeader"] = "Supported|r Addons"
 L["SupportedAddonsTable2ndHeader"] = "Enabled"
 L["SupportedAddonsTable3rdHeader"] = "Installed Version"
