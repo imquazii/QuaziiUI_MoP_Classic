@@ -55,11 +55,24 @@ function page:CreateImportFrames(frame)
     local containerHeight = (frame:GetHeight() - headerHeight - 60) / 2  -- Adjust as needed
 
     local function createContainer(addon, row, col, importFunc)
-        local container = QUI:CreateImportFrame(frame, addon, addon, containerWidth, containerHeight, nil, function()
+        local container = QUI:CreateImportFrame(frame, addon, addon, function()
             importFunc()
             updateDisplay()
         end)
-        container:SetPoint("TOPLEFT", frame, "TOPLEFT", 10 + (col - 1) * (containerWidth + 20), -headerHeight - 20 - (row - 1) * (containerHeight + 20))
+        local container_anchor, frame_anchor, x_offset 
+        if col == 1 then
+            container_anchor = "TOPRIGHT"
+            frame_anchor = "TOP"
+            x_offset = -10
+        else
+            container_anchor = "TOPLEFT"
+            frame_anchor = "TOP"
+            x_offset = 10
+        end
+
+        local y_offset = -headerHeight - 30 - ((row - 1) * (containerHeight - 50))
+
+        container:SetPoint(container_anchor, frame, frame_anchor, x_offset, y_offset)
         return container
     end
 

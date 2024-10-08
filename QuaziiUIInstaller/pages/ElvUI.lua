@@ -113,13 +113,13 @@ function page:CreateElvUISection(frame)
     elvDescription:SetJustifyH("LEFT")
     elvDescription:SetJustifyV("TOP")
 
-    local importTankContainer = QUI:CreateImportFrame(frame, "ElvUI", L["Tank"] .. "/" .. L["DPS"], nil, nil, nil, importTankProfile)
-    importTankContainer:SetPoint("TOPRIGHT", elvDescription.widget, "BOTTOMRIGHT", 0, -20)
+    local importTankContainer = QUI:CreateImportFrame(frame, "ElvUI", L["Tank"] .. "/" .. L["DPS"], importTankProfile)
+    importTankContainer:SetPoint("TOP", elvDescription.widget, "BOTTOM", 0, -20)
 
-    local importHealerContainer = QUI:CreateImportFrame(frame, "ElvUI", L["Healer"], nil, nil, nil, importHealerProfile)
+    local importHealerContainer = QUI:CreateImportFrame(frame, "ElvUI", L["Healer"], importHealerProfile)
     importHealerContainer:SetPoint("TOPRIGHT", importTankContainer, "BOTTOMRIGHT", 0, 10)
 
-    local importHealerCellContainer = QUI:CreateImportFrame(frame, "ElvUI", L["Healer"] .. " - " .. L["Cell"], nil, nil, nil, importHealerCellProfile)
+    local importHealerCellContainer = QUI:CreateImportFrame(frame, "ElvUI", L["Healer"] .. " - " .. L["Cell"], importHealerCellProfile)
     importHealerCellContainer:SetPoint("TOPRIGHT", importHealerContainer, "BOTTOMRIGHT", 0, 10)
 
     self.lastHImportTime = importHealerContainer.lastImportText

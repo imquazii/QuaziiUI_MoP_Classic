@@ -108,8 +108,7 @@ local function selectPreviousPage()
 end
 
 -- Frame Template Functions
-function QUI:CreateImportFrame(parentPanel, addonName, importLabel, addonLogo,
-                               addonLogoWidth, addonLogoHeight, importFunction)
+function QUI:CreateImportFrame(parentPanel, addonName, importLabel, importFunction)
     local frame = CreateFrame("Frame", nil, parentPanel)
     frame:SetHeight(100)
 
@@ -134,13 +133,6 @@ function QUI:CreateImportFrame(parentPanel, addonName, importLabel, addonLogo,
     lastImportText:SetPoint("LEFT", lastImportLabel, "RIGHT", 10, 0);
     local versionText = DF:CreateLabel(frame, "", QUI.TableTextSize);
     versionText:SetPoint("LEFT", versionLabel, "RIGHT", 6, 0);
-
-    if not addonLogo ~= nil then
-        frame:SetHeight(100 + (addonLogoHeight or 0))
-        local logo = DF:CreateImage(frame, addonLogo, addonLogoWidth,
-                                    addonLogoHeight);
-        logo:SetPoint("TOP", frame, "TOP", 0, -70);
-    end
 
     local function update()
         local addonLoaded = C_AddOns and C_AddOns.IsAddOnLoaded(addonName);

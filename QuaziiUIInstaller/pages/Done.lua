@@ -20,16 +20,19 @@ end
 function page:CreateHeader(frame)
     local header = DF:CreateLabel(frame, 
         "|c" .. QUI.highlightColorHex .. L["FinishHeader"] .. "|r", 
-        18)
-    header:SetPoint("TOPLEFT", frame, "TOPLEFT")
+        QUI.PageHeaderSize)
+    header:SetPoint("TOP", frame, "TOP", 0, -10)
+
 end
 
 function page:CreateText(frame)
-    local text = DF:CreateLabel(frame, L["FinishedText"], 16)
-    text:SetPoint("TOPLEFT", frame, "TOPLEFT", 0, -30)
-    text:SetPoint("BOTTOMRIGHT", frame, "BOTTOMRIGHT")
-    text:SetJustifyH("LEFT")
+    local text = DF:CreateLabel(frame, L["FinishedText"], QUI.PageTextSize)
+    text:SetPoint("TOPLEFT", frame, "TOPLEFT", 10, -40)
+    text:SetPoint("BOTTOMRIGHT", frame, "BOTTOMRIGHT", -10, -40)
+    text:SetSpacing(5)
+    text:SetJustifyH("CENTER")
     text:SetJustifyV("TOP")
+    frame.textWidget = text.widget
 end
 
 function page:CreateImage(frame)
