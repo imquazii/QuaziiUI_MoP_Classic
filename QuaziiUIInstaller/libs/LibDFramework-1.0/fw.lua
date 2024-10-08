@@ -11,7 +11,7 @@ end
 
 _G["DetailsFramework"] = DF
 
----@cast DF detailsframework
+---@cast DF DetailsFramework-1.0
 
 local detailsFramework = DF
 
