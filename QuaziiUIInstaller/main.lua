@@ -99,9 +99,8 @@ end
 
 local function selectNextPage()
     if ((QuaziiUI_CDB.selectedPage or 0) < QuaziiUI_CDB.shownPages) then -- If selectedPage is less than total pages
-        selectPage(QuaziiUI_CDB.selectedPage + 1) -- Show next page
+        QUI.selectPage(QuaziiUI_CDB.selectedPage + 1) -- Show next page
     else -- If last page or higher
-        print("Last Page Detected")
         QUI.frames.main:Hide() -- Hide installer UI
         QuaziiUI_CDB.isDone = true -- Set done as true
         ReloadUI() -- reload UI
@@ -110,10 +109,13 @@ local function selectNextPage()
 end
 
 local function selectPreviousPage()
-    if QuaziiUI_CDB.selectedPage > 1 then
-        selectPage(QuaziiUI_CDB.selectedPage - 1)
-    end -- If not page 1, select previous page
-    QuaziiUI_CDB.openPage = nil
+    if (QuaziiUI_CDB.selectedPage == 1) then
+        return
+    elseif QuaziiUI_CDB.selectedPage > 2 then
+        QUI.selectPage(2)
+    else
+        QUI.selectPage(1)
+    end
 end
 
 -- Frame Template Functions
@@ -194,17 +196,14 @@ local function createPanel()
     panel:SetLayerVisibility(true, false, false) -- DFramework Layer Visibilty options, we only use layer 1, so others are set to false
 
     -- Previous Button
-    local previousButton = DF:CreateButton(panel, selectPreviousPage, 90, 40,
-                                           "<- " .. L["Prev"], nil, nil, nil, nil, nil,
-                                           nil, QUI.ODT)
+    local previousButton =
+        DF:CreateButton(panel, selectPreviousPage, 90, 40, "<- " .. L["Back"], nil, nil, nil, nil, nil, nil, QUI.ODT)
     previousButton:SetPoint("BOTTOMLEFT", panel, "BOTTOMLEFT", 10, 5) -- Anchor Button to Bottom Left of Panel, with 5 pixel buffer
-    previousButton.text_overlay:SetFont(previousButton.text_overlay:GetFont(),
-                                        18) -- Set Font Size
+    previousButton.text_overlay:SetFont(previousButton.text_overlay:GetFont(), 18) -- Set Font Size
     previousButton:SetTextColor(unpack(QUI.textColorRGBA)) -- Set Text to Text Color
     -- Next Button
-    local nextButton = DF:CreateButton(panel, selectNextPage, 90, 40, L["Next"] .. " ->",
-                                       nil, nil, nil, nil, nil, nil,
-                                       QUI.ODT)
+    local nextButton =
+        DF:CreateButton(panel, selectNextPage, 90, 40, L["Next"] .. " ->", nil, nil, nil, nil, nil, nil, QUI.ODT)
     nextButton:SetPoint("BOTTOMRIGHT", panel, "BOTTOMRIGHT", -10, 5) -- Anchor Button to Bottom Right of Panel, with 5 pixel buffer
     nextButton.text_overlay:SetFont(nextButton.text_overlay:GetFont(), 18) -- Set Font Size
     nextButton:SetTextColor(unpack(QUI.textColorRGBA)) -- Set Text to Text Color
