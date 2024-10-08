@@ -50,9 +50,15 @@ local function updateUIScale(scale)
 end
 
 -- UI Scale Functions
-local function smallUIScale() updateUIScale(0.64) end
-local function medUIScale() updateUIScale(0.71) end
-local function lgUIScale() updateUIScale(0.78) end
+local function smallUIScale()
+    updateUIScale(0.64)
+end
+local function medUIScale()
+    updateUIScale(0.71)
+end
+local function lgUIScale()
+    updateUIScale(0.78)
+end
 local function autoUIScale()
     if C_AddOns and C_AddOns.IsAddOnLoaded("ElvUI") then
         updateUIScale(ElvUI[1]:PixelBestSize())
@@ -78,7 +84,8 @@ local function importProfile(profileType, dataKey)
                 QuaziiUI_CDB.openPage = pageIndex
                 updateElvUIDisplay()
             end,
-            function() end,
+            function()
+            end,
             true
         )
     end
@@ -100,7 +107,12 @@ function page:Create(parent)
 end
 
 function page:CreateElvUISection(frame)
-    local elvHeader = DF:CreateLabel(frame, "|c" .. QUI.highlightColorHex .. L["ElvUI"] .. " " .. L["Imports"] .. "|r", QUI.PageHeaderSize)
+    local elvHeader =
+        DF:CreateLabel(
+        frame,
+        "|c" .. QUI.highlightColorHex .. L["ElvUI"] .. " " .. L["Imports"] .. "|r",
+        QUI.PageHeaderSize
+    )
     elvHeader:SetPoint("TOPLEFT", frame, "TOPLEFT", 10, -10)
     elvHeader:SetPoint("TOPRIGHT", frame, "TOP", -10, -10)
     elvHeader:SetJustifyH("CENTER")
@@ -119,7 +131,8 @@ function page:CreateElvUISection(frame)
     local importHealerContainer = QUI:CreateImportFrame(frame, "ElvUI", L["Healer"], importHealerProfile)
     importHealerContainer:SetPoint("TOPRIGHT", importTankContainer, "BOTTOMRIGHT", 0, 10)
 
-    local importHealerCellContainer = QUI:CreateImportFrame(frame, "ElvUI", L["Healer"] .. " - " .. L["Cell"], importHealerCellProfile)
+    local importHealerCellContainer =
+        QUI:CreateImportFrame(frame, "ElvUI", L["Healer"] .. " - " .. L["Cell"], importHealerCellProfile)
     importHealerCellContainer:SetPoint("TOPRIGHT", importHealerContainer, "BOTTOMRIGHT", 0, 10)
 
     self.lastHImportTime = importHealerContainer.lastImportText
@@ -131,7 +144,8 @@ function page:CreateElvUISection(frame)
 end
 
 function page:CreateUIScaleSection(frame)
-    local uiHeader = DF:CreateLabel(frame, "|c" .. QUI.highlightColorHex .. L["UIScaleHeader"] .. "|r", QUI.PageHeaderSize)
+    local uiHeader =
+        DF:CreateLabel(frame, "|c" .. QUI.highlightColorHex .. L["UIScaleHeader"] .. "|r", QUI.PageHeaderSize)
     uiHeader:SetPoint("TOPLEFT", frame, "TOP", 10, -10)
     uiHeader:SetPoint("TOPRIGHT", frame, "TOPRIGHT", -10, -10)
     uiHeader:SetJustifyH("CENTER")
@@ -173,8 +187,8 @@ function page:CreateScaleButtons(frame)
     end
 end
 
-function page:ShouldShow() 
-    return true 
+function page:ShouldShow()
+    return true
 end
 
 function page:Show()
@@ -183,6 +197,6 @@ function page:Show()
     self.rootFrame:Show()
 end
 
-function page:Hide() 
-    self.rootFrame:Hide() 
+function page:Hide()
+    self.rootFrame:Hide()
 end

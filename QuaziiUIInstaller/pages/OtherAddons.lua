@@ -41,7 +41,8 @@ function page:Create(parent)
 end
 
 function page:CreateHeader(frame)
-    local mainLabel = DF:CreateLabel(frame, "|c" .. QUI.highlightColorHex .. "Other Addon Imports|r", QUI.PageHeaderSize)
+    local mainLabel =
+        DF:CreateLabel(frame, "|c" .. QUI.highlightColorHex .. "Other Addon Imports|r", QUI.PageHeaderSize)
     mainLabel:SetPoint("TOPLEFT", frame, "TOPLEFT", 10, -10)
     mainLabel:SetPoint("TOPRIGHT", frame, "TOPRIGHT", -10, -10)
     mainLabel:SetJustifyH("CENTER")
@@ -51,15 +52,21 @@ end
 
 function page:CreateImportFrames(frame)
     local headerHeight = frame.headerAnchor:GetHeight()
-    local containerWidth = frame:GetWidth() / 2 - 20  -- Adjust as needed
-    local containerHeight = (frame:GetHeight() - headerHeight - 60) / 2  -- Adjust as needed
+    local containerWidth = frame:GetWidth() / 2 - 20 -- Adjust as needed
+    local containerHeight = (frame:GetHeight() - headerHeight - 60) / 2 -- Adjust as needed
 
     local function createContainer(addon, row, col, importFunc)
-        local container = QUI:CreateImportFrame(frame, addon, addon, function()
-            importFunc()
-            updateDisplay()
-        end)
-        local container_anchor, frame_anchor, x_offset 
+        local container =
+            QUI:CreateImportFrame(
+            frame,
+            addon,
+            addon,
+            function()
+                importFunc()
+                updateDisplay()
+            end
+        )
+        local container_anchor, frame_anchor, x_offset
         if col == 1 then
             container_anchor = "TOPRIGHT"
             frame_anchor = "TOP"

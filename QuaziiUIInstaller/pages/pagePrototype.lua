@@ -16,8 +16,14 @@ function page:Create(parent)
     page.rootFrame = frame
 end
 
-function page:ShouldShow() return true end
+function page:ShouldShow()
+    return true
+end
 
-function page:Show() page.rootFrame:Show() end
+function page:Show()
+    page.rootFrame:Show()
+end
 
-function page:Hide() page.rootFrame:Hide() end
+function page:Hide()
+    page.rootFrame:Hide()
+end

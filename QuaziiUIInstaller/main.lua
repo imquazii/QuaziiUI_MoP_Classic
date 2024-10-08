@@ -26,7 +26,9 @@ do
 
     local function loadDB(database)
         for key, value in pairs(dbDefaults) do
-            if (not database[key]) then database[key] = value end
+            if (not database[key]) then
+                database[key] = value
+            end
         end
     end
 
@@ -37,38 +39,45 @@ do
         return isNotDone or lastVersion < QUI.version or noLastPage
     end
 
-    QUI.frames.eventListener:SetScript("OnEvent", function(self, event, ...)
-        if (event == "PLAYER_ENTERING_WORLD" and not shown) then -- if Event is Player Loading in
+    QUI.frames.eventListener:SetScript(
+        "OnEvent",
+        function(self, event, ...)
+            if (event == "PLAYER_ENTERING_WORLD" and not shown) then -- if Event is Player Loading in
+                if (ShouldShow()) then -- Check if Should Show
+                    QUI:Show() -- If we should, show frame
+                    QuaziiUI_CDB.lastVersion = QUI.version -- Update lastVersion to current addon version
+                    shown = true -- Set shown to true
+                end
+            elseif (event == "ADDON_LOADED") then
+                local loadedAddonName = ... -- Get Loaded Addon Name
 
-            if (ShouldShow()) then -- Check if Should Show
-                QUI:Show() -- If we should, show frame
-                QuaziiUI_CDB.lastVersion = QUI.version -- Update lastVersion to current addon version
-                shown = true -- Set shown to true 
-            end
-        elseif (event == "ADDON_LOADED") then
-
-            local loadedAddonName = ... -- Get Loaded Addon Name
-
-            if loadedAddonName == addonName then -- if Loaded Addon is outs
-                QuaziiUI_DB = QuaziiUI_DB or {} -- Init Addon DB
-                QuaziiUI_CDB = QuaziiUI_CDB or {} -- Init Character Addon DB
-                loadDB(QuaziiUI_DB) -- Load Addon DB
-                loadDB(QuaziiUI_CDB) -- Load Character Addon DB
-                selectPage(QuaziiUI_CDB.openPage or 1) -- Open last open page or page 1
-                AddSlashCommand("QUAZIIUISHOW", function()
-                    selectPage(QuaziiUI_CDB.openPage or 1)
-                    QUI:Show()
-                end, "/qui")
+                if loadedAddonName == addonName then -- if Loaded Addon is outs
+                    QuaziiUI_DB = QuaziiUI_DB or {} -- Init Addon DB
+                    QuaziiUI_CDB = QuaziiUI_CDB or {} -- Init Character Addon DB
+                    loadDB(QuaziiUI_DB) -- Load Addon DB
+                    loadDB(QuaziiUI_CDB) -- Load Character Addon DB
+                    QUI.selectPage(QuaziiUI_CDB.openPage or 1) -- Open last open page or page 1
+                    AddSlashCommand(
+                        "QUAZIIUISHOW",
+                        function()
+                            QUI.selectPage(QuaziiUI_CDB.openPage or 1)
+                            QUI:Show()
+                        end,
+                        "/qui"
+                    )
+                end
             end
         end
-    end)
+    )
 end
 
 local function createPages(parentFrame)
-    for i, page in ipairs(QUI.pagePrototypes) do page:Create(parentFrame) end
+    for i, page in ipairs(QUI.pagePrototypes) do
+        page:Create(parentFrame)
+    end
 end
 
-function selectPage(pageIndex)
+function QUI.selectPage(pageIndex)
     ---@type integer
     QuaziiUI_CDB.selectedPage = pageIndex
     QuaziiUI_CDB.shownPages = 0
@@ -116,64 +125,56 @@ function QUI:CreateImportFrame(parentPanel, addonName, importLabel, importFuncti
     profileText:SetPoint("TOPLEFT", frame, "TOPLEFT")
 
     -- Button Template
-    local importProfileButton = DF:CreateButton(frame, importFunction, 90, 25,
-                                                "Import", nil, nil, nil, nil,
-                                                nil, nil, QUI.ODT)
+    local importProfileButton =
+        DF:CreateButton(frame, importFunction, 90, 25, "Import", nil, nil, nil, nil, nil, nil, QUI.ODT)
     importProfileButton:SetPoint("LEFT", profileText, "RIGHT", 10) -- Attach Button to profileText Label
-    importProfileButton.text_overlay:SetFont(
-        importProfileButton.text_overlay:GetFont(), QUI.TableHeaderSize) -- Set Button Font Size
+    importProfileButton.text_overlay:SetFont(importProfileButton.text_overlay:GetFont(), QUI.TableHeaderSize) -- Set Button Font Size
 
-    local lastImportLabel = DF:CreateLabel(frame, "Last Import Time:",
-                                           QUI.TableTextSize);
-    lastImportLabel:SetPoint("TOPRIGHT", profileText, "BOTTOMRIGHT", 0, -3);
-    local versionLabel = DF:CreateLabel(frame, "Version: ", QUI.TableTextSize);
-    versionLabel:SetPoint("TOPRIGHT", lastImportLabel, "BOTTOMRIGHT", 4, -3);
+    local lastImportLabel = DF:CreateLabel(frame, "Last Import Time:", QUI.TableTextSize)
+    lastImportLabel:SetPoint("TOPRIGHT", profileText, "BOTTOMRIGHT", 0, -3)
+    local versionLabel = DF:CreateLabel(frame, "Version: ", QUI.TableTextSize)
+    versionLabel:SetPoint("TOPRIGHT", lastImportLabel, "BOTTOMRIGHT", 4, -3)
 
-    local lastImportText = DF:CreateLabel(frame, "", QUI.TableTextSize);
-    lastImportText:SetPoint("LEFT", lastImportLabel, "RIGHT", 10, 0);
-    local versionText = DF:CreateLabel(frame, "", QUI.TableTextSize);
-    versionText:SetPoint("LEFT", versionLabel, "RIGHT", 6, 0);
+    local lastImportText = DF:CreateLabel(frame, "", QUI.TableTextSize)
+    lastImportText:SetPoint("LEFT", lastImportLabel, "RIGHT", 10, 0)
+    local versionText = DF:CreateLabel(frame, "", QUI.TableTextSize)
+    versionText:SetPoint("LEFT", versionLabel, "RIGHT", 6, 0)
 
     local function update()
-        local addonLoaded = C_AddOns and C_AddOns.IsAddOnLoaded(addonName);
-        local addonRealName = addonLoaded and
-                                  select(2, C_AddOns and
-                                             C_AddOns.GetAddOnInfo(addonName)) or
-                                  addonName;
+        local addonLoaded = C_AddOns and C_AddOns.IsAddOnLoaded(addonName)
+        local addonRealName = addonLoaded and select(2, C_AddOns and C_AddOns.GetAddOnInfo(addonName)) or addonName
 
         local updateLabel = addonRealName
 
-        if not importLabel ~= nil then updateLabel = importLabel end
+        if not importLabel ~= nil then
+            updateLabel = importLabel
+        end
 
-        profileText:SetText("|c" .. QUI.highlightColorHex .. updateLabel ..
-                                " Profile|r:");
-        frame:SetWidth(profileText:GetStringWidth() + 100);
+        profileText:SetText("|c" .. QUI.highlightColorHex .. updateLabel .. " Profile|r:")
+        frame:SetWidth(profileText:GetStringWidth() + 100)
 
         if (not addonLoaded) then
-            importProfileButton:Disable();
-            importProfileButton:SetText(L["NA"]);
+            importProfileButton:Disable()
+            importProfileButton:SetText(L["NA"])
         else
-            importProfileButton:Enable();
-            importProfileButton:SetText(L["Import"]);
+            importProfileButton:Enable()
+            importProfileButton:SetText(L["Import"])
         end
-        importProfileButton:SetWidth(
-            importProfileButton.button.text:GetStringWidth() + 10);
+        importProfileButton:SetWidth(importProfileButton.button.text:GetStringWidth() + 10)
     end
 
-    frame:SetScript("OnShow", update);
+    frame:SetScript("OnShow", update)
 
-    frame.lastImportText = lastImportText;
-    frame.versionText = versionText;
+    frame.lastImportText = lastImportText
+    frame.versionText = versionText
 
-    return frame;
-
+    return frame
 end
 
 -- Create Main UI Frame
 local function createPanel()
     -- Init panel
-    local panel = DF:CreateSimplePanel(UIParent, 600, 500,
-                                       L["AddonName"] .." v" .. QUI.version) -- Create a 600x500 panel
+    local panel = DF:CreateSimplePanel(UIParent, 600, 500, L["AddonName"] .. " v" .. QUI.version) -- Create a 600x500 panel
     DF:ApplyStandardBackdrop(panel) -- Give it a basic backdrop
 
     -- Panel Border

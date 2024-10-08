@@ -22,19 +22,25 @@ local function fillMDTFromCategoryIndex(index)
         for _, importString in ipairs(QUI.imports.MDT[index].Routes) do
             local MDTPreset = MDT:StringToTable(importString, true)
             if MDT:ValidateImportPreset(MDTPreset) then
-                table.insert(data, {
-                    name = MDTPreset["text"],
-                    version = MDTPreset["uid"],
-                    icon = "Interface\\AddOns\\QuaziiUIInstaller\\assets\\quaziiLogo.tga"
-                })
+                table.insert(
+                    data,
+                    {
+                        name = MDTPreset["text"],
+                        version = MDTPreset["uid"],
+                        icon = "Interface\\AddOns\\QuaziiUIInstaller\\assets\\quaziiLogo.png"
+                    }
+                )
             end
         end
     else
-        table.insert(data, {
-            name = L["MDTNotLoaded"],
-            version = "",
-            icon = "Interface\\AddOns\\QuaziiUIInstaller\\assets\\quaziiLogo.tga"
-        })
+        table.insert(
+            data,
+            {
+                name = L["MDTNotLoaded"],
+                version = "",
+                icon = "Interface\\AddOns\\QuaziiUIInstaller\\assets\\quaziiLogo.png"
+            }
+        )
     end
     page.mdtScrollBox:SetData(data)
     page.mdtScrollBox:Refresh()
@@ -67,12 +73,14 @@ local function mdtScrollBoxUpdate(self, data, offset, totalLines)
                 line.importButton:Disable()
                 line.importButton:SetText(L["NA"])
             else
-                line.importButton:SetClickFunction(function()
-                    local MDTPreset = MDT:StringToTable(QUI.imports.MDT[currentCategory].Routes[index], true)
-                    if MDT:ValidateImportPreset(MDTPreset) then
-                        MDT:ImportPreset(MDTPreset, false)
+                line.importButton:SetClickFunction(
+                    function()
+                        local MDTPreset = MDT:StringToTable(QUI.imports.MDT[currentCategory].Routes[index], true)
+                        if MDT:ValidateImportPreset(MDTPreset) then
+                            MDT:ImportPreset(MDTPreset, false)
+                        end
                     end
-                end)
+                )
             end
         end
     end
@@ -83,24 +91,26 @@ local function createMDTButton(self, index)
     line:SetClipsChildren(true)
     line:SetPoint("TOPLEFT", self, "TOPLEFT", 1, -((index - 1) * (self.LineHeight + 1)) - 1)
     line:SetSize(555, self.LineHeight)
-    line:SetBackdrop({
-        bgFile = "Interface\\Tooltips\\UI-Tooltip-Background",
-        tileSize = 64,
-        tile = true
-    })
+    line:SetBackdrop(
+        {
+            bgFile = "Interface\\Tooltips\\UI-Tooltip-Background",
+            tileSize = 64,
+            tile = true
+        }
+    )
     line:SetBackdropColor(0.8, 0.8, 0.8, 0.2)
     DF:Mixin(line, DF.HeaderFunctions)
 
     line.icon = line:CreateTexture(nil, "OVERLAY")
     line.icon:SetSize(42, 42)
-    line.nameLabel = DF:CreateLabel(line, "", 18)
-    line.versionLabel = DF:CreateLabel(line, "", 18)
+    line.nameLabel = DF:CreateLabel(line, "", 16)
+    line.versionLabel = DF:CreateLabel(line, "", 16)
     line.nameLabel:SetSize(318, self.LineHeight / 2)
     line.versionLabel:SetSize(68, self.LineHeight / 2)
     line.versionLabel:SetJustifyH("CENTER")
 
-    line.importButton = DF:CreateButton(line, nil, 110, 30, L["Import"], nil, nil, nil, nil, nil, nil, QUI.ODT)
-    line.importButton.text_overlay:SetFont(line.importButton.text_overlay:GetFont(), 18)
+    line.importButton = DF:CreateButton(line, nil, 105, 30, L["Import"], nil, nil, nil, nil, nil, nil, QUI.ODT)
+    line.importButton.text_overlay:SetFont(line.importButton.text_overlay:GetFont(), 16)
 
     line:AddFrameToHeaderAlignment(line.icon)
     line:AddFrameToHeaderAlignment(line.nameLabel)
@@ -149,29 +159,29 @@ end
 function page:CreateMDTList(frame)
     local headerTable = {
         {text = L["Icon"], width = 50, offset = 1},
-        {text = L["Name"], width = 300},
-        {text = L["Version"], width = 84},
-        {text = L["Import"], width = 117}
+        {text = L["Name"], width = 310},
+        {text = L["Version"], width = 81},
+        {text = L["Import"], width = 110}
     }
     local options = {text_size = 16}
     frame.addonHeader = DF:CreateHeader(frame, headerTable, options, "QuaziiUIInstallMDTHeader")
     frame.addonHeader:SetPoint("TOPLEFT", self.descriptionText.widget, "BOTTOMLEFT", -2, -35)
 
-    local mdtScrollBox = DF:CreateScrollBox(frame, nil, mdtScrollBoxUpdate, {}, 557, 271, 0, 44, createMDTButton, true)
+    local mdtScrollBox = DF:CreateScrollBox(frame, nil, mdtScrollBoxUpdate, {}, 557, 288, 0, 40, createMDTButton, true)
     mdtScrollBox:SetPoint("TOPLEFT", frame.addonHeader, "BOTTOMLEFT", 0, 0)
-    mdtScrollBox.ScrollBar.scrollStep = 44
+    mdtScrollBox.ScrollBar.scrollStep = 40
     DF:ReskinSlider(mdtScrollBox)
     self.mdtScrollBox = mdtScrollBox
 end
 
-function page:ShouldShow() 
-    return true 
+function page:ShouldShow()
+    return true
 end
 
-function page:Show() 
-    self.rootFrame:Show() 
+function page:Show()
+    self.rootFrame:Show()
 end
 
-function page:Hide() 
-    self.rootFrame:Hide() 
+function page:Hide()
+    self.rootFrame:Hide()
 end

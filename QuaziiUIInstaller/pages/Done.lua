@@ -18,11 +18,8 @@ function page:Create(parent)
 end
 
 function page:CreateHeader(frame)
-    local header = DF:CreateLabel(frame, 
-        "|c" .. QUI.highlightColorHex .. L["FinishHeader"] .. "|r", 
-        QUI.PageHeaderSize)
+    local header = DF:CreateLabel(frame, "|c" .. QUI.highlightColorHex .. L["FinishHeader"] .. "|r", QUI.PageHeaderSize)
     header:SetPoint("TOP", frame, "TOP", 0, -10)
-
 end
 
 function page:CreateText(frame)
@@ -36,9 +33,7 @@ function page:CreateText(frame)
 end
 
 function page:CreateImage(frame)
-    local image = DF:CreateImage(frame,
-        "Interface\\AddOns\\QuaziiUIInstaller\\assets\\quaziiLogo.png",
-        256, 256)
+    local image = DF:CreateImage(frame, "Interface\\AddOns\\QuaziiUIInstaller\\assets\\quaziiLogo.png", 256, 256)
     image:SetPoint("CENTER", frame, "CENTER", 0, -10)
 end
 
@@ -46,10 +41,10 @@ function page:ShouldShow()
     return true
 end
 
-function page:Show() 
+function page:Show()
     self.rootFrame:Show()
 end
 
-function page:Hide() 
+function page:Hide()
     self.rootFrame:Hide()
 end
