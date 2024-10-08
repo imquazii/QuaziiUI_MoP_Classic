@@ -4,59 +4,59 @@ local addonName = ...
 local QUI = select(2, ...)
 local DF = _G["DetailsFramework"]
 local L = QUI.L
+
 QUI.pagePrototypes = QUI.pagePrototypes or {}
 local page = {}
 table.insert(QUI.pagePrototypes, page)
+
 local currentCategory = 1
 local GameTooltip = GameTooltip
+
+local function decodeWAPacket(importString)
+    return QUI.decodeWAPacket(importString)
+end
+
+local function getWAUpdateStatus(waTable)
+    local isWAInstalled = WeakAuras.GetData(waTable.d.id)
+    if not isWAInstalled then
+        return "N/A"
+    end
+
+    local installedVersion = isWAInstalled.version
+    local newVersion = waTable.d.version or 0
+    return newVersion > (installedVersion or 0) and "|cFFbc1f00Yes|r" or "|cFF28bc00No|r"
+end
 
 local function fillWAFromCategoryIndex(index)
     local data = {}
     for _, importString in ipairs(QUI.imports.WAStrings[index].WAs) do
-        local waTable = QUI.decodeWAPacket(importString)
+        local waTable = decodeWAPacket(importString)
         if waTable then
-            local isWAInstalled = WeakAuras.GetData(waTable.d.id)
-            local installedWAVersion, needsUpdate
-            if isWAInstalled then
-                installedWAVersion = isWAInstalled.version
-                if (waTable.d.version or 0) > (installedWAVersion or 0) then
-                    print("WA NEEDS UPDATE")
-                    needsUpdate = "|cFFbc1f00Yes|r"
-                else
-                    print("WA NO NEEDS UPDATE")
-                    needsUpdate = "|cFF28bc00No|r"
-                end
-            else
-                needsUpdate = "N/A"
-            end
-
-            local icon = waTable.d.groupIcon or waTable.d.displayIcon or
-                             "Interface\\AddOns\\QuaziiUIInstaller\\assets\\quaziiLogo.tga"
             table.insert(data, {
-                icon = icon,
+                icon = waTable.d.groupIcon or waTable.d.displayIcon or "Interface\\AddOns\\QuaziiUIInstaller\\assets\\quaziiLogo.tga",
                 name = waTable.d.id:gsub("%[READ%sINFORMATION%sTAB%]", ""),
-                update = needsUpdate
+                update = getWAUpdateStatus(waTable)
             })
         end
     end
     page.waScrollBox:SetData(data)
     page.waScrollBox:Refresh()
 end
-local function onCategoryClick(self, _, index)
+
+local function onCategoryClick(_, _, index)
     currentCategory = index
     fillWAFromCategoryIndex(currentCategory)
 end
+
 local function fillSelectionDropdown()
     local options = {}
     for index, category in ipairs(QUI.imports.WAStrings) do
-        local label =
-            category.color and "|c" .. category.color .. category.name .. "|r" or
-                category.name
-        table.insert(options,
-                     {value = index, label = label, onclick = onCategoryClick})
+        local label = category.color and "|c" .. category.color .. category.name .. "|r" or category.name
+        table.insert(options, {value = index, label = label, onclick = onCategoryClick})
     end
     return options
 end
+
 local function waScrollBoxUpdate(self, data, offset, totalLines)
     for i = 1, totalLines do
         local index = i + offset
@@ -64,104 +64,126 @@ local function waScrollBoxUpdate(self, data, offset, totalLines)
         if info then
             local line = self:GetLine(i)
             line.nameLabel:SetText(info.name)
-            
             line.updateLabel:SetText(info.update)
+            line.icon:SetTexture(info.icon)
+            
             if info.update == "N/A" then
-                line.updateLabel:SetScript("onEnter", function(self)
+                line.updateLabel:SetScript("OnEnter", function(self)
                     GameTooltip:SetOwner(self, "ANCHOR_CURSOR_RIGHT")
-                    GameTooltip:AddLine("Weakaura not installed or has been renamed")
+                    GameTooltip:AddLine("WeakAura not installed or has been renamed")
                     GameTooltip:Show()
                 end)
-                line.updateLabel:SetScript("onLeave", function()
-                    GameTooltip:Hide()
-                end)
+                line.updateLabel:SetScript("OnLeave", GameTooltip_Hide)
+            else
+                line.updateLabel:SetScript("OnEnter", nil)
+                line.updateLabel:SetScript("OnLeave", nil)
             end
-            line.icon:SetTexture(info.icon)
+
             if not WeakAuras then
                 line.importButton:Disable()
                 line.importButton:SetText("Load WAs")
             else
-                line.importButton:SetClickFunction(function(self)
-                    WeakAuras.Import(
-                        QUI.imports.WAStrings[currentCategory].WAs[index])
+                line.importButton:SetClickFunction(function()
+                    WeakAuras.Import(QUI.imports.WAStrings[currentCategory].WAs[index])
                 end)
             end
         end
     end
 end
+
 local function createWAButton(self, index)
     local line = CreateFrame("Button", nil, self, "BackdropTemplate")
     line:SetClipsChildren(true)
-    line:SetPoint("TOPLEFT", self, "TOPLEFT", 1,
-                  -((index - 1) * (self.LineHeight + 1)) - 1)
+    line:SetPoint("TOPLEFT", self, "TOPLEFT", 1, -((index - 1) * (self.LineHeight + 1)) - 1)
     line:SetSize(555, self.LineHeight)
     line:SetBackdrop({
         bgFile = "Interface\\Tooltips\\UI-Tooltip-Background",
         tileSize = 64,
         tile = true
     })
-    line:SetBackdropColor(unpack({0.8, 0.8, 0.8, 0.2}))
+    line:SetBackdropColor(0.8, 0.8, 0.8, 0.2)
     DF:Mixin(line, DF.HeaderFunctions)
 
-    local icon = line:CreateTexture(nil, "OVERLAY")
-    icon:SetSize(42, 42)
-    local nameLabel = DF:CreateLabel(line, "", 16)
-    local updateLabel = DF:CreateLabel(line, "", 16)
-    nameLabel:SetSize(318, self.LineHeight / 2)
+    line.icon = line:CreateTexture(nil, "OVERLAY")
+    line.icon:SetSize(42, 42)
+    line.nameLabel = DF:CreateLabel(line, "", 16)
+    line.updateLabel = DF:CreateLabel(line, "", 16)
+    line.nameLabel:SetSize(318, self.LineHeight / 2)
+    line.updateLabel:SetSize(68, self.LineHeight / 2)
+    line.updateLabel:SetJustifyH("CENTER")
 
-    updateLabel:SetSize(68, self.LineHeight / 2)
-    updateLabel:SetJustifyH("CENTER")
+    line.importButton = DF:CreateButton(line, nil, 110, 30, "Import", nil, nil, nil, nil, nil, nil, QUI.ODT)
+    line.importButton.text_overlay:SetFont(line.importButton.text_overlay:GetFont(), 16)
 
-    local importButton = DF:CreateButton(line, nil, 110, 30, "Import", nil, nil,
-                                         nil, nil, nil, nil, QUI.ODT)
-    importButton.text_overlay:SetFont(importButton.text_overlay:GetFont(), 16)
-    line:AddFrameToHeaderAlignment(icon)
-    line:AddFrameToHeaderAlignment(nameLabel)
-    line:AddFrameToHeaderAlignment(updateLabel)
-    line:AddFrameToHeaderAlignment(importButton)
+    line:AddFrameToHeaderAlignment(line.icon)
+    line:AddFrameToHeaderAlignment(line.nameLabel)
+    line:AddFrameToHeaderAlignment(line.updateLabel)
+    line:AddFrameToHeaderAlignment(line.importButton)
     line:AlignWithHeader(self:GetParent().addonHeader, "LEFT")
-    line.icon = icon
-    line.nameLabel = nameLabel
-    line.updateLabel = updateLabel
-    line.importButton = importButton
+
     return line
 end
+
 function page:Create(parent)
     local frame = CreateFrame("Frame", nil, parent.frameContent)
     frame:SetAllPoints()
-    local header = DF:CreateLabel(frame, "|c" .. QUI.highlightColorHex ..
-                                      L["WeakAuras"] .. L["Imports"] .. "|r",
-                                  QUI.PageHeaderSize)
+
+    self:CreateHeader(frame)
+    self:CreateDescription(frame)
+    self:CreateSelectionDropdown(frame)
+    self:CreateWAList(frame)
+
+    self.rootFrame = frame
+    fillWAFromCategoryIndex(1)
+end
+
+function page:CreateHeader(frame)
+    local header = DF:CreateLabel(frame, "|c" .. QUI.highlightColorHex .. L["WeakAuras"] .. L["Imports"] .. "|r", QUI.PageHeaderSize)
     header:SetPoint("CENTER", frame, "TOP", 0, -20)
-    local textString = L["WeakAuraText"]
-    local text = DF:CreateLabel(frame, textString, QUI.PageTextSize)
+end
+
+function page:CreateDescription(frame)
+    local text = DF:CreateLabel(frame, L["WeakAuraText"], QUI.PageTextSize)
     text:SetWordWrap(true)
     text:SetPoint("TOPLEFT", frame, "TOPLEFT", 10, -40)
     text:SetPoint("TOPRIGHT", frame, "TOPRIGHT", -10, -40)
     text:SetJustifyH("LEFT")
     text:SetJustifyV("TOP")
+    self.descriptionText = text
+end
 
-    local selectionDropdown = DF:CreateDropDown(frame, fillSelectionDropdown,
-                                                nil, 200, 25, nil, nil, QUI.ODT)
-    selectionDropdown:SetPoint("TOPLEFT", text, "BOTTOMLEFT", -1, -5)
+function page:CreateSelectionDropdown(frame)
+    local selectionDropdown = DF:CreateDropDown(frame, fillSelectionDropdown, nil, 200, 25, nil, nil, QUI.ODT)
+    selectionDropdown:SetPoint("TOPLEFT", self.descriptionText, "BOTTOMLEFT", -1, -5)
     selectionDropdown.label:SetFont(selectionDropdown.label:GetFont(), 16)
+end
+
+function page:CreateWAList(frame)
     local headerTable = {
-        {text = "Icon", width = 50, offset = 1}, {text = "Name", width = 317},
-        {text = "Update?", width = 67}, {text = "Import", width = 117}
+        {text = "Icon", width = 50, offset = 1},
+        {text = "Name", width = 317},
+        {text = "Update?", width = 67},
+        {text = "Import", width = 117}
     }
     local options = {text_size = 16}
-    frame.addonHeader = DF:CreateHeader(frame, headerTable, options,
-                                        "QuaziiUIInstallWAHeader")
-    frame.addonHeader:SetPoint("TOPLEFT", text.widget, "BOTTOMLEFT", -2, -35)
-    local waScrollBox = DF:CreateScrollBox(frame, nil, waScrollBoxUpdate, {},
-                                           557, 271, 0, 44, createWAButton, true)
+    frame.addonHeader = DF:CreateHeader(frame, headerTable, options, "QuaziiUIInstallWAHeader")
+    frame.addonHeader:SetPoint("TOPLEFT", self.descriptionText.widget, "BOTTOMLEFT", -2, -35)
+
+    local waScrollBox = DF:CreateScrollBox(frame, nil, waScrollBoxUpdate, {}, 557, 271, 0, 44, createWAButton, true)
     waScrollBox:SetPoint("TOPLEFT", frame.addonHeader, "BOTTOMLEFT", 0, 0)
     waScrollBox.ScrollBar.scrollStep = 44
     DF:ReskinSlider(waScrollBox)
-    page.waScrollBox = waScrollBox
-    page.rootFrame = frame
-    fillWAFromCategoryIndex(1)
+    self.waScrollBox = waScrollBox
 end
-function page:ShouldShow() return true end
-function page:Show() page.rootFrame:Show() end
-function page:Hide() page.rootFrame:Hide() end
+
+function page:ShouldShow() 
+    return true 
+end
+
+function page:Show() 
+    self.rootFrame:Show() 
+end
+
+function page:Hide() 
+    self.rootFrame:Hide() 
+end
