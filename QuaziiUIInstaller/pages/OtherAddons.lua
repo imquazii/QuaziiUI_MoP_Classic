@@ -82,8 +82,8 @@ function page:Create(parent)
     local OmniCDImportContainer = QUI:CreateImportFrame(frame, "OmniCD",
                                                         "OmniCD", nil, nil, nil,
                                                         function()
-        updateDisplay()
         QUI.importOmniCDProfile()
+        updateDisplay()
     end)
     OmniCDImportContainer:SetPoint("TOPRIGHT", PlaterImportContainer,
                                    "BOTTOMRIGHT", 0, 20)
