@@ -73,7 +73,7 @@ local function addonScrollBoxUpdate(self, data, offset, totalLines)
                 if addonEnabled then
                     line.importButton:SetClickFunction(
                         function()
-                            return -- TBD, Still working on import function
+                            QUI.importCellProfile()
                         end
                     )
                 else
