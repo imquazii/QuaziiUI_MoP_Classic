@@ -34,19 +34,19 @@ end
 
 function page:CreateImage(frame)
     local image = DF:CreateImage(frame,
-        "Interface\\AddOns\\MeeresUIInstall\\assets\\meeresL.tga",
-        128, 128)
-    image:SetPoint("CENTER", frame, "CENTER", 0, -50)
+        "Interface\\AddOns\\QuaziiUIInstaller\\assets\\quaziiLogo.png",
+        256, 256)
+    image:SetPoint("CENTER", frame, "CENTER", 0, -10)
 end
 
-function page:ShouldShow() 
-    return true 
+function page:ShouldShow()
+    return true
 end
 
 function page:Show() 
-    self.rootFrame:Show() 
+    self.rootFrame:Show()
 end
 
 function page:Hide() 
-    self.rootFrame:Hide() 
+    self.rootFrame:Hide()
 end
