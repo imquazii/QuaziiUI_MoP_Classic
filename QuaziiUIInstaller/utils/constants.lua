@@ -12,7 +12,6 @@ QUI.version = tonumber(C_AddOns.GetAddOnMetadata(addonName, "Version")) -- Get A
 
 QUI.frames = {} -- Frames holder object
 
-
 -- Define Basic Colors
 QUI.highlightColorHex = "FF30D1FF" -- Quazii Blue
 QUI.highlightColorRGB = {0.188, 0.819, 1} -- Quazii Blue in RGB, no Alpha
