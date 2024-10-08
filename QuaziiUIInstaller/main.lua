@@ -162,7 +162,7 @@ function QUI:CreateImportFrame(parentPanel, addonName, importLabel, addonLogo,
             importProfileButton:SetText(L["NA"]);
         else
             importProfileButton:Enable();
-            importProfileButton:SetText("Import");
+            importProfileButton:SetText(L["Import"]);
         end
         importProfileButton:SetWidth(
             importProfileButton.button.text:GetStringWidth() + 10);
