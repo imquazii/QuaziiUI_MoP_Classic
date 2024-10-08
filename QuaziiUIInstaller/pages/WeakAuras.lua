@@ -138,8 +138,8 @@ function page:Create(parent)
 end
 
 function page:CreateHeader(frame)
-    local header = DF:CreateLabel(frame, "|c" .. QUI.highlightColorHex .. L["WeakAuras"] .. L["Imports"] .. "|r", QUI.PageHeaderSize)
-    header:SetPoint("CENTER", frame, "TOP", 0, -20)
+    local header = DF:CreateLabel(frame, "|c" .. QUI.highlightColorHex .. L["WeakAuras"] .. " " .. L["Imports"] .. "|r", QUI.PageHeaderSize)
+    header:SetPoint("TOP", frame, "TOP", 0, -10)
 end
 
 function page:CreateDescription(frame)

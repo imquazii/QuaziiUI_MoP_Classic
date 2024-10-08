@@ -100,9 +100,9 @@ function page:Create(parent)
 end
 
 function page:CreateElvUISection(frame)
-    local elvHeader = DF:CreateLabel(frame, "|c" .. QUI.highlightColorHex .. L["ElvUI"] .. L["Imports"] .. "|r", QUI.PageHeaderSize)
-    elvHeader:SetPoint("TOPLEFT", frame, "TOPLEFT", 10, -20)
-    elvHeader:SetPoint("TOPRIGHT", frame, "TOP", -5, -20)
+    local elvHeader = DF:CreateLabel(frame, "|c" .. QUI.highlightColorHex .. L["ElvUI"] .. " " .. L["Imports"] .. "|r", QUI.PageHeaderSize)
+    elvHeader:SetPoint("TOPLEFT", frame, "TOPLEFT", 10, -10)
+    elvHeader:SetPoint("TOPRIGHT", frame, "TOP", -10, -10)
     elvHeader:SetJustifyH("CENTER")
     elvHeader:SetJustifyV("TOP")
 
@@ -132,8 +132,8 @@ end
 
 function page:CreateUIScaleSection(frame)
     local uiHeader = DF:CreateLabel(frame, "|c" .. QUI.highlightColorHex .. L["UIScaleHeader"] .. "|r", QUI.PageHeaderSize)
-    uiHeader:SetPoint("TOPLEFT", frame, "TOP", 5, -20)
-    uiHeader:SetPoint("TOPRIGHT", frame, "TOPRIGHT", -10, 10)
+    uiHeader:SetPoint("TOPLEFT", frame, "TOP", 10, -10)
+    uiHeader:SetPoint("TOPRIGHT", frame, "TOPRIGHT", -10, -10)
     uiHeader:SetJustifyH("CENTER")
 
     local uiDescription = DF:CreateLabel(frame, L["UIScaleText"], QUI.PageTextSize)

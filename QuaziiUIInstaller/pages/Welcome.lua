@@ -25,7 +25,7 @@ function page:CreateHeader(frame)
     local header = DF:CreateLabel(frame, 
         "|c" .. QUI.highlightColorHex .. L["WelcomeHeader"] .. "|r",
         QUI.PageHeaderSize)
-    header:SetPoint("CENTER", frame, "TOP", 0, -20)
+    header:SetPoint("TOP", frame, "TOP", 0, -10)
 end
 
 function page:CreateText(frame)

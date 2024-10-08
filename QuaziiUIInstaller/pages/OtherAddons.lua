@@ -42,8 +42,8 @@ end
 
 function page:CreateHeader(frame)
     local mainLabel = DF:CreateLabel(frame, "|c" .. QUI.highlightColorHex .. "Other Addon Imports|r", QUI.PageHeaderSize)
-    mainLabel:SetPoint("TOPLEFT", frame, "TOPLEFT", 10, -20)
-    mainLabel:SetPoint("TOPRIGHT", frame, "TOPRIGHT", -10, -20)
+    mainLabel:SetPoint("TOPLEFT", frame, "TOPLEFT", 10, -10)
+    mainLabel:SetPoint("TOPRIGHT", frame, "TOPRIGHT", -10, -10)
     mainLabel:SetJustifyH("CENTER")
     mainLabel:SetJustifyV("TOP")
     frame.headerAnchor = mainLabel.widget
