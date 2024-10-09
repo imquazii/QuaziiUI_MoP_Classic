@@ -17,17 +17,18 @@ local function decodeWAPacket(importString)
 end
 
 local function getWAUpdateStatus(waTable)
-    local isWAInstalled = WeakAuras.GetData(waTable.d.id)
-    if not isWAInstalled then
-        return L["NA"]
+    if WeakAuras then
+        local isWAInstalled = WeakAuras.GetData(waTable.d.id)
+        if not isWAInstalled then
+            return L["NA"]
+        end
+
+        local installedVersion = isWAInstalled.version
+        local newVersion = waTable.d.version or 0
+        return newVersion > (installedVersion or 0) and "|cFFbc1f00" .. L["Yes"] .. "|r" or
+            "|cFF28bc00" .. L["No"] .. "|r"
     end
-
-    local installedVersion = isWAInstalled.version
-    local newVersion = waTable.d.version or 0
-    return newVersion > (installedVersion or 0) and "|cFFbc1f00" .. L["Yes"] .. "|r" or "|cFF28bc00" .. L["No"] .. "|r"
 end
-
-
 
 local function parseWAData(index)
     local data = {}
