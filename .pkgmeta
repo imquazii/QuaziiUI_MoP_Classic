@@ -1,32 +1,22 @@
 embedded-libraries:
-  - libdframework-1-0
-  - aceaddon-3-0
-  - acecomm-3-0
-  - aceconfig-3-0
-  - aceconsole-3-0
-  - acedb-3-0
-  - acedboptions-3-0
-  - aceevent-3-0
-  - acegui-3-0
-  - acelocale-3-0
-  - callbackhandler-1-0
-  - libdatabroker-1-1
-  - libdbicon-1-0
-  - libsharedmedia-3-0
+- acelocale-3-0
+- libdeflate
+- libdframework-1-0
+- libserialize
+- libstub
 
 ignore:
-  # Folders to Ignore
-  - imports         
-  - tools           
-  - .vscode         
-  - .github         
-  - .git         
-  # Files to Ignore   
-  - LICENSE
-  - README.md
-  - .gitattributes
-  - .editorconfig
-
-manual-changelog:
-  filename: CHANGELOG.md
-  markup-type: markdown
+# Folders to Ignore
+- .git
+- .github
+- .vscode
+- tools
+# Files to Ignore
+- .editorconfig
+- .gitattributes
+- .gitignore
+- .pkgmeta
+- CHANGELOG.md
+- LICENSE
+- QuaziiUIInstaller.7z
+- README.md
