@@ -130,7 +130,7 @@ function QUI:CreateImportFrame(parentPanel, addonName, importLabel, importFuncti
     local importProfileButton =
         DF:CreateButton(frame, importFunction, 90, 25, "Import", nil, nil, nil, nil, nil, nil, QUI.ODT)
     importProfileButton:SetPoint("LEFT", profileText, "RIGHT", 10) -- Attach Button to profileText Label
-    importProfileButton.text_overlay:SetFont(importProfileButton.text_overlay:GetFont(), QUI.TableHeaderSize) -- Set Button Font Size
+    importProfileButton.text_overlay:SetFont(importProfileButton.text_overlay:GetFont(), QUI.TableTextSize) -- Set Button Font Size
 
     local lastImportLabel = DF:CreateLabel(frame, "Last Import Time:", QUI.TableTextSize)
     lastImportLabel:SetPoint("TOPRIGHT", profileText, "BOTTOMRIGHT", 0, -3)

@@ -25,5 +25,5 @@ QUI.textColorRGBA = {1, 0.976, 0.964, 1} -- Off White RGB with Alpha
 QUI.PageHeaderSize = 24
 QUI.PageTextSize = 18
 
-QUI.TableHeaderSize = 18
-QUI.TableTextSize = 16
+QUI.TableHeaderSize = 17
+QUI.TableTextSize = 15
