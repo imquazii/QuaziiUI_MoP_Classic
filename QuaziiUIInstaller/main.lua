@@ -65,6 +65,13 @@ do
                         end,
                         "/qui"
                     )
+                    AddSlashCommand(
+                        "QUAZIIUIRELOAD",
+                        function()
+                            ReloadUI()
+                        end,
+                        "/rl"
+                    )
                 end
             end
         end
