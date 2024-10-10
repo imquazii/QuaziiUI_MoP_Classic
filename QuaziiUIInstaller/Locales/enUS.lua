@@ -38,9 +38,9 @@ if L then
     L["MDT"] = "MDT"
 
     -- Welcome Page
-    L["WelcomeHeader"] = "Quazii's UI Installer"
+    L["WelcomeHeader"] = "Quazii UI Installer"
     L["WelcomeText1"] =
-        "This installer will take you through the steps needed to import and install all aspects of Quazii's UI."
+        "This installer will take you through the steps needed to import and install all aspects of Quazii UI."
     L["WelcomeText2"] =
         "Each step can be considered optional, however, it is recommended to at least use ElvUI and Weakauras."
     L["WelcomeText3"] = "Let's get started!"
