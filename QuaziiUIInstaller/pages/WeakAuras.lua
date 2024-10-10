@@ -18,14 +18,14 @@ end
 
 local function getWAUpdateStatus(waTable)
     if WeakAuras then
-        local isWAInstalled = WeakAuras.GetData(waTable.d.id)
-        if not isWAInstalled then
+        local WAData = WeakAuras.GetData(waTable.d.id)
+        if not WAData then
             return L["NA"]
         end
 
-        local installedVersion = isWAInstalled.version
-        local newVersion = waTable.d.version or 0
-        return newVersion > (installedVersion or 0) and "|cFFbc1f00" .. L["Yes"] .. "|r" or
+        local installedVersion = tonumber(string.match(WAData.desc or "Version 0", "Version (%d+)")) or 0
+        local newVersion = tonumber(string.match(waTable.d.desc or "Version 0", "Version (%d+)")) or 0
+        return newVersion > installedVersion and "|cFFbc1f00" .. L["Yes"] .. "|r" or
             "|cFF28bc00" .. L["No"] .. "|r"
     end
 end
@@ -33,14 +33,17 @@ end
 local function parseWAData(index)
     local data = {}
     for _, importString in ipairs(QUI.imports.WAStrings[index].WAs) do
-        local waTable = decodeWAPacket(importString)
-        if waTable then
+        local waTable = decodeWAPacket(importString) or {}
+        
+        if waTable  and waTable.d then
+            print("WA ID: ", waTable.d.id)
             table.insert(
                 data,
                 {
                     icon = waTable.d.groupIcon or waTable.d.displayIcon or
                         "Interface\\AddOns\\QuaziiUIInstaller\\assets\\quaziiLogo.png",
                     name = waTable.d.id:gsub("%[READ%sINFORMATION%sTAB%]", ""),
+                    version = string.match(waTable.d.desc or "", "Version (%d+)") or "0",
                     update = getWAUpdateStatus(waTable)
                 }
             )
@@ -83,9 +86,11 @@ local function waScrollBoxUpdate(self, data, offset, totalLines)
         local info = data[index]
         if info then
             local line = self:GetLine(i)
-            line.nameLabel:SetText(info.name)
-            line.updateLabel:SetText(info.update)
             line.icon:SetTexture(info.icon)
+            line.nameLabel:SetText(info.name)
+            line.versionLabel:SetText(info.version)
+            line.updateLabel:SetText(info.update)
+            
 
             if info.update == "N/A" then
                 line.updateLabel:SetScript(
@@ -132,19 +137,23 @@ local function createWAButton(self, index)
     DF:Mixin(line, DF.HeaderFunctions)
 
     line.icon = line:CreateTexture(nil, "OVERLAY")
-    line.icon:SetSize(42, 42)
     line.nameLabel = DF:CreateLabel(line, "", 16)
+    line.versionLabel = DF:CreateLabel(line, "", 16)
     line.updateLabel = DF:CreateLabel(line, "", 16)
+
+    line.icon:SetSize(42, 42)
     line.nameLabel:SetSize(318, self.LineHeight / 2)
-    --line.updateLabel:SetSize(68, self.LineHeight / 2)
-    --line.updateLabel:SetJustifyH("CENTER")
+    line.versionLabel:SetSize(68, self.LineHeight / 2)
+    line.updateLabel:SetSize(68, self.LineHeight / 2)
+    line.updateLabel:SetJustifyH("CENTER")
 
     line.importButton = DF:CreateButton(line, nil, 105, 30, L["Import"], nil, nil, nil, nil, nil, nil, QUI.ODT)
     line.importButton.text_overlay:SetFont(line.importButton.text_overlay:GetFont(), 16)
 
     line:AddFrameToHeaderAlignment(line.icon)
     line:AddFrameToHeaderAlignment(line.nameLabel)
-    --line:AddFrameToHeaderAlignment(line.updateLabel)
+    line:AddFrameToHeaderAlignment(line.versionLabel)
+    line:AddFrameToHeaderAlignment(line.updateLabel)
     line:AddFrameToHeaderAlignment(line.importButton)
     line:AlignWithHeader(self:GetParent().addonHeader, "LEFT")
 
@@ -193,8 +202,9 @@ end
 function page:CreateWAList(frame)
     local headerTable = {
         {text = L["Icon"], width = 50, canSort = false},
-        {text = L["Name"], width = 391, canSort = false}, --284 w/ Update Enabled
-        --{text = L["Update"], width = 107, canSort = false},
+        {text = L["Name"], width = 209, canSort = false}, --284 w/ Update | 391 w/o Update
+        {text = L["Version"], width = 75, canSort = false},
+        {text = L["Update"], width = 107, canSort = false},
         {text = L["Import"], width = 110, canSort = false}
     }
     local options = {text_size = 16}
