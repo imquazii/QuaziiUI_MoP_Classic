@@ -135,13 +135,13 @@ function QUI:CreateImportFrame(parentPanel, addonName, importLabel, importFuncti
 
     -- Button Template
     local importProfileButton =
-        DF:CreateButton(frame, importFunction, 90, 25, "Import", nil, nil, nil, nil, nil, nil, QUI.ODT)
+        DF:CreateButton(frame, importFunction, 90, 25, L["Import"], nil, nil, nil, nil, nil, nil, QUI.ODT)
     importProfileButton:SetPoint("LEFT", profileText, "RIGHT", 10) -- Attach Button to profileText Label
     importProfileButton.text_overlay:SetFont(importProfileButton.text_overlay:GetFont(), QUI.TableTextSize) -- Set Button Font Size
 
-    local lastImportLabel = DF:CreateLabel(frame, "Last Import Time:", QUI.TableTextSize)
+    local lastImportLabel = DF:CreateLabel(frame, L["ImportLastImportText"], QUI.TableTextSize)
     lastImportLabel:SetPoint("TOPRIGHT", profileText, "BOTTOMRIGHT", 0, -3)
-    local versionLabel = DF:CreateLabel(frame, "Version: ", QUI.TableTextSize)
+    local versionLabel = DF:CreateLabel(frame, L["Version"] ..": ", QUI.TableTextSize)
     versionLabel:SetPoint("TOPRIGHT", lastImportLabel, "BOTTOMRIGHT", 4, -3)
 
     local lastImportText = DF:CreateLabel(frame, "", QUI.TableTextSize)
@@ -159,7 +159,7 @@ function QUI:CreateImportFrame(parentPanel, addonName, importLabel, importFuncti
             updateLabel = importLabel
         end
 
-        profileText:SetText("|c" .. QUI.highlightColorHex .. updateLabel .. " Profile|r:")
+        profileText:SetText("|c" .. QUI.highlightColorHex .. updateLabel .. L["ImportProfileText"] .. "|r")
         frame:SetWidth(profileText:GetStringWidth() + 100)
 
         if (not addonLoaded) then
