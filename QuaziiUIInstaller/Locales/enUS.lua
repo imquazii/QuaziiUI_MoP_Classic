@@ -46,9 +46,9 @@ if L then
     L["WelcomeText3"] = "Let's get started!"
 
     -- Supported Addon Check
-    L["SupportedAddonsHeader"] = "Addon Index"
+    L["SupportedAddonsHeader"] = "Quazii UI Install Homepage"
     L["SupportedAddonsText"] =
-        "Here you will see what addon profiles are supported by this installer, and be able to import or go to the addon specific page.\n"
+        "Below shows the addon profiles are supported by Quazii UI.\nIf you have the respective addon installed, you can proceed to import the profiles\n"
     L["SupportedAddonsTable1stHeader"] = "Supported|r Addons"
     L["SupportedAddonsTable2ndHeader"] = "Enabled"
     L["SupportedAddonsTable3rdHeader"] = "Installed Version"
