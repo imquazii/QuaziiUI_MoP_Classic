@@ -21,7 +21,7 @@ QUI.imports.ElvUI = {
             data = "{HEALER_CELL_IMPORT}"
         },
         normal = {
-            data = "{HEALER_NON_CELL_IMPORT}"
+            data = "{HEALER_IMPORT}"
         }
     },
     tankdps = {
@@ -32,19 +32,19 @@ QUI.imports.WAStrings = {
     [1] = {
         name = L["ClassWA"],
         WAs = {
-            "{DK}",
-            "{DH}",
-            "{DRUID}",
-            "{EVOKER}",
-            "{HUNTER}",
-            "{MAGE}",
-            "{MONK}",
-            "{PALADIN}",
-            "{PRIEST}",
-            "{ROGUE}",
-            "{SHAMAN}",
-            "{WARLOCK}",
-            "{WARRIOR}"
+            "{dk}",
+            "{dh}",
+            "{druid}",
+            "{evoker}",
+            "{hunter}",
+            "{mage}",
+            "{monk}",
+            "{paladin}",
+            "{priest}",
+            "{rogue}",
+            "{shaman}",
+            "{warlock}",
+            "{warrior}"
         }
     },
     [2] = {
