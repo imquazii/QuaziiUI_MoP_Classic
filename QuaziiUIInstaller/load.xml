@@ -6,10 +6,10 @@
     <!-- Localalization Files -->
     <Include file="utils\utils.xml" />
     <!-- Util Files -->
-    <Include file="imports.lua" />
+    <Script file="imports.lua" />
     <!-- Addon and WA Imports -->
     <Include file="pages\pages.xml" />
     <!-- Installer Pages -->
-    <Include file="main.lua" />
+    <Script file="main.lua" />
     <!-- Main Program -->
 </Ui>
