@@ -23,7 +23,7 @@ local function updateElvUIDisplay()
     end
 
     updateImportInfo("ElvUIHeals", "lastHImportTime", "lastHVersion")
-    updateImportInfo("ElvUIHealsCell", "lastHCImportTime", "lastHCVersion")
+    --[[updateImportInfo("ElvUIHealsCell", "lastHCImportTime", "lastHCVersion")]]
     updateImportInfo("ElvUITank", "lastTImportTime", "lastTVersion")
 end
 
@@ -92,7 +92,7 @@ local function importProfile(profileType, dataKey)
 end
 
 local importHealerProfile = importProfile("Healer", "healer.normal")
-local importHealerCellProfile = importProfile("Healer - Cell", "healer.cell")
+--[[local importHealerCellProfile = importProfile("Healer - Cell", "healer.cell")--]]
 local importTankProfile = importProfile("Tank/DPS", "tankdps")
 
 -- Page Creation
@@ -131,16 +131,16 @@ function page:CreateElvUISection(frame)
     local importHealerContainer = QUI:CreateImportFrame(frame, "ElvUI", L["Healer"], importHealerProfile)
     importHealerContainer:SetPoint("TOPRIGHT", importTankContainer, "BOTTOMRIGHT", 0, 10)
 
-    local importHealerCellContainer =
-        QUI:CreateImportFrame(frame, "ElvUI", L["Healer"] .. " - " .. L["Cell"], importHealerCellProfile)
-    importHealerCellContainer:SetPoint("TOPRIGHT", importHealerContainer, "BOTTOMRIGHT", 0, 10)
-
     self.lastHImportTime = importHealerContainer.lastImportText
-    self.lastHCImportTime = importHealerCellContainer.lastImportText
     self.lastTImportTime = importTankContainer.lastImportText
     self.lastHVersion = importHealerContainer.versionText
-    self.lastHCVersion = importHealerCellContainer.versionText
     self.lastTVersion = importTankContainer.versionText
+
+    --[[local importHealerCellContainer =
+        QUI:CreateImportFrame(frame, "ElvUI", L["Healer"] .. " - " .. L["Cell"], importHealerCellProfile)
+    importHealerCellContainer:SetPoint("TOPRIGHT", importHealerContainer, "BOTTOMRIGHT", 0, 10)
+    self.lastHCVersion = importHealerCellContainer.versionText
+    self.lastHCImportTime = importHealerCellContainer.lastImportText--]]
 end
 
 function page:CreateUIScaleSection(frame)
