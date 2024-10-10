@@ -183,7 +183,9 @@ end
 -- Create Main UI Frame
 local function createPanel()
     -- Init panel
-    local panel = DF:CreateSimplePanel(UIParent, 600, 500, L["AddonName"] .. " v" .. QUI.version) -- Create a 600x500 panel
+    local Y, M, D = string.match(QUI.version, "(%d%d%d%d)(%d%d)(%d%d)")
+    local versionString = " v" .. Y .. "." .. M .. "." .. D
+    local panel = DF:CreateSimplePanel(UIParent, 600, 500, L["AddonName"] .. versionString) -- Create a 600x500 panel
     DF:ApplyStandardBackdrop(panel) -- Give it a basic backdrop
 
     -- Panel Border

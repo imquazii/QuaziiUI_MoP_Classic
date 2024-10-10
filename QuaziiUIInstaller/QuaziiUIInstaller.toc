@@ -1,7 +1,7 @@
 ## Interface: 110002
 ## Title: Quazii UI Install (Retail)
 ## Author: Chats
-## Version: 0.5
+## Version: 20241010
 ## DefaultState: Enabled
 ## LoadOnDemand: 0
 ## SavedVariables: QuaziiUI_DB
