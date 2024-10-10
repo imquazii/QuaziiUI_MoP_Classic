@@ -2,7 +2,7 @@
 
 All notable changes to this project will be documented in this file.
 
-The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
+The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 
 <!-- insertion marker -->
 ## Pre-Alpha
@@ -11,6 +11,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ### Features
 
+- Implement Version Checking ([1791c0f](https://github.com/chatterchats/quaziiUIInstaller/commit/1791c0fea522b395da0d56c0ccccfded164f57c3) by Chatter Chats).
 - add /rl command ([6511601](https://github.com/chatterchats/quaziiUIInstaller/commit/65116012702257e83a92fa45e3305e5bb7d5bdb7) by Chatter Chats).
 - add cell import function ([8240944](https://github.com/chatterchats/quaziiUIInstaller/commit/82409447ef031a66926ba42c5971aa9e680e3a8c) by Chatter Chats).
 - implement index button ([1280226](https://github.com/chatterchats/quaziiUIInstaller/commit/1280226def9b69623d6b1dda43cf47ddd5fd2701) by Chatter Chats).
@@ -24,6 +25,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ### Bug Fixes
 
+- correct Template names ([6582be9](https://github.com/chatterchats/quaziiUIInstaller/commit/6582be97d93d87dc0720696ff0fcca31783ceafe) by Chatter Chats).
 - Correct XML Loading ([33b8616](https://github.com/chatterchats/quaziiUIInstaller/commit/33b8616d3c5af28ec3b288e3cb2854660de6732c) by Chatter Chats).
 - Add check for if WA is not installed ([109d36f](https://github.com/chatterchats/quaziiUIInstaller/commit/109d36f4f0665fb3641ce6e947aaa7dfe2473cf1) by Chatter Chats).
 - add safety checking as per AceLocale recommendation ([c9a8fd5](https://github.com/chatterchats/quaziiUIInstaller/commit/c9a8fd5fb57c57d3f00078303b7f8f3a35896104) by Chatter Chats).
