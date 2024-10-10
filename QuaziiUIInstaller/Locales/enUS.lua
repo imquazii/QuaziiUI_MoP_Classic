@@ -3,7 +3,7 @@ local L = LibStub("AceLocale-3.0"):NewLocale("QuaziiUI", "enUS", true, true)
 
 if L then
     -- Generic
-    L["AddonName"] = "Quazii's UI Installer"
+    L["AddonName"] = "Quazii UI Installer"
     L["Tank"] = "Tank"
     L["DPS"] = "DPS"
     L["Healer"] = "Healer"
