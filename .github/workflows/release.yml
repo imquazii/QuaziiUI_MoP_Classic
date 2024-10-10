@@ -17,7 +17,7 @@ jobs:
 
     steps:
     # Step 1: Add a delay (sleep for 1 hour = 3600 seconds)
-    - name: Wait for 1 hour
+    - name: Wait for 15 mintues
       run: sleep 900
 
     # Step 2: Checkout the code
@@ -50,8 +50,6 @@ jobs:
           # If no tag without a release was found, create a new one
           COUNT=$(echo "$EXISTING_TAGS" | wc -l)
           TAG_TO_USE="$DATE-$((COUNT+1))"
-          git tag $TAG_TO_USE
-          git push origin $TAG_TO_USE
         fi
         echo "tag=$TAG_TO_USE" >> $GITHUB_ENV
 
