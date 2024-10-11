@@ -3,7 +3,7 @@ local L = LibStub("AceLocale-3.0"):NewLocale("QuaziiUI", "enUS", true, true)
 
 if L then
     -- Generic
-    L["AddonName"] = "Quazii UI Installer"
+    L["AddonName"] = "Quazii UI"
     L["Tank"] = "Tank"
     L["DPS"] = "DPS"
     L["Healer"] = "Healer"
@@ -38,7 +38,7 @@ if L then
     L["MDT"] = "MDT"
 
     -- Welcome Page
-    L["WelcomeHeader"] = "Quazii UI Installer"
+    L["WelcomeHeader"] = "Quazii UI"
     L["WelcomeText1"] =
         "This installer will take you through the steps needed to import and install all aspects of Quazii UI."
     L["WelcomeText2"] =
@@ -46,7 +46,7 @@ if L then
     L["WelcomeText3"] = "Let's get started!"
 
     -- Supported Addon Check
-    L["SupportedAddonsHeader"] = "Quazii UI Install Homepage"
+    L["SupportedAddonsHeader"] = "Quazii UI Homepage"
     L["SupportedAddonsText"] =
         "Below shows the addon profiles are supported by Quazii UI.\nIf you have the respective addon installed, you can proceed to import the profiles\n"
     L["SupportedAddonsTable1stHeader"] = "Supported|r Addons"
