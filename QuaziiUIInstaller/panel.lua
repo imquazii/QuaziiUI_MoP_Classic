@@ -7,18 +7,18 @@ local function createPages(parentFrame)
     end
 end
 
-function QuaziiUI.selectPage(pageIndex)
-    ---@type integer
-    QuaziiUI.db.char.selectedPage = pageIndex
-    QuaziiUI.db.char.shownPages = 0
+---@param pageIndex integer
+function QuaziiUI:selectPage(pageIndex)
+    self.db.char.selectedPage = pageIndex
+    self.db.char.shownPages = 0
 
-    for i, page in ipairs(QuaziiUI.pagePrototypes) do
+    for _, page in ipairs(self.pagePrototypes) do
         if not page:ShouldShow() then
             page:Hide()
         else
-            QuaziiUI.db.char.shownPages = QuaziiUI.db.char.shownPages + 1
-            if QuaziiUI.db.char.shownPages == pageIndex then
-                QuaziiUI.db.char.openPage = pageIndex
+            self.db.char.shownPages = self.db.char.shownPages + 1
+            if self.db.char.shownPages == pageIndex then
+                self.db.char.openPage = pageIndex
                 page:Show()
             else
                 page:Hide()
@@ -30,7 +30,7 @@ end
 local function selectNextPage()
     if ((QuaziiUI.db.char.selectedPage or 0) < QuaziiUI.db.char.shownPages) then -- If selectedPage is less than total pages
         QuaziiUI.db.char.openPage = QuaziiUI.db.char.selectedPage + 1
-        QuaziiUI.selectPage(QuaziiUI.db.char.openPage) -- Show next page
+        QuaziiUI:selectPage(QuaziiUI.db.char.openPage) -- Show next page
     else -- If last page or higher
         QuaziiUI.frames.main:Hide() -- Hide installer UI
         QuaziiUI.db.char.isDone = true -- Set done as true
@@ -41,13 +41,13 @@ end
 
 local function selectIndexPage()
     QuaziiUI.db.char.openPage = 2
-    QuaziiUI.selectPage(2)
+    QuaziiUI:selectPage(2)
 end
 
 local function selectPreviousPage()
     if QuaziiUI.db.char.selectedPage > 1 then
         QuaziiUI.db.char.openPage = QuaziiUI.db.char.selectedPage - 1
-        QuaziiUI.selectPage(QuaziiUI.db.char.openPage)
+        QuaziiUI:selectPage(QuaziiUI.db.char.openPage)
     end
 end
 
@@ -56,23 +56,23 @@ function QuaziiUI:CreateImportFrame(parentPanel, addonName, importLabel, importF
     local frame = CreateFrame("Frame", nil, parentPanel)
     frame:SetHeight(100)
 
-    local profileText = QuaziiUI.DF:CreateLabel(frame, "", QuaziiUI.TableHeaderSize)
+    local profileText = self.DF:CreateLabel(frame, "", self.TableHeaderSize)
     profileText:SetPoint("TOPLEFT", frame, "TOPLEFT")
 
     -- Button Template
     local importProfileButton =
-        QuaziiUI.DF:CreateButton(frame, importFunction, 90, 25, L["Import"], nil, nil, nil, nil, nil, nil, QuaziiUI.ODT)
+        self.DF:CreateButton(frame, importFunction, 90, 25, L["Import"], nil, nil, nil, nil, nil, nil, self.ODT)
     importProfileButton:SetPoint("LEFT", profileText, "RIGHT", 10) -- Attach Button to profileText Label
-    importProfileButton.text_overlay:SetFont(importProfileButton.text_overlay:GetFont(), QuaziiUI.TableTextSize) -- Set Button Font Size
+    importProfileButton.text_overlay:SetFont(importProfileButton.text_overlay:GetFont(), self.TableTextSize) -- Set Button Font Size
 
-    local lastImportLabel = QuaziiUI.DF:CreateLabel(frame, L["ImportLastImportText"], QuaziiUI.TableTextSize)
+    local lastImportLabel = self.DF:CreateLabel(frame, L["ImportLastImportText"], self.TableTextSize)
     lastImportLabel:SetPoint("TOPRIGHT", profileText, "BOTTOMRIGHT", 0, -3)
-    local versionLabel = QuaziiUI.DF:CreateLabel(frame, L["Version"] ..": ", QuaziiUI.TableTextSize)
+    local versionLabel = self.DF:CreateLabel(frame, L["Version"] ..": ", self.TableTextSize)
     versionLabel:SetPoint("TOPRIGHT", lastImportLabel, "BOTTOMRIGHT", 4, -3)
 
-    local lastImportText = QuaziiUI.DF:CreateLabel(frame, "", QuaziiUI.TableTextSize)
+    local lastImportText = self.DF:CreateLabel(frame, "", self.TableTextSize)
     lastImportText:SetPoint("LEFT", lastImportLabel, "RIGHT", 10, 0)
-    local versionText = QuaziiUI.DF:CreateLabel(frame, "", QuaziiUI.TableTextSize)
+    local versionText = self.DF:CreateLabel(frame, "", self.TableTextSize)
     versionText:SetPoint("LEFT", versionLabel, "RIGHT", 6, 0)
 
     local function update()
@@ -85,7 +85,7 @@ function QuaziiUI:CreateImportFrame(parentPanel, addonName, importLabel, importF
             updateLabel = importLabel
         end
 
-        profileText:SetText("|c" .. QuaziiUI.highlightColorHex .. updateLabel .. L["ImportProfileText"] .. "|r")
+        profileText:SetText("|c" .. self.highlightColorHex .. updateLabel .. L["ImportProfileText"] .. "|r")
         frame:SetWidth(profileText:GetStringWidth() + 100)
 
         if (not addonLoaded) then

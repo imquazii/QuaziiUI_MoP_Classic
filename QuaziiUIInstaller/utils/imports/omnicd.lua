@@ -1,15 +1,15 @@
-function QuaziiUI.importOmniCDProfile(self)
-    QuaziiUI.DF:ShowPromptPanel(
+function QuaziiUI:importOmniCDProfile()
+    self.DF:ShowPromptPanel(
         "Are you sure you want to import/update OmniCD profile?",
         function()
-            QuaziiUI.db.profile.imports.OmniCD = {}
-            QuaziiUI.db.profile.imports.OmniCD.date = GetServerTime()
-            QuaziiUI.db.profile.imports.OmniCD.versionNumber = QuaziiUI.versionNumber
+            self.db.profile.imports.OmniCD = {}
+            self.db.profile.imports.OmniCD.date = GetServerTime()
+            self.db.profile.imports.OmniCD.versionNumber = self.versionNumber
             local OmniCD = OmniCD[1]
             local Profile = OmniCD.ProfileSharing
-            local profileType, profileKey, profileData = Profile:Decode(QuaziiUI.imports.OmniCD.data)
+            local profileType, profileKey, profileData = Profile:Decode(self.imports.OmniCD.data)
             Profile:CopyProfile(profileType, profileKey, profileData)
-            QuaziiUI.db.char.openPage = 2
+            self.db.char.openPage = 2
         end,
         function()
         end,

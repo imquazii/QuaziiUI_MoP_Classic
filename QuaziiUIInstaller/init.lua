@@ -24,8 +24,8 @@ function QuaziiUI:OnInitialize()
 end
 
 function QuaziiUI:SlashCommandOpen()
-    QuaziiUI.selectPage(QuaziiUI.db.char.openPage or 1)
-    QuaziiUI:Show()
+    self:selectPage(QuaziiUI.db.char.openPage or 1)
+    self:Show()
 end
 
 function QuaziiUI:SlashCommandReload()
@@ -42,8 +42,8 @@ function QuaziiUI:PLAYER_ENTERING_WORLD()
     local hasopenPage = self.db.char.openPage ~= nil -- Hasn't finished on a page before
 
     if (isNotDone) or (newVersion) or (hasopenPage) then
-        QuaziiUI.selectPage((self.db.char.openPage or 1))
-        QuaziiUI:Show()
+        self:selectPage((self.db.char.openPage or 1))
+        self:Show()
         self.db.char.lastVersion = self.versionNumber
     end
 end

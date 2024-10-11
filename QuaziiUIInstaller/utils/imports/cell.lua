@@ -1,10 +1,10 @@
 local Serializer = LibStub:GetLibrary("LibSerialize")
 local LibDeflate = LibStub:GetLibrary("LibDeflate")
 
-function QuaziiUI.importCellProfile()
+function QuaziiUI:importCellProfile()
     local F = Cell.funcs
 
-    local importString = QuaziiUI.imports.Cell.data
+    local importString = self.imports.Cell.data
 
     local version, data = string.match(importString, "^!CELL:(%d+):ALL!(.+)$")
     version = tonumber(version)

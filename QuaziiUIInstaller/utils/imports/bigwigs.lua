@@ -1,20 +1,20 @@
 local addonName = ...
 
-function QuaziiUI.importBigWigsProfile(self)
+function QuaziiUI:importBigWigsProfile()
     local profileName = "QuaziiUI"
     BigWigsAPI:ImportProfileString(
         addonName,
-        QuaziiUI.imports.BigWigs.data,
+        self.imports.BigWigs.data,
         profileName,
         function(accepted)
             if accepted then
-                QuaziiUI.db.profile.imports.BigWigs = {}
-                QuaziiUI.db.profile.imports.BigWigs.date = GetServerTime()
-                QuaziiUI.db.profile.imports.BigWigs.versionNumber = QuaziiUI.versionNumber
-                QuaziiUI.db.char.openPage = 1
+                self.db.profile.imports.BigWigs = {}
+                self.db.profile.imports.BigWigs.date = GetServerTime()
+                self.db.profile.imports.BigWigs.versionNumber = self.versionNumber
+                self.db.char.openPage = 1
                 BigWigs3DB.namespaces.BigWigs_Plugins_Colors.profiles =
                     BigWigs3DB.namespaces.BigWigs_Plugins_Colors.profiles or {}
-                BigWigs3DB.namespaces.BigWigs_Plugins_Colors.profiles[profileName] = QuaziiUI.imports.BigWigsColors
+                BigWigs3DB.namespaces.BigWigs_Plugins_Colors.profiles[profileName] = self.imports.BigWigsColors
             end
         end
     )

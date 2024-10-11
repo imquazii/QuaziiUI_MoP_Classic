@@ -32,7 +32,7 @@ local function addonScrollBoxUpdate(self, data, offset, totalLines)
                     line.importButton:SetText("Go To Page")
                     line.importButton:SetClickFunction(
                         function()
-                            QuaziiUI.selectPage(3)
+                            QuaziiUI:selectPage(3)
                         end
                     )
                 else
@@ -44,7 +44,7 @@ local function addonScrollBoxUpdate(self, data, offset, totalLines)
                     line.importButton:SetText("Go To Page")
                     line.importButton:SetClickFunction(
                         function()
-                            QuaziiUI.selectPage(4)
+                            QuaziiUI:selectPage(4)
                         end
                     )
                 else
@@ -56,7 +56,7 @@ local function addonScrollBoxUpdate(self, data, offset, totalLines)
                     line.importButton:SetText("Go To Page")
                     line.importButton:SetClickFunction(
                         function()
-                            QuaziiUI.selectPage(5)
+                            QuaziiUI:selectPage(5)
                         end
                     )
                 else
@@ -67,7 +67,7 @@ local function addonScrollBoxUpdate(self, data, offset, totalLines)
                 if addonEnabled then
                     line.importButton:SetClickFunction(
                         function()
-                            QuaziiUI.importCellProfile()
+                            QuaziiUI:importCellProfile()
                         end
                     )
                 else
@@ -78,7 +78,7 @@ local function addonScrollBoxUpdate(self, data, offset, totalLines)
                 if addonEnabled then
                     line.importButton:SetClickFunction(
                         function()
-                            QuaziiUI.importPlaterProfile()
+                            QuaziiUI:importPlaterProfile()
                         end
                     )
                 else
@@ -89,7 +89,7 @@ local function addonScrollBoxUpdate(self, data, offset, totalLines)
                 if addonEnabled then
                     line.importButton:SetClickFunction(
                         function()
-                            QuaziiUI.importBigWigsProfile()
+                            QuaziiUI:importBigWigsProfile()
                         end
                     )
                 else
@@ -100,7 +100,7 @@ local function addonScrollBoxUpdate(self, data, offset, totalLines)
                 if addonEnabled then
                     line.importButton:SetClickFunction(
                         function()
-                            QuaziiUI.importDetailsProfile()
+                            QuaziiUI:importDetailsProfile()
                         end
                     )
                 else
@@ -111,7 +111,7 @@ local function addonScrollBoxUpdate(self, data, offset, totalLines)
                 if addonEnabled then
                     line.importButton:SetClickFunction(
                         function()
-                            QuaziiUI.importOmniCDProfile()
+                            QuaziiUI:importOmniCDProfile()
                         end
                     )
                 else
