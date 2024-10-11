@@ -31,7 +31,7 @@ function page:CreateText(frame)
 end
 
 function page:CreateImage(frame)
-    local image = QuaziiUI.DF:CreateImage(frame, "Interface\\AddOns\\QuaziiUIInstaller\\assets\\quaziiLogo.png", 256, 256)
+    local image = QuaziiUI.DF:CreateImage(frame, "Interface\\AddOns\\" .. QuaziiUI:GetName() .. "\\assets\\quaziiLogo.tga", 256, 256)
     image:SetPoint("CENTER", frame, "CENTER", 0, -10)
 end
 

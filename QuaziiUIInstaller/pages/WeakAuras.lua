@@ -41,7 +41,7 @@ local function parseWAData(index)
                 data,
                 {
                     icon = waTable.d.groupIcon or waTable.d.displayIcon or
-                        "Interface\\AddOns\\QuaziiUIInstaller\\assets\\quaziiLogo.png",
+                        "Interface\\AddOns\\" .. QuaziiUI:GetName() .. "\\assets\\quaziiLogo.tga",
                     name = waTable.d.id:gsub("%[READ%sINFORMATION%sTAB%]", ""),
                     version = string.match(waTable.d.desc or "", "Version (%d+)") or "0",
                     update = getWAUpdateStatus(waTable)

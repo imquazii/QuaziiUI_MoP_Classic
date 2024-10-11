@@ -23,7 +23,7 @@ local function fillMDTFromCategoryIndex(index)
                     {
                         name = MDTPreset["text"],
                         version = MDTPreset["uid"],
-                        icon = "Interface\\AddOns\\QuaziiUIInstaller\\assets\\quaziiLogo.png"
+                        icon = "Interface\\AddOns\\" .. QuaziiUI:GetName() .. "\\assets\\quaziiLogo.tga"
                     }
                 )
             end
@@ -34,7 +34,7 @@ local function fillMDTFromCategoryIndex(index)
             {
                 name = L["MDTNotLoaded"],
                 version = "",
-                icon = "Interface\\AddOns\\QuaziiUIInstaller\\assets\\quaziiLogo.png"
+                icon = "Interface\\AddOns\\" .. QuaziiUI:GetName() .. "\\assets\\quaziiLogo.tga"
             }
         )
     end
