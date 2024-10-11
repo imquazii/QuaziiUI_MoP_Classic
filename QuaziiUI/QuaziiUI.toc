@@ -1,14 +1,15 @@
 ## Interface: 110002
-## Title: Quazii UI Install (Retail)
+## Title: |cFF30D1FFQuazii|r UI (Retail)
+## IconTexture: Interface\AddOns\QuaziiUI\assets\quaziiLogo
+## Notes: Installer for |cFF30D1FFQuazii|r UI
 ## Author: Chats
-## Version: 20241010
+## Version: 20241011
 ## DefaultState: Enabled
 ## LoadOnDemand: 0
 ## SavedVariables: QuaziiUI_DB
 ## OptionalDeps: ElvUI, Cell, BigWigs, OmniCD, WeakAuras, Details, Plater, MythicDungeonTools
-## IconTexture: Interface\AddOns\MeeresAssets\assets\icons\quaziiLogo.tga
 
-## X-Credits: Dark(Inspiration for Addon), Quazii(Maker of UI and WAs)
+## X-Contributors: Quazii, Knuffelpanda
 ## X-License: GPLv3
 ## X-Website: https://quazii.com
 
