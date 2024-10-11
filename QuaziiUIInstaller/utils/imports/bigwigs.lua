@@ -1,9 +1,7 @@
-local addonName = ...
-
 function QuaziiUI:importBigWigsProfile()
     local profileName = "QuaziiUI"
     BigWigsAPI:ImportProfileString(
-        addonName,
+        self:GetName(),
         self.imports.BigWigs.data,
         profileName,
         function(accepted)

@@ -1,23 +1,38 @@
+---@type table|AceAddon
 QuaziiUI = LibStub("AceAddon-3.0"):NewAddon("QuaziiUI", "AceConsole-3.0", "AceEvent-3.0")
 
+---@type table
 QuaziiUI.DF = _G["DetailsFramework"]
 
+
+---@type table
 QuaziiUI.defaults = {
     profile = {
+        ---@type table
         imports = {}
     },
     char = {
+        ---@type boolean
         isDone = false,
+        ---@type integer
         lastVersion = 0,
-        selectedPage = 1
+        ---@type integer
+        shownPages = 0,
+        ---@type integer
+        selectedPage = 1,
+        ---@type integer
+        openPage = 1
     }
 }
 
+---@type table
 QuaziiUI.imports = {}
+---@type table
 QuaziiUI.pagePrototypes = QuaziiUI.pagePrototypes or {}
 
 function QuaziiUI:OnInitialize()
-    self.db = LibStub("AceDB-3.0"):New("QuaziiUI.db.profile", self.defaults, true)
+    ---@type AceDBObject-3.0
+    self.db = LibStub("AceDB-3.0"):New("QuaziiUI_DB", self.defaults, true)
 
     self:RegisterChatCommand("qui", "SlashCommandOpen")
     self:RegisterChatCommand("rl", "SlashCommandReload")

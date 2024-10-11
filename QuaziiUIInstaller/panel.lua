@@ -1,8 +1,9 @@
 local L = QuaziiUI.L
 
 -- Page Functions
+---@param parentFrame table|Frame
 local function createPages(parentFrame)
-    for i, page in ipairs(QuaziiUI.pagePrototypes) do
+    for _, page in ipairs(QuaziiUI.pagePrototypes) do
         page:Create(parentFrame)
     end
 end
@@ -32,7 +33,7 @@ local function selectNextPage()
         QuaziiUI.db.char.openPage = QuaziiUI.db.char.selectedPage + 1
         QuaziiUI:selectPage(QuaziiUI.db.char.openPage) -- Show next page
     else -- If last page or higher
-        QuaziiUI.frames.main:Hide() -- Hide installer UI
+        QuaziiUI.panel:Hide() -- Hide installer UI
         QuaziiUI.db.char.isDone = true -- Set done as true
         ReloadUI() -- reload UI
     end
@@ -52,6 +53,11 @@ local function selectPreviousPage()
 end
 
 -- Frame Template Functions
+---@param parentPanel table|Frame
+---@param addonName string
+---@param importLabel string
+---@param importFunction function
+---@return table|Frame
 function QuaziiUI:CreateImportFrame(parentPanel, addonName, importLabel, importFunction)
     local frame = CreateFrame("Frame", nil, parentPanel)
     frame:SetHeight(100)
@@ -158,7 +164,7 @@ local function createPanel()
     panelContentFrame:SetPoint("BOTTOMRIGHT", panel, "BOTTOMRIGHT", 0, 48) -- Above for Bottom Right
 
     panel.frameContent = panelContentFrame
-    QuaziiUI.frames.main = panel
+    QuaziiUI.panel = panel
     createPages(panel)
 end
 

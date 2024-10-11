@@ -1,30 +1,45 @@
+---@type table<string, string>
 local L = QuaziiUI.L
 
+---@type table
 QuaziiUI.imports.MDT = {
+    ---@type table
     [1] = {
+        ---@type string
         name = L["PUG 'Push W' Routes"],
+        ---@type table<string>
         Routes = {
             "{MDT_ROUTES}"
         }
     }
 }
 
+---@type table
 QuaziiUI.imports.ElvUI = {
+    ---@type table
     healer = {
+        ---@type table
         cell = {
             data = "{HEALER_CELL_IMPORT}"
         },
+        ---@type table
         normal = {
             data = "{HEALER_IMPORT}"
         }
     },
+    ---@type table
     tankdps = {
         data = "{TANK_DPS_IMPORT}"
     }
 }
+
+---@type table
 QuaziiUI.imports.WAStrings = {
+    ---@type table
     [1] = {
+        ---@type string
         name = L["ClassWA"],
+        ---@type table<string>
         WAs = {
             "{dk}",
             "{dh}",
@@ -41,8 +56,11 @@ QuaziiUI.imports.WAStrings = {
             "{warrior}"
         }
     },
+    ---@type table
     [2] = {
+        ---@type string
         name = L["NonClassWA"],
+        ---@type table<string>
         WAs = {
             "{INTERRUPT_BARS}",
             "{GROUP_HEALER_MANA}",
@@ -54,9 +72,13 @@ QuaziiUI.imports.WAStrings = {
         }
     }
 }
+---@type table
 QuaziiUI.imports.BigWigs = {
+    ---@type string
     data = "{BIGWIGS}"
 }
+
+---@type table
 QuaziiUI.imports.BigWigsColors = {
     blue = {
         ["BigWigs_Bosses_Kurog Grimtotem"] = {[374023] = {nil, nil, nil, 1}},
@@ -872,15 +894,27 @@ QuaziiUI.imports.BigWigsColors = {
     },
     red = {BigWigs_Bosses_Eranog = {[390715] = {nil, nil, nil, 1}}}
 }
+
+---@type table
 QuaziiUI.imports.OmniCD = {
+    ---@type string
     data = "{OMNICD}"
 }
+
+---@type table
 QuaziiUI.imports.Details = {
+    ---@type string
     data = "{DETAILS}"
 }
+
+---@type table
 QuaziiUI.imports.Plater = {
+    ---@type string
     data = "{PLATER}"
 }
+
+---@type table
 QuaziiUI.imports.Cell = {
+    ---@type string
     data = "{CELL}"
 }

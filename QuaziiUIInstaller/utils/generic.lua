@@ -1,9 +1,9 @@
 function QuaziiUI:Show()
-    self.frames.main:Show()
+    self.panel:Show()
 end -- Makes the installer UI visible
 
 function QuaziiUI:Hide()
-    self.frames.main:Hide()
+    self.panel:Hide()
 end -- Makes the installer UI hidden
 
 ---@param inputVersion integer|string "string|integer in the format of YYYYMMDD"

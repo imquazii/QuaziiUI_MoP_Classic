@@ -6,10 +6,12 @@ table.insert(QuaziiUI.pagePrototypes, page)
 local currentCategory = 1
 
 -- Helper Functions
+---@return boolean
 local function isMDTLoaded()
     return C_AddOns and C_AddOns.IsAddOnLoaded("MythicDungeonTools")
 end
 
+---@param index integer
 local function fillMDTFromCategoryIndex(index)
     local data = {}
     if isMDTLoaded() then
@@ -40,6 +42,7 @@ local function fillMDTFromCategoryIndex(index)
     page.mdtScrollBox:Refresh()
 end
 
+---@param index integer
 local function onCategoryClick(_, _, index)
     currentCategory = index
     fillMDTFromCategoryIndex(currentCategory)

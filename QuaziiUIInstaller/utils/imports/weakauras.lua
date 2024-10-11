@@ -1,6 +1,8 @@
 local LibDeflate = LibStub:GetLibrary("LibDeflate")
 local LibSerializer = LibStub("LibSerialize")
 
+---@param importString string
+---@return table
 function QuaziiUI.decodeWAPacket(importString)
     local _, _, encodeVersion, encoded = importString:find("^(!WA:%d+!)(.+)$")
     if encodeVersion then
@@ -19,5 +21,5 @@ function QuaziiUI.decodeWAPacket(importString)
         end
         return deserialized
     end
-    return nil
+    return {}
 end

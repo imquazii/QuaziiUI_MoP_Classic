@@ -3,6 +3,7 @@ local L = QuaziiUI.L
 local page = {}
 table.insert(QuaziiUI.pagePrototypes, page)
 
+---@type table<string>
 QuaziiUI.supportedAddons = {
     "ElvUI",
     "WeakAuras",
@@ -123,6 +124,7 @@ local function addonScrollBoxUpdate(self, data, offset, totalLines)
     end
 end
 
+---@param index integer
 local function createAddonButton(self, index)
     local line = CreateFrame("Button", nil, self, "BackdropTemplate")
     line:SetClipsChildren(true)
