@@ -1,21 +1,15 @@
----@type string
-local addonName = ...
----@class QUI
-local QUI = select(2, ...)
-local DF = _G["DetailsFramework"]
-local L = QUI.L
+local L = QuaziiUI.L
 
-QUI.pagePrototypes = QUI.pagePrototypes or {}
 local page = {}
-table.insert(QUI.pagePrototypes, page)
+table.insert(QuaziiUI.pagePrototypes, page)
 
-QUI.supportedAddons = {
+QuaziiUI.supportedAddons = {
     "ElvUI",
     "WeakAuras",
+    "MythicDungeonTools",
     "Details",
     "Plater",
     "BigWigs",
-    "MythicDungeonTools",
     "Cell",
     "OmniCD"
 }
@@ -38,7 +32,7 @@ local function addonScrollBoxUpdate(self, data, offset, totalLines)
                     line.importButton:SetText("Go To Page")
                     line.importButton:SetClickFunction(
                         function()
-                            QUI.selectPage(3)
+                            QuaziiUI.selectPage(3)
                         end
                     )
                 else
@@ -50,7 +44,7 @@ local function addonScrollBoxUpdate(self, data, offset, totalLines)
                     line.importButton:SetText("Go To Page")
                     line.importButton:SetClickFunction(
                         function()
-                            QUI.selectPage(4)
+                            QuaziiUI.selectPage(4)
                         end
                     )
                 else
@@ -62,7 +56,7 @@ local function addonScrollBoxUpdate(self, data, offset, totalLines)
                     line.importButton:SetText("Go To Page")
                     line.importButton:SetClickFunction(
                         function()
-                            QUI.selectPage(5)
+                            QuaziiUI.selectPage(5)
                         end
                     )
                 else
@@ -73,7 +67,7 @@ local function addonScrollBoxUpdate(self, data, offset, totalLines)
                 if addonEnabled then
                     line.importButton:SetClickFunction(
                         function()
-                            QUI.importCellProfile()
+                            QuaziiUI.importCellProfile()
                         end
                     )
                 else
@@ -84,7 +78,7 @@ local function addonScrollBoxUpdate(self, data, offset, totalLines)
                 if addonEnabled then
                     line.importButton:SetClickFunction(
                         function()
-                            QUI.importPlaterProfile()
+                            QuaziiUI.importPlaterProfile()
                         end
                     )
                 else
@@ -95,7 +89,7 @@ local function addonScrollBoxUpdate(self, data, offset, totalLines)
                 if addonEnabled then
                     line.importButton:SetClickFunction(
                         function()
-                            QUI.importBigWigsProfile()
+                            QuaziiUI.importBigWigsProfile()
                         end
                     )
                 else
@@ -106,7 +100,7 @@ local function addonScrollBoxUpdate(self, data, offset, totalLines)
                 if addonEnabled then
                     line.importButton:SetClickFunction(
                         function()
-                            QUI.importDetailsProfile()
+                            QuaziiUI.importDetailsProfile()
                         end
                     )
                 else
@@ -117,7 +111,7 @@ local function addonScrollBoxUpdate(self, data, offset, totalLines)
                 if addonEnabled then
                     line.importButton:SetClickFunction(
                         function()
-                            QUI.importOmniCDProfile()
+                            QuaziiUI.importOmniCDProfile()
                         end
                     )
                 else
@@ -142,12 +136,12 @@ local function createAddonButton(self, index)
         }
     )
     line:SetBackdropColor(0.8, 0.8, 0.8, 0.2)
-    DF:Mixin(line, DF.HeaderFunctions)
+    QuaziiUI.DF:Mixin(line, QuaziiUI.DF.HeaderFunctions)
 
-    line.addonLabel = DF:CreateLabel(line, nil, QUI.TableTextSize)
-    line.versionLabel = DF:CreateLabel(line, nil, QUI.TableTextSize)
-    line.enabledLabel = DF:CreateLabel(line, nil, QUI.TableTextSize)
-    line.importButton = DF:CreateButton(line, nil, 105, 30, L["Import"], nil, nil, nil, nil, nil, nil, QUI.ODT)
+    line.addonLabel = QuaziiUI.DF:CreateLabel(line, nil, QuaziiUI.TableTextSize)
+    line.versionLabel = QuaziiUI.DF:CreateLabel(line, nil, QuaziiUI.TableTextSize)
+    line.enabledLabel = QuaziiUI.DF:CreateLabel(line, nil, QuaziiUI.TableTextSize)
+    line.importButton = QuaziiUI.DF:CreateButton(line, nil, 105, 30, L["Import"], nil, nil, nil, nil, nil, nil, QuaziiUI.ODT)
     line.importButton.text_overlay:SetFont(line.importButton.text_overlay:GetFont(), 16)
 
     line:AddFrameToHeaderAlignment(line.addonLabel)
@@ -173,12 +167,12 @@ end
 
 function page:CreateHeader(frame)
     local header =
-        DF:CreateLabel(frame, "|c" .. QUI.highlightColorHex .. L["SupportedAddonsHeader"] .. "|r", QUI.PageHeaderSize)
+        QuaziiUI.DF:CreateLabel(frame, "|c" .. QuaziiUI.highlightColorHex .. L["SupportedAddonsHeader"] .. "|r", QuaziiUI.PageHeaderSize)
     header:SetPoint("TOP", frame, "TOP", 0, -10)
 end
 
 function page:CreateDescription(frame)
-    local description = DF:CreateLabel(frame, L["SupportedAddonsText"], QUI.PageTextSize)
+    local description = QuaziiUI.DF:CreateLabel(frame, L["SupportedAddonsText"], QuaziiUI.PageTextSize)
     description:SetWordWrap(true)
     description:SetPoint("TOPLEFT", frame, "TOPLEFT", 10, -40)
     description:SetPoint("TOPRIGHT", frame, "TOPRIGHT", -10, -40)
@@ -190,21 +184,21 @@ end
 function page:CreateAddonList(frame)
     local headerTable = {
         -- Widths should add to 551
-        {text = "|c" .. QUI.highlightColorHex .. L["SupportedAddonsTable1stHeader"], width = 221, offset = 2},
+        {text = "|c" .. QuaziiUI.highlightColorHex .. L["SupportedAddonsTable1stHeader"], width = 221, offset = 2},
         {text = L["SupportedAddonsTable2ndHeader"], width = 70},
         {text = L["SupportedAddonsTable3rdHeader"], width = 150},
         {text = L["Import"], width = 110}
     }
-    local options = {text_size = QUI.TableHeaderSize}
-    frame.addonHeader = DF:CreateHeader(frame, headerTable, options, "QuaziiUIInstallAddonHeader")
+    local options = {text_size = QuaziiUI.TableHeaderSize}
+    frame.addonHeader = QuaziiUI.DF:CreateHeader(frame, headerTable, options, "QuaziiUIInstallAddonHeader")
     frame.addonHeader:SetPoint("TOPLEFT", self.description.widget, "BOTTOMLEFT", -2, -10)
 
     local addonScrollBox =
-        DF:CreateScrollBox(frame, nil, addonScrollBoxUpdate, {}, 557, 281, 0, 34, createAddonButton, true)
+        QuaziiUI.DF:CreateScrollBox(frame, nil, addonScrollBoxUpdate, {}, 557, 281, 0, 34, createAddonButton, true)
     addonScrollBox:SetPoint("TOPLEFT", frame.addonHeader, "BOTTOMLEFT", 0, 0)
     addonScrollBox.ScrollBar.scrollStep = 34
-    DF:ReskinSlider(addonScrollBox)
-    addonScrollBox:SetData(QUI.supportedAddons)
+    QuaziiUI.DF:ReskinSlider(addonScrollBox)
+    addonScrollBox:SetData(QuaziiUI.supportedAddons)
     addonScrollBox:Refresh()
 end
 

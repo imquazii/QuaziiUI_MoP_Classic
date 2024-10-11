@@ -1,19 +1,13 @@
----@type string
-local addonName = ...
+local L = QuaziiUI.L
 
----@class QUI
-local QUI = select(2, ...)
-
-local DF = _G["DetailsFramework"]
-
-QUI.pagePrototypes = QUI.pagePrototypes or {}
 local page = {}
-table.insert(QUI.pagePrototypes, page)
+table.insert(QuaziiUI.pagePrototypes, page)
 
 function page:Create(parent)
     local frame = CreateFrame("Frame", nil, parent.frameContent)
     frame:SetAllPoints()
     page.rootFrame = frame
+    return frame
 end
 
 function page:ShouldShow()

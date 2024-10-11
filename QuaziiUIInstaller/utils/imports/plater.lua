@@ -1,22 +1,17 @@
----@type string
-local addonName = ...
----@class QUI
-local QUI = select(2, ...)
-local DF = _G["DetailsFramework"]
-
-function QUI.importPlaterProfile(self)
-    DF:ShowTextPromptPanel(
+function QuaziiUI.importPlaterProfile(self)
+    QuaziiUI.DF:ShowTextPromptPanel(
         "Insert a Name for the New Plater Profile:",
         function(newProfileName)
-            QuaziiUI_DB.imports.Plater = {}
-            QuaziiUI_DB.imports.Plater.date = GetServerTime()
-            QuaziiUI_DB.imports.Plater.version = QUI.version
+            QuaziiUI.db.profile.imports.Plater = {}
+            QuaziiUI.db.profile.imports.Plater.date = GetServerTime()
+            QuaziiUI.db.profile.imports.Plater.versionNumber = QuaziiUI.versionNumber
             Plater.OpenOptionsPanel()
             PlaterOptionsPanelFrame:Hide()
+
             local profileFrame = PlaterOptionsPanelContainer.AllFrames[22]
-            profileFrame.ImportStringField.importDataText = QUI.imports.Plater["data"]
+            profileFrame.ImportStringField.importDataText = QuaziiUI.imports.Plater["data"]
             profileFrame.NewProfileTextEntry:SetText(newProfileName)
-            QuaziiUI_CDB.openPage = 1
+            QuaziiUI.db.char.openPage = 1
             profileFrame.ConfirmImportProfile()
         end,
         function()

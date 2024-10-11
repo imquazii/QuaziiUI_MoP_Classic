@@ -1,13 +1,7 @@
----@type string
-local addonName = ...
----@class QUI
-local QUI = select(2, ...)
-local L = QUI.L
-local DF = _G["DetailsFramework"]
+local L = QuaziiUI.L
 
-QUI.pagePrototypes = QUI.pagePrototypes or {}
 local page = {}
-table.insert(QUI.pagePrototypes, page)
+table.insert(QuaziiUI.pagePrototypes, page)
 
 local currentCategory = 1
 
@@ -19,7 +13,7 @@ end
 local function fillMDTFromCategoryIndex(index)
     local data = {}
     if isMDTLoaded() then
-        for _, importString in ipairs(QUI.imports.MDT[index].Routes) do
+        for _, importString in ipairs(QuaziiUI.imports.MDT[index].Routes) do
             local MDTPreset = MDT:StringToTable(importString, true)
             if MDT:ValidateImportPreset(MDTPreset) then
                 table.insert(
@@ -53,7 +47,7 @@ end
 
 local function fillSelectionDropdown()
     local options = {}
-    for index, category in ipairs(QUI.imports.MDT) do
+    for index, category in ipairs(QuaziiUI.imports.MDT) do
         local label = category.color and "|c" .. category.color .. category.name .. "|r" or category.name
         table.insert(options, {value = index, label = label, onclick = onCategoryClick})
     end
@@ -75,7 +69,7 @@ local function mdtScrollBoxUpdate(self, data, offset, totalLines)
             else
                 line.importButton:SetClickFunction(
                     function()
-                        local MDTPreset = MDT:StringToTable(QUI.imports.MDT[currentCategory].Routes[index], true)
+                        local MDTPreset = MDT:StringToTable(QuaziiUI.imports.MDT[currentCategory].Routes[index], true)
                         if MDT:ValidateImportPreset(MDTPreset) then
                             MDT:ImportPreset(MDTPreset, false)
                         end
@@ -99,17 +93,17 @@ local function createMDTButton(self, index)
         }
     )
     line:SetBackdropColor(0.8, 0.8, 0.8, 0.2)
-    DF:Mixin(line, DF.HeaderFunctions)
+    QuaziiUI.DF:Mixin(line, QuaziiUI.DF.HeaderFunctions)
 
     line.icon = line:CreateTexture(nil, "OVERLAY")
     line.icon:SetSize(42, 42)
-    line.nameLabel = DF:CreateLabel(line, "", 16)
-    line.versionLabel = DF:CreateLabel(line, "", 16)
+    line.nameLabel = QuaziiUI.DF:CreateLabel(line, "", 16)
+    line.versionLabel = QuaziiUI.DF:CreateLabel(line, "", 16)
     line.nameLabel:SetSize(318, self.LineHeight / 2)
     line.versionLabel:SetSize(68, self.LineHeight / 2)
     line.versionLabel:SetJustifyH("CENTER")
 
-    line.importButton = DF:CreateButton(line, nil, 105, 30, L["Import"], nil, nil, nil, nil, nil, nil, QUI.ODT)
+    line.importButton = QuaziiUI.DF:CreateButton(line, nil, 105, 30, L["Import"], nil, nil, nil, nil, nil, nil, QuaziiUI.ODT)
     line.importButton.text_overlay:SetFont(line.importButton.text_overlay:GetFont(), 16)
 
     line:AddFrameToHeaderAlignment(line.icon)
@@ -133,15 +127,16 @@ function page:Create(parent)
 
     self.rootFrame = frame
     fillMDTFromCategoryIndex(1)
+    return frame
 end
 
 function page:CreateHeader(frame)
-    local header = DF:CreateLabel(frame, "|c" .. QUI.highlightColorHex .. L["MDTHeader"] .. "|r", QUI.PageHeaderSize)
+    local header = QuaziiUI.DF:CreateLabel(frame, "|c" .. QuaziiUI.highlightColorHex .. L["MDTHeader"] .. "|r", QuaziiUI.PageHeaderSize)
     header:SetPoint("TOP", frame, "TOP", 0, -10)
 end
 
 function page:CreateDescription(frame)
-    local text = DF:CreateLabel(frame, L["MDTText"], QUI.PageTextSize)
+    local text = QuaziiUI.DF:CreateLabel(frame, L["MDTText"], QuaziiUI.PageTextSize)
     text:SetWordWrap(true)
     text:SetPoint("TOPLEFT", frame, "TOPLEFT", 10, -40)
     text:SetPoint("TOPRIGHT", frame, "TOPRIGHT", -10, -40)
@@ -151,7 +146,7 @@ function page:CreateDescription(frame)
 end
 
 function page:CreateSelectionDropdown(frame)
-    local selectionDropdown = DF:CreateDropDown(frame, fillSelectionDropdown, nil, 200, 25, nil, nil, QUI.ODT)
+    local selectionDropdown = QuaziiUI.DF:CreateDropDown(frame, fillSelectionDropdown, nil, 200, 25, nil, nil, QuaziiUI.ODT)
     selectionDropdown:SetPoint("TOPLEFT", self.descriptionText, "BOTTOMLEFT", -1, -5)
     selectionDropdown.label:SetFont(selectionDropdown.label:GetFont(), 16)
 end
@@ -164,13 +159,13 @@ function page:CreateMDTList(frame)
         {text = L["Import"], width = 110}
     }
     local options = {text_size = 16}
-    frame.addonHeader = DF:CreateHeader(frame, headerTable, options, "QuaziiUIInstallMDTHeader")
+    frame.addonHeader = QuaziiUI.DF:CreateHeader(frame, headerTable, options, "QuaziiUIInstallMDTHeader")
     frame.addonHeader:SetPoint("TOPLEFT", self.descriptionText.widget, "BOTTOMLEFT", -2, -35)
 
-    local mdtScrollBox = DF:CreateScrollBox(frame, nil, mdtScrollBoxUpdate, {}, 557, 288, 0, 40, createMDTButton, true)
+    local mdtScrollBox = QuaziiUI.DF:CreateScrollBox(frame, nil, mdtScrollBoxUpdate, {}, 557, 288, 0, 40, createMDTButton, true)
     mdtScrollBox:SetPoint("TOPLEFT", frame.addonHeader, "BOTTOMLEFT", 0, 0)
     mdtScrollBox.ScrollBar.scrollStep = 40
-    DF:ReskinSlider(mdtScrollBox)
+    QuaziiUI.DF:ReskinSlider(mdtScrollBox)
     self.mdtScrollBox = mdtScrollBox
 end
 

@@ -1,13 +1,7 @@
----@type string
-local addonName = ...
----@class QUI
-local QUI = select(2, ...)
-local DF = _G["DetailsFramework"]
 local LibDeflate = LibStub:GetLibrary("LibDeflate")
-local Serializer = LibStub:GetLibrary("AceSerializer-3.0")
 local LibSerializer = LibStub("LibSerialize")
 
-function QUI.decodeWAPacket(importString)
+function QuaziiUI.decodeWAPacket(importString)
     local _, _, encodeVersion, encoded = importString:find("^(!WA:%d+!)(.+)$")
     if encodeVersion then
         encodeVersion = tonumber(encodeVersion:match("%d+"))
@@ -21,7 +15,7 @@ function QUI.decodeWAPacket(importString)
         if encodeVersion == 2 then
             _, deserialized = LibSerializer:Deserialize(decompressed)
         else
-            _, deserialized = Serializer:Deserialize(decompressed or "")
+            error("Incompatible WA Import String. Please report this to Quazii's Discord!")
         end
         return deserialized
     end

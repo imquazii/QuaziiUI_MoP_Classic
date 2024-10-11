@@ -3,6 +3,8 @@
     <Include file="libs\libs.xml" />
     <!-- Load Libs First -->
     <Include file="locales\locales.xml" />
+    <!-- Addon Init -->
+    <Script file="init.lua" />
     <!-- Localalization Files -->
     <Include file="utils\utils.xml" />
     <!-- Util Files -->
@@ -10,6 +12,6 @@
     <!-- Addon and WA Imports -->
     <Include file="pages\pages.xml" />
     <!-- Installer Pages -->
-    <Script file="main.lua" />
+    <Script file="panel.lua" />
     <!-- Main Program -->
 </Ui>

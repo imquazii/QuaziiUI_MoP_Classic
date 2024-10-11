@@ -5,12 +5,10 @@
 ## DefaultState: Enabled
 ## LoadOnDemand: 0
 ## SavedVariables: QuaziiUI_DB
-## SavedVariablesPerCharacter: QuaziiUI_CDB
-## OptionalDeps: ElvUI, BigWigs, OmniCD, WeakAuras, Details, Plater
+## OptionalDeps: ElvUI, Cell, BigWigs, OmniCD, WeakAuras, Details, Plater, MythicDungeonTools
 ## IconTexture: Interface\AddOns\MeeresAssets\assets\icons\quaziiLogo.tga
 
 ## X-Credits: Dark(Inspiration for Addon), Quazii(Maker of UI and WAs)
-## X-Wago-ID: QKywmlN7
 ## X-License: GPLv3
 ## X-Website: https://quazii.com
 

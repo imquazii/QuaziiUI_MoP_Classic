@@ -1,12 +1,6 @@
----@type string
-local addonName = ...
----@class QUI
-local QUI = select(2, ...)
-local L = QUI.L
+local L = QuaziiUI.L
 
-QUI.imports = {}
-
-QUI.imports.MDT = {
+QuaziiUI.imports.MDT = {
     [1] = {
         name = L["PUG 'Push W' Routes"],
         Routes = {
@@ -15,7 +9,7 @@ QUI.imports.MDT = {
     }
 }
 
-QUI.imports.ElvUI = {
+QuaziiUI.imports.ElvUI = {
     healer = {
         cell = {
             data = "{HEALER_CELL_IMPORT}"
@@ -28,7 +22,7 @@ QUI.imports.ElvUI = {
         data = "{TANK_DPS_IMPORT}"
     }
 }
-QUI.imports.WAStrings = {
+QuaziiUI.imports.WAStrings = {
     [1] = {
         name = L["ClassWA"],
         WAs = {
@@ -60,10 +54,10 @@ QUI.imports.WAStrings = {
         }
     }
 }
-QUI.imports.BigWigs = {
+QuaziiUI.imports.BigWigs = {
     data = "{BIGWIGS}"
 }
-QUI.imports.BigWigsColors = {
+QuaziiUI.imports.BigWigsColors = {
     blue = {
         ["BigWigs_Bosses_Kurog Grimtotem"] = {[374023] = {nil, nil, nil, 1}},
         ["BigWigs_Bosses_The Tarragrue"] = {[346985] = {nil, nil, nil, 1}},
@@ -878,15 +872,15 @@ QUI.imports.BigWigsColors = {
     },
     red = {BigWigs_Bosses_Eranog = {[390715] = {nil, nil, nil, 1}}}
 }
-QUI.imports.OmniCD = {
+QuaziiUI.imports.OmniCD = {
     data = "{OMNICD}"
 }
-QUI.imports.Details = {
+QuaziiUI.imports.Details = {
     data = "{DETAILS}"
 }
-QUI.imports.Plater = {
+QuaziiUI.imports.Plater = {
     data = "{PLATER}"
 }
-QUI.imports.Cell = {
+QuaziiUI.imports.Cell = {
     data = "{CELL}"
 }

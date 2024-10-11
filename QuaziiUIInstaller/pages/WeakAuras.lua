@@ -1,19 +1,13 @@
----@type string
-local addonName = ...
----@class QUI
-local QUI = select(2, ...)
-local DF = _G["DetailsFramework"]
-local L = QUI.L
+local L = QuaziiUI.L
 
-QUI.pagePrototypes = QUI.pagePrototypes or {}
 local page = {}
-table.insert(QUI.pagePrototypes, page)
+table.insert(QuaziiUI.pagePrototypes, page)
 
 local currentCategory = 1
 local GameTooltip = GameTooltip
 
 local function decodeWAPacket(importString)
-    return QUI.decodeWAPacket(importString)
+    return QuaziiUI.decodeWAPacket(importString)
 end
 
 local function getWAUpdateStatus(waTable)
@@ -32,7 +26,7 @@ end
 
 local function parseWAData(index)
     local data = {}
-    for _, importString in ipairs(QUI.imports.WAStrings[index].WAs) do
+    for _, importString in ipairs(QuaziiUI.imports.WAStrings[index].WAs) do
         local waTable = decodeWAPacket(importString) or {}
         
         if waTable  and waTable.d then
@@ -73,7 +67,7 @@ end
 
 local function fillSelectionDropdown()
     local options = {}
-    for index, category in ipairs(QUI.imports.WAStrings) do
+    for index, category in ipairs(QuaziiUI.imports.WAStrings) do
         local label = category.color and "|c" .. category.color .. category.name .. "|r" or category.name
         table.insert(options, {value = index, label = label, onclick = onCategoryClick})
     end
@@ -113,7 +107,7 @@ local function waScrollBoxUpdate(self, data, offset, totalLines)
             else
                 line.importButton:SetClickFunction(
                     function()
-                        WeakAuras.Import(QUI.imports.WAStrings[currentCategory].WAs[index])
+                        WeakAuras.Import(QuaziiUI.imports.WAStrings[currentCategory].WAs[index])
                     end
                 )
             end
@@ -134,12 +128,12 @@ local function createWAButton(self, index)
         }
     )
     line:SetBackdropColor(0.8, 0.8, 0.8, 0.2)
-    DF:Mixin(line, DF.HeaderFunctions)
+    QuaziiUI.DF:Mixin(line, QuaziiUI.DF.HeaderFunctions)
 
     line.icon = line:CreateTexture(nil, "OVERLAY")
-    line.nameLabel = DF:CreateLabel(line, "", 16)
-    line.versionLabel = DF:CreateLabel(line, "", 16)
-    line.updateLabel = DF:CreateLabel(line, "", 16)
+    line.nameLabel = QuaziiUI.DF:CreateLabel(line, "", 16)
+    line.versionLabel = QuaziiUI.DF:CreateLabel(line, "", 16)
+    line.updateLabel = QuaziiUI.DF:CreateLabel(line, "", 16)
 
     line.icon:SetSize(42, 42)
     line.nameLabel:SetSize(318, self.LineHeight / 2)
@@ -147,7 +141,7 @@ local function createWAButton(self, index)
     line.updateLabel:SetSize(68, self.LineHeight / 2)
     line.updateLabel:SetJustifyH("CENTER")
 
-    line.importButton = DF:CreateButton(line, nil, 105, 30, L["Import"], nil, nil, nil, nil, nil, nil, QUI.ODT)
+    line.importButton = QuaziiUI.DF:CreateButton(line, nil, 105, 30, L["Import"], nil, nil, nil, nil, nil, nil, QuaziiUI.ODT)
     line.importButton.text_overlay:SetFont(line.importButton.text_overlay:GetFont(), 16)
 
     line:AddFrameToHeaderAlignment(line.icon)
@@ -171,20 +165,21 @@ function page:Create(parent)
 
     self.rootFrame = frame
     fillWAFromCategoryIndex(1)
+    return frame
 end
 
 function page:CreateHeader(frame)
     local header =
-        DF:CreateLabel(
+        QuaziiUI.DF:CreateLabel(
         frame,
-        "|c" .. QUI.highlightColorHex .. L["WeakAuras"] .. " " .. L["Imports"] .. "|r",
-        QUI.PageHeaderSize
+        "|c" .. QuaziiUI.highlightColorHex .. L["WeakAuras"] .. " " .. L["Imports"] .. "|r",
+        QuaziiUI.PageHeaderSize
     )
     header:SetPoint("TOP", frame, "TOP", 0, -10)
 end
 
 function page:CreateDescription(frame)
-    local text = DF:CreateLabel(frame, L["WeakAuraText"], QUI.PageTextSize)
+    local text = QuaziiUI.DF:CreateLabel(frame, L["WeakAuraText"], QuaziiUI.PageTextSize)
     text:SetWordWrap(true)
     text:SetPoint("TOPLEFT", frame, "TOPLEFT", 10, -40)
     text:SetPoint("TOPRIGHT", frame, "TOPRIGHT", -10, -40)
@@ -194,7 +189,7 @@ function page:CreateDescription(frame)
 end
 
 function page:CreateSelectionDropdown(frame)
-    local selectionDropdown = DF:CreateDropDown(frame, fillSelectionDropdown, nil, 200, 25, nil, nil, QUI.ODT)
+    local selectionDropdown = QuaziiUI.DF:CreateDropDown(frame, fillSelectionDropdown, nil, 200, 25, nil, nil, QuaziiUI.ODT)
     selectionDropdown:SetPoint("TOPLEFT", self.descriptionText, "BOTTOMLEFT", -1, -5)
     selectionDropdown.label:SetFont(selectionDropdown.label:GetFont(), 16)
 end
@@ -208,13 +203,13 @@ function page:CreateWAList(frame)
         {text = L["Import"], width = 110, canSort = false}
     }
     local options = {text_size = 16}
-    frame.addonHeader = DF:CreateHeader(frame, headerTable, options, "QuaziiUIInstallWAHeader")
+    frame.addonHeader = QuaziiUI.DF:CreateHeader(frame, headerTable, options, "QuaziiUIInstallWAHeader")
     frame.addonHeader:SetPoint("TOPLEFT", self.descriptionText.widget, "BOTTOMLEFT", -2, -35)
 
-    local waScrollBox = DF:CreateScrollBox(frame, nil, waScrollBoxUpdate, {}, 557, 288, 0, 40, createWAButton, true)
+    local waScrollBox = QuaziiUI.DF:CreateScrollBox(frame, nil, waScrollBoxUpdate, {}, 557, 288, 0, 40, createWAButton, true)
     waScrollBox:SetPoint("TOPLEFT", frame.addonHeader, "BOTTOMLEFT", 0, 0)
     waScrollBox.ScrollBar.scrollStep = 40
-    DF:ReskinSlider(waScrollBox)
+    QuaziiUI.DF:ReskinSlider(waScrollBox)
     self.waScrollBox = waScrollBox
 end
 

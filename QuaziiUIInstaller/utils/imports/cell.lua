@@ -1,15 +1,10 @@
----@type string
-local addonName = ...
----@class QUI
-local QUI = select(2, ...)
-
 local Serializer = LibStub:GetLibrary("LibSerialize")
 local LibDeflate = LibStub:GetLibrary("LibDeflate")
 
-function QUI.importCellProfile()
+function QuaziiUI.importCellProfile()
     local F = Cell.funcs
 
-    local importString = QUI.imports.Cell.data
+    local importString = QuaziiUI.imports.Cell.data
 
     local version, data = string.match(importString, "^!CELL:(%d+):ALL!(.+)$")
     version = tonumber(version)
