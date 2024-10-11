@@ -8,6 +8,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 ### Added
 - Variable Typing
 ### Changed
+- Renamed Addon from Quazii UI Installer to Quazii UI [BREAKING]
 - Converted quaziiLogo from png to tga for wow compatibility
   - Adjusted texture paths
   - Added IconTexture to toc to logo appears in Addon List.
