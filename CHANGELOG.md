@@ -4,7 +4,13 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
-## [Unreleased](https://github.com/chatterchats/QuaziiUIInstaller/compare/2024.10.11-alpha...HEAD)
+## [2024.10.11-alpha2](https://github.com/chatterchats/QuaziiUIInstaller/compare/2024.10.11-alpha...2024.10.11-alpha2)
+### Added
+- Variable Typing
+### Changed
+- Converted quaziiLogo from png to tga for wow compatibility
+  - Adjusted texture paths
+  - Added IconTexture to toc to logo appears in Addon List.
 ### Fixed
 -  Removed whitespace from .gitattributes
 ### Removed
