@@ -9,7 +9,15 @@ QuaziiUI.imports.MDT = {
         name = L["PUG 'Push W' Routes"],
         ---@type table<string>
         Routes = {
-            "{MDT_ROUTES}"
+            "{MDT_W_ROUTES}"
+        }
+    },
+    [2] = {
+        ---@type string
+        name = L["AdvRoutes"],
+        ---@type table<string>
+        Routes = {
+            "{MDT_ADV_ROUTES}"
         }
     }
 }

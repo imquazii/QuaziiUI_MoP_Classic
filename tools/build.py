@@ -2,8 +2,9 @@ from pathlib import Path
 import os
 from json import load
 
-raw_import_data = {}
-mdt_routes_string = []
+raw_import_data: dict = {}
+mdt_w_routes_string: list = []
+mdt_adv_routes_string: list = []
 
 
 def get_import_files():
@@ -26,9 +27,14 @@ def get_import_files():
                 )[1:][:-4]
                 with open(txt_path, "r", encoding="utf-8") as import_file:
                     if "routes" in txt_path:
-                        mdt_routes_string.append(
-                            import_file.read().strip().join(('"', '"'))
-                        )
+                        if "PUG" in txt_path:
+                            mdt_w_routes_string.append(
+                                import_file.read().strip().join(('"', '"'))
+                            )
+                        elif "Adv" in txt_path:
+                            mdt_adv_routes_string.append(
+                                import_file.read().strip().join(('"', '"'))
+                            )
                     else:
                         raw_import_data[txt_split] = import_file.read().strip()
 
@@ -47,8 +53,10 @@ def write_template(input):
 
 def process_temple():
     template = get_template()
-    routes_string = ",\n            ".join(mdt_routes_string)
-    template = template.replace('"{MDT_ROUTES}"', routes_string)
+    w_routes_string = ",\n            ".join(mdt_w_routes_string)
+    adv_routes_string = ",\n            ".join(mdt_adv_routes_string)
+    template = template.replace('"{MDT_W_ROUTES}"', w_routes_string)
+    template = template.replace('"{MDT_ADV_ROUTES}"', adv_routes_string)
     for k, v in raw_import_data.items():
         replace_string = "{" + k + "}"
         value_string = v
