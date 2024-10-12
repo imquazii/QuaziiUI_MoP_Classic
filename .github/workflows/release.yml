@@ -18,7 +18,7 @@ jobs:
     steps:
     # Step 1: Add a delay (sleep for 1 hour = 3600 seconds)
     - name: Wait for 15 mintues
-      run: sleep 900
+      run: sleep 10
 
     # Step 2: Checkout the code
     - name: Checkout code
