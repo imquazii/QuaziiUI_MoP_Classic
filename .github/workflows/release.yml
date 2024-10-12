@@ -72,7 +72,7 @@ jobs:
 
     # Step 6: Zip the QuaziiUI directory
     - name: Zip QuaziiUI directory
-      run: zip -r QuaziiUI.zip QuaziiUI
+      run: zip -r QuaziiUI_${{ env.tag }}.zip QuaziiUI
 
     # Step 7: Generate changelog from commit messages since last tag
     - name: Generate changelog
@@ -81,7 +81,7 @@ jobs:
         if git describe --tags --abbrev=0 > /dev/null 2>&1; then
           LAST_TAG=$(git describe --tags --abbrev=0)
           echo "Changes since $LAST_TAG:" > CHANGELOG.md
-          git log $LAST_TAG..HEAD --oneline >> CHANGELOG.md
+          git log $LAST_TAG..HEAD >> CHANGELOG.md
         else
           # If no tags, generate changelog for all commits
           echo "Changes since the beginning:" > CHANGELOG.md
