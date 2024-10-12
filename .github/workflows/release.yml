@@ -129,7 +129,7 @@ jobs:
 
                   if [ ! -z "$EXISTING_ASSET_ID" ]; then
                     echo "Deleting existing asset: $ASSET_NAME"
-                    gh release delete-asset $EXISTING_ASSET_ID --yes
+                    gh release delete-asset ${{ env.tag }} $EXISTING_ASSET_ID --yes
                   fi
 
             - name: Upload Release Asset
