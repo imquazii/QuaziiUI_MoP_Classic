@@ -85,12 +85,13 @@ jobs:
                   if git describe --tags --abbrev=0 > /dev/null 2>&1; then
                     LAST_TAG=$(git describe --tags --abbrev=0)
                     echo "Changes since $LAST_TAG:" > CHANGELOG.md
-                    git log $LAST_TAG..HEAD >> CHANGELOG.md
+                    git log $LAST_TAG..HEAD --oneline >> CHANGELOG.md
                   else
                     # If no tags, generate changelog for all commits
                     echo "Changes since the beginning:" > CHANGELOG.md
                     git log --oneline >> CHANGELOG.md
                   fi
+
             - name: Output changelog
               id: changelog
               run: cat CHANGELOG.md
@@ -106,20 +107,8 @@ jobs:
                     echo "release_exists=false" >> $GITHUB_ENV
                   fi
 
-            - name: Create or Update GitHub Release
-              # Step 9: Create or update a GitHub Release using gh CLI
-              if: env.release_exists == 'false'
-              env:
-                  GH_TOKEN: ${{ secrets.GITHUB_TOKEN }} # Set GH_TOKEN here
-              run: |
-                  gh release create ${{ env.tag }} \
-                    QuaziiUI_${{ env.tag }}.zip \
-                    --title "QuaziiUI ${{ env.tag }}" \
-                    --notes-file CHANGELOG.md \
-                    --target main
-
             - name: Check and Delete Existing Asset
-              # Step 10: Check and Delete Existing Asset
+              # Step 9: Check and Delete Existing Asset
               if: env.release_exists == 'false'
               env:
                   GH_TOKEN: ${{ secrets.GITHUB_TOKEN }} # Set GH_TOKEN here
@@ -130,7 +119,21 @@ jobs:
                   if [ ! -z "$EXISTING_ASSET_ID" ]; then
                     echo "Deleting existing asset: $ASSET_NAME"
                     gh release delete-asset ${{ env.tag }} $EXISTING_ASSET_ID --yes
+                  else
+                    echo "No existing asset named $ASSET_NAME found in release ${{ env.tag }}."
                   fi
+
+            - name: Create or Update GitHub Release
+              # Step 10: Create or update a GitHub Release using gh CLI
+              if: env.release_exists == 'false'
+              env:
+                  GH_TOKEN: ${{ secrets.GITHUB_TOKEN }} # Set GH_TOKEN here
+              run: |
+                  gh release create ${{ env.tag }} \
+                    QuaziiUI_${{ env.tag }}.zip \
+                    --title "QuaziiUI ${{ env.tag }}" \
+                    --notes-file CHANGELOG.md \
+                    --target main
 
             - name: Upload Release Asset
               # Step 11: Upload Release Asset
