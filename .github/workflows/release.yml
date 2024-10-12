@@ -1,127 +1,141 @@
 name: Build and Release
 
 on:
-  push:
-    branches:
-    - main
-    paths:
-    - 'tools/imports/**'
+    push:
+        branches:
+            - main
+        paths:
+            - "tools/imports/**"
 
-  # Manual trigger
-  workflow_dispatch:
+    # Manual trigger
+    workflow_dispatch:
 
 permissions:
-  contents: write # Allow the action to write to the repository (for creating tags/releases)
-  discussions: read # Optional, adjust according to your needs
+    contents: write # Allow the action to write to the repository (for creating tags/releases)
+    discussions: read # Optional, adjust according to your needs
 
 jobs:
-  build:
-    runs-on: ubuntu-latest
+    build:
+        runs-on: ubuntu-latest
 
-    concurrency:
-      group: build-and-release-${{ github.ref }}
-      cancel-in-progress: true
+        concurrency:
+            group: build-and-release-${{ github.ref }}
+            cancel-in-progress: true
 
-    steps:
-    # Step 1: Add a delay (sleep for 15 minutes = 900 seconds), only for push events
-    - name: Wait for 15 minutes (only on push)
-      if: github.event_name == 'push'
-      run: sleep 900
+        steps:
+            # Step 1: Add a delay (sleep for 15 minutes = 900 seconds), only for push events
+            - name: Wait for 15 minutes (only on push)
+              if: github.event_name == 'push'
+              run: sleep 900
 
-    # Step 2: Checkout the code
-    - name: Checkout code
-      uses: actions/checkout@v3
+            # Step 2: Checkout the code
+            - name: Checkout code
+              uses: actions/checkout@v3
 
-    # Step 3: Install GitHub CLI (gh)
-    - name: Install GitHub CLI
-      run: sudo apt-get install gh
+            # Step 3: Install GitHub CLI (gh)
+            - name: Install GitHub CLI
+              run: sudo apt-get install gh
 
-    # Step 4: Check if tag already exists without a release
-    - name: Check existing tags
-      id: tag_check
-      run: |
-        git config --global user.email "github-actions[bot]@users.noreply.github.com"
-        git config --global user.name "github-actions[bot]"
+            # Step 4: Check if tag already exists without a release
+            - name: Check existing tags
+              id: tag_check
+              run: |
+                  git config --global user.email "github-actions[bot]@users.noreply.github.com"
+                  git config --global user.name "github-actions[bot]"
 
-        DATE=$(date +'%Y%m%d')
-        EXISTING_TAGS=$(git tag --list "$DATE-*")
-        TAG_TO_USE=""
+                  DATE=$(date +'%Y%m%d')
+                  EXISTING_TAGS=$(git tag --list "$DATE-*")
+                  TAG_TO_USE=""
 
-        # Check for existing tags and whether they have a release
-        for TAG in $EXISTING_TAGS; do
-          RELEASE_COUNT=$(gh release view $TAG --json tagName --jq '.tagName' | wc -l || true)
-          if [[ $RELEASE_COUNT -eq 0 ]]; then
-            TAG_TO_USE=$TAG
-            break
-          fi
-        done
+                  # Check for existing tags and whether they have a release
+                  for TAG in $EXISTING_TAGS; do
+                    RELEASE_COUNT=$(gh release view $TAG --json tagName --jq '.tagName' | wc -l || true)
+                    if [[ $RELEASE_COUNT -eq 0 ]]; then
+                      TAG_TO_USE=$TAG
+                      break
+                    fi
+                  done
 
-        # If no existing tag without a release is found, create a new one
-        if [[ -z "$TAG_TO_USE" ]]; then
-          COUNT=$(echo "$EXISTING_TAGS" | wc -l)
-          TAG_TO_USE="$DATE-$((COUNT+1))"
+                  # If no existing tag without a release is found, create a new one
+                  if [[ -z "$TAG_TO_USE" ]]; then
+                    COUNT=$(echo "$EXISTING_TAGS" | wc -l)
+                    TAG_TO_USE="$DATE-$((COUNT+1))"
 
-          # Check if the tag exists remotely
-          if ! git ls-remote --tags origin | grep -q "refs/tags/$TAG_TO_USE"; then
-            git tag $TAG_TO_USE
-            git push origin $TAG_TO_USE
-          fi
-        fi
+                    # Check if the tag exists remotely
+                    if ! git ls-remote --tags origin | grep -q "refs/tags/$TAG_TO_USE"; then
+                      git tag $TAG_TO_USE
+                      git push origin $TAG_TO_USE
+                    fi
+                  fi
 
-        echo "tag=$TAG_TO_USE" >> $GITHUB_ENV
+                  echo "tag=$TAG_TO_USE" >> $GITHUB_ENV
 
-    - name: Run build.py
-      # Step 5: Run the Python build script
-      run: python tools/build.py
+            - name: Run build.py
+              # Step 5: Run the Python build script
+              run: python tools/build.py
 
-    # Step 6: Zip the QuaziiUI directory
-    - name: Zip QuaziiUI directory
-      run: zip -r QuaziiUI_${{ env.tag }}.zip QuaziiUI
+            # Step 6: Zip the QuaziiUI directory
+            - name: Zip QuaziiUI directory
+              run: zip -r QuaziiUI_${{ env.tag }}.zip QuaziiUI
 
-    # Step 7: Generate changelog from commit messages since last tag
-    - name: Generate changelog
-      run: |
-        # Check if there are any tags
-        if git describe --tags --abbrev=0 > /dev/null 2>&1; then
-          LAST_TAG=$(git describe --tags --abbrev=0)
-          echo "Changes since $LAST_TAG:" > CHANGELOG.md
-          git log $LAST_TAG..HEAD >> CHANGELOG.md
-        else
-          # If no tags, generate changelog for all commits
-          echo "Changes since the beginning:" > CHANGELOG.md
-          git log --oneline >> CHANGELOG.md
-        fi
-    - name: Output changelog
-      id: changelog
-      run: cat CHANGELOG.md
+            # Step 7: Generate changelog from commit messages since last tag
+            - name: Generate changelog
+              run: |
+                  # Check if there are any tags
+                  if git describe --tags --abbrev=0 > /dev/null 2>&1; then
+                    LAST_TAG=$(git describe --tags --abbrev=0)
+                    echo "Changes since $LAST_TAG:" > CHANGELOG.md
+                    git log $LAST_TAG..HEAD >> CHANGELOG.md
+                  else
+                    # If no tags, generate changelog for all commits
+                    echo "Changes since the beginning:" > CHANGELOG.md
+                    git log --oneline >> CHANGELOG.md
+                  fi
+            - name: Output changelog
+              id: changelog
+              run: cat CHANGELOG.md
 
-    - name: Check if Release Exists
-      # Step 8: Check if the release already exists
-      id: release_check
-      run: |
-        if gh release view ${{ env.tag }} > /dev/null 2>&1; then
-          echo "Release for tag ${{ env.tag }} already exists. Skipping release creation."
-          echo "release_exists=true" >> $GITHUB_ENV
-        else
-          echo "release_exists=false" >> $GITHUB_ENV
-        fi
+            - name: Check if Release Exists
+              # Step 8: Check if the release already exists
+              id: release_check
+              run: |
+                  if gh release view ${{ env.tag }} > /dev/null 2>&1; then
+                    echo "Release for tag ${{ env.tag }} already exists. Skipping release creation."
+                    echo "release_exists=true" >> $GITHUB_ENV
+                  else
+                    echo "release_exists=false" >> $GITHUB_ENV
+                  fi
 
-    - name: Create or Update GitHub Release
-      # Step 9: Create or update a GitHub Release using gh CLI
-      if: env.release_exists == 'false'
-      env:
-        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }} # Set GH_TOKEN here
-      run: |
-        gh release create ${{ env.tag }} \
-          QuaziiUI_${{ env.tag }}.zip \
-          --title "QuaziiUI ${{ env.tag }}" \
-          --notes-file CHANGELOG.md \
-          --target main
+            - name: Create or Update GitHub Release
+              # Step 9: Create or update a GitHub Release using gh CLI
+              if: env.release_exists == 'false'
+              env:
+                  GH_TOKEN: ${{ secrets.GITHUB_TOKEN }} # Set GH_TOKEN here
+              run: |
+                  gh release create ${{ env.tag }} \
+                    QuaziiUI_${{ env.tag }}.zip \
+                    --title "QuaziiUI ${{ env.tag }}" \
+                    --notes-file CHANGELOG.md \
+                    --target main
 
-    - name: Upload Release Asset
-      # Step 10: Upload the zipped file as release asset
-      if: env.release_exists == 'false'
-      env:
-        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }} # Set GH_TOKEN here
-      run: |
-        gh release upload ${{ env.tag }} QuaziiUI_${{ env.tag }}.zip
+            - name: Check and Delete Existing Asset
+              # Step 10: Check and Delete Existing Asset
+              if: env.release_exists == 'false'
+              env:
+                  GH_TOKEN: ${{ secrets.GITHUB_TOKEN }} # Set GH_TOKEN here
+              run: |
+                  ASSET_NAME="QuaziiUI.zip"
+                  EXISTING_ASSET_ID=$(gh release view ${{ env.tag }} --json assets --jq ".assets | .[] | select(.name == \"$ASSET_NAME\") | .id")
+
+                  if [ ! -z "$EXISTING_ASSET_ID" ]; then
+                    echo "Deleting existing asset: $ASSET_NAME"
+                    gh release delete-asset $EXISTING_ASSET_ID --yes
+                  fi
+
+            - name: Upload Release Asset
+              # Step 11: Upload Release Asset
+              if: env.release_exists == 'false'
+              env:
+                  GH_TOKEN: ${{ secrets.GITHUB_TOKEN }} # Set GH_TOKEN here
+              run: |
+                  gh release upload ${{ env.tag }} QuaziiUI.zip
