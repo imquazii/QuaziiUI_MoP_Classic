@@ -59,7 +59,7 @@ jobs:
 
     # Step 6: Zip the QuaziiUIInstaller directory
     - name: Zip QuaziiUIInstaller
-      run: zip -r QuaziiUIInstaller.zip QuaziiUIInstaller
+      run: zip -r QuaziiUI.zip QuaziiUI
 
     # Step 7: Create or update a GitHub Release
     - name: Create or Update GitHub Release
