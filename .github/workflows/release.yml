@@ -96,15 +96,21 @@ jobs:
               id: changelog
               run: cat CHANGELOG.md
 
-            - name: Check if Release Exists
+              - name: Check if Release Exists
               # Step 8: Check if the release already exists
               id: release_check
               run: |
-                  if gh release view ${{ env.tag }} > /dev/null 2>&1; then
-                    echo "Release for tag ${{ env.tag }} already exists. Skipping release creation."
-                    echo "release_exists=true" >> $GITHUB_ENV
+                  if git tag --list | grep -q "${{ env.tag }}"; then
+                      if gh release view ${{ env.tag }} > /dev/null 2>&1; then
+                          echo "Release for tag ${{ env.tag }} already exists. Skipping release creation."
+                          echo "release_exists=true" >> $GITHUB_ENV
+                      else
+                          echo "Release for tag ${{ env.tag }} does not exist."
+                          echo "release_exists=false" >> $GITHUB_ENV
+                      fi
                   else
-                    echo "release_exists=false" >> $GITHUB_ENV
+                      echo "Tag ${{ env.tag }} does not exist. Skipping release creation."
+                      echo "release_exists=false" >> $GITHUB_ENV
                   fi
 
             - name: Check and Delete Existing Asset
@@ -118,7 +124,7 @@ jobs:
 
                   if [ ! -z "$EXISTING_ASSET_ID" ]; then
                     echo "Deleting existing asset: $ASSET_NAME"
-                    gh release delete-asset ${{ env.tag }} $ASSET_NAME --yes
+                    gh release delete-asset ${{ env.tag }} $EXISTING_ASSET_ID --yes
                   else
                     echo "No existing asset named $ASSET_NAME found in release ${{ env.tag }}."
                   fi
