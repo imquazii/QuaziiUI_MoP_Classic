@@ -91,10 +91,22 @@ jobs:
       id: changelog
       run: cat CHANGELOG.md
 
-    # Step 8: Create or update a GitHub Release using gh CLI
+    - name: Check if Release Exists
+      # Step 8: Check if the release already exists
+      id: release_check
+      run: |
+        if gh release view ${{ env.tag }} > /dev/null 2>&1; then
+          echo "Release for tag ${{ env.tag }} already exists. Skipping release creation."
+          echo "release_exists=true" >> $GITHUB_ENV
+        else
+          echo "release_exists=false" >> $GITHUB_ENV
+        fi
+
     - name: Create or Update GitHub Release
+      # Step 9: Create or update a GitHub Release using gh CLI
+      if: env.release_exists == 'false'
       env:
-        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }} # Set GH_TOKEN here
       run: |
         gh release create ${{ env.tag }} \
           QuaziiUI.zip \
@@ -103,8 +115,9 @@ jobs:
           --target main
 
     - name: Upload Release Asset
+      # Step 10: Upload the zipped file as release asset
+      if: env.release_exists == 'false'
       env:
-        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      # Step 9: Upload the zipped file as release asset
+        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }} # Set GH_TOKEN here
       run: |
         gh release upload ${{ env.tag }} QuaziiUI.zip
