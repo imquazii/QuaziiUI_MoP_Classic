@@ -36,9 +36,14 @@ jobs:
     - name: Check existing tags
       id: tag_check
       run: |
+        git config --global user.email "github-actions[bot]@users.noreply.github.com"
+        git config --global user.name "github-actions[bot]"
+
         DATE=$(date +'%Y%m%d')
         EXISTING_TAGS=$(git tag --list "$DATE-*")
         TAG_TO_USE=""
+
+        # Check for existing tags and whether they have a release
         for TAG in $EXISTING_TAGS; do
           RELEASE_COUNT=$(gh release view $TAG --json tagName --jq '.tagName' | wc -l || true)
           if [[ $RELEASE_COUNT -eq 0 ]]; then
@@ -46,12 +51,19 @@ jobs:
             break
           fi
         done
+
+        # If no existing tag without a release is found, create a new one
         if [[ -z "$TAG_TO_USE" ]]; then
           COUNT=$(echo "$EXISTING_TAGS" | wc -l)
           TAG_TO_USE="$DATE-$((COUNT+1))"
-          git tag $TAG_TO_USE
-          git push origin $TAG_TO_USE
+
+          # Check if the tag exists remotely
+          if ! git ls-remote --tags origin | grep -q "refs/tags/$TAG_TO_USE"; then
+            git tag $TAG_TO_USE
+            git push origin $TAG_TO_USE
+          fi
         fi
+
         echo "tag=$TAG_TO_USE" >> $GITHUB_ENV
 
     - name: Run build.py
