@@ -10,6 +10,10 @@ on:
   # Manual trigger
   workflow_dispatch:
 
+permissions:
+  contents: write # Allow the action to write to the repository (for creating tags/releases)
+  discussions: read # Optional, adjust according to your needs
+
 jobs:
   build:
     runs-on: ubuntu-latest
