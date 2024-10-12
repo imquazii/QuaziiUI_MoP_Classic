@@ -40,7 +40,7 @@ def get_template():
 
 
 def write_template(input):
-    path: Path = Path.cwd().joinpath("QuaziiUIInstaller/imports.lua")
+    path: Path = Path.cwd().joinpath("QuaziiUI/imports.lua")
     with open(path, "w") as template:
         template.write(input)
 
