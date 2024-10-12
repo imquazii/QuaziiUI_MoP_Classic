@@ -81,7 +81,8 @@ if L then
     L["MDTHeader"] = "MDT Route Import"
     L["MDTText"] = "Here you can choose which MDT Routes you would like to import."
     L["MDTNotLoaded"] = "MDT Addon not loaded"
-    L["PUG 'Push W' Routes"] = true
+    L["PUG 'Push W' Routes"] = "PUG 'Push W' Routes"
+    L["AdvRoutes"] = "Advanced Routes"
     -- All MDT Names are pulled from the import string, so cannot be translated
 
     -- Finish Page
