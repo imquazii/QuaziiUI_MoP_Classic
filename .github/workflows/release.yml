@@ -113,7 +113,7 @@ jobs:
         GH_TOKEN: ${{ secrets.GITHUB_TOKEN }} # Set GH_TOKEN here
       run: |
         gh release create ${{ env.tag }} \
-          QuaziiUI.zip \
+          QuaziiUI_${{ env.tag }}.zip \
           --title "QuaziiUI ${{ env.tag }}" \
           --notes-file CHANGELOG.md \
           --target main
@@ -124,4 +124,4 @@ jobs:
       env:
         GH_TOKEN: ${{ secrets.GITHUB_TOKEN }} # Set GH_TOKEN here
       run: |
-        gh release upload ${{ env.tag }} QuaziiUI.zip
+        gh release upload ${{ env.tag }} QuaziiUI_${{ env.tag }}.zip
