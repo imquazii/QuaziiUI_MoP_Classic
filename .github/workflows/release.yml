@@ -118,7 +118,7 @@ jobs:
 
                   if [ ! -z "$EXISTING_ASSET_ID" ]; then
                     echo "Deleting existing asset: $ASSET_NAME"
-                    gh release delete-asset ${{ env.tag }} $EXISTING_ASSET_ID --yes
+                    gh release delete-asset ${{ env.tag }} $ASSET_NAME --yes
                   else
                     echo "No existing asset named $ASSET_NAME found in release ${{ env.tag }}."
                   fi
