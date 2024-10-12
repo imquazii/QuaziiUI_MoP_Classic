@@ -77,9 +77,16 @@ jobs:
     # Step 7: Generate changelog from commit messages since last tag
     - name: Generate changelog
       run: |
-        LAST_TAG=$(git describe --tags --abbrev=0)
-        echo "Changes since $LAST_TAG:" > CHANGELOG.md
-        git log $LAST_TAG..HEAD --oneline >> CHANGELOG.md
+        # Check if there are any tags
+        if git describe --tags --abbrev=0 > /dev/null 2>&1; then
+          LAST_TAG=$(git describe --tags --abbrev=0)
+          echo "Changes since $LAST_TAG:" > CHANGELOG.md
+          git log $LAST_TAG..HEAD --oneline >> CHANGELOG.md
+        else
+          # If no tags, generate changelog for all commits
+          echo "Changes since the beginning:" > CHANGELOG.md
+          git log --oneline >> CHANGELOG.md
+        fi
     - name: Output changelog
       id: changelog
       run: cat CHANGELOG.md
