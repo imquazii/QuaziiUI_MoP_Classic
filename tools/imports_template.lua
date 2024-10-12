@@ -28,15 +28,18 @@ QuaziiUI.imports.ElvUI = {
     healer = {
         ---@type table
         cell = {
+            ---@type string
             data = "{HEALER_CELL_IMPORT}"
         },
         ---@type table
         normal = {
+            ---@type string
             data = "{HEALER_IMPORT}"
         }
     },
     ---@type table
     tankdps = {
+        ---@type string
         data = "{TANK_DPS_IMPORT}"
     }
 }
@@ -49,19 +52,7 @@ QuaziiUI.imports.WAStrings = {
         name = L["ClassWA"],
         ---@type table<string>
         WAs = {
-            "{dk}",
-            "{dh}",
-            "{druid}",
-            "{evoker}",
-            "{hunter}",
-            "{mage}",
-            "{monk}",
-            "{paladin}",
-            "{priest}",
-            "{rogue}",
-            "{shaman}",
-            "{warlock}",
-            "{warrior}"
+            "{CLASS_WA}"
         }
     },
     ---@type table
@@ -70,13 +61,7 @@ QuaziiUI.imports.WAStrings = {
         name = L["NonClassWA"],
         ---@type table<string>
         WAs = {
-            "{INTERRUPT_BARS}",
-            "{GROUP_HEALER_MANA}",
-            "{BATTLE_RES_TRACKER}",
-            "{CONSUMABLES}",
-            "{TALENT_CHECK}",
-            "{REROLL_KEY}",
-            "{CASTBAR}"
+            "{NON_CLASS_WA}"
         }
     }
 }
@@ -84,6 +69,30 @@ QuaziiUI.imports.WAStrings = {
 QuaziiUI.imports.BigWigs = {
     ---@type string
     data = "{BIGWIGS}"
+}
+
+---@type table
+QuaziiUI.imports.OmniCD = {
+    ---@type string
+    data = "{OMNICD}"
+}
+
+---@type table
+QuaziiUI.imports.Details = {
+    ---@type string
+    data = "{DETAILS}"
+}
+
+---@type table
+QuaziiUI.imports.Plater = {
+    ---@type string
+    data = "{PLATER}"
+}
+
+---@type table
+QuaziiUI.imports.Cell = {
+    ---@type string
+    data = "{CELL}"
 }
 
 ---@type table
@@ -901,28 +910,4 @@ QuaziiUI.imports.BigWigsColors = {
         ["BigWigs_Bosses_Vigilant Guardian"] = {[361001] = {nil, nil, nil, 1}}
     },
     red = {BigWigs_Bosses_Eranog = {[390715] = {nil, nil, nil, 1}}}
-}
-
----@type table
-QuaziiUI.imports.OmniCD = {
-    ---@type string
-    data = "{OMNICD}"
-}
-
----@type table
-QuaziiUI.imports.Details = {
-    ---@type string
-    data = "{DETAILS}"
-}
-
----@type table
-QuaziiUI.imports.Plater = {
-    ---@type string
-    data = "{PLATER}"
-}
-
----@type table
-QuaziiUI.imports.Cell = {
-    ---@type string
-    data = "{CELL}"
 }

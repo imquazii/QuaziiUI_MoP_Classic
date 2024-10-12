@@ -3,8 +3,10 @@ import os
 from json import load
 
 raw_import_data: dict = {}
-mdt_w_routes_string: list = []
-mdt_adv_routes_string: list = []
+mdt_w_routes_list: list = []
+mdt_adv_routes_list: list = []
+wa_class_list: list = []
+wa_non_class_list: list = []
 
 
 def get_import_files():
@@ -28,11 +30,20 @@ def get_import_files():
                 with open(txt_path, "r", encoding="utf-8") as import_file:
                     if "routes" in txt_path:
                         if "PUG" in txt_path:
-                            mdt_w_routes_string.append(
+                            mdt_w_routes_list.append(
                                 import_file.read().strip().join(('"', '"'))
                             )
                         elif "Adv" in txt_path:
-                            mdt_adv_routes_string.append(
+                            mdt_adv_routes_list.append(
+                                import_file.read().strip().join(('"', '"'))
+                            )
+                    elif "weakauras" in txt_path:
+                        if "class" in txt_path:
+                            wa_class_list.append(
+                                import_file.read().strip().join(('"', '"'))
+                            )
+                        elif "utility" in txt_path:
+                            wa_non_class_list.append(
                                 import_file.read().strip().join(('"', '"'))
                             )
                     else:
@@ -53,10 +64,16 @@ def write_template(input):
 
 def process_temple():
     template = get_template()
-    w_routes_string = ",\n            ".join(mdt_w_routes_string)
-    adv_routes_string = ",\n            ".join(mdt_adv_routes_string)
+    w_routes_string = ",\n            ".join(mdt_w_routes_list)
+    adv_routes_string = ",\n            ".join(mdt_adv_routes_list)
+    wa_class_string = ",\n            ".join(wa_class_list)
+    wa_non_class_string = ",\n            ".join(wa_non_class_list)
+
     template = template.replace('"{MDT_W_ROUTES}"', w_routes_string)
     template = template.replace('"{MDT_ADV_ROUTES}"', adv_routes_string)
+    template = template.replace('"{CLASS_WA}"', wa_class_string)
+    template = template.replace('"{NON_CLASS_WA}"', wa_non_class_string)
+
     for k, v in raw_import_data.items():
         replace_string = "{" + k + "}"
         value_string = v
