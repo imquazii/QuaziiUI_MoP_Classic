@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+## [2024.10.11-alpha3](https://github.com/chatterchats/QuaziiUIInstaller/compare/2024.10.11-alpha2...2024.10.11-alpha3)
+## Changed
+- Updated Plater Import
+
 ## [2024.10.11-alpha2](https://github.com/chatterchats/QuaziiUIInstaller/compare/2024.10.11-alpha...2024.10.11-alpha2)
 ### Added
 - Variable Typing
