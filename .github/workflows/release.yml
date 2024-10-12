@@ -4,6 +4,11 @@ on:
   push:
     branches:
     - main
+    paths:
+    - 'tools/imports/**'
+
+  # Manual trigger
+  workflow_dispatch:
 
 jobs:
   build:
@@ -14,28 +19,25 @@ jobs:
       cancel-in-progress: true
 
     steps:
-    # Step 1: Add a delay (sleep for 1 hour = 3600 seconds)
-    - name: Wait for 15 mintues
-      run: sleep 10
+    # Step 1: Add a delay (sleep for 15 minutes = 900 seconds), only for push events
+    - name: Wait for 15 minutes (only on push)
+      if: github.event_name == 'push'
+      run: sleep 900
 
     # Step 2: Checkout the code
     - name: Checkout code
       uses: actions/checkout@v3
 
-    # Step 3: Set up Python
-    - name: Set up Python
-      uses: actions/setup-python@v4
-      with:
-        python-version: "3.x"
+    # Step 3: Install GitHub CLI (gh)
+    - name: Install GitHub CLI
+      run: sudo apt-get install gh
 
     # Step 4: Check if tag already exists without a release
     - name: Check existing tags
       id: tag_check
       run: |
         DATE=$(date +'%Y%m%d')
-        # List all tags matching the date
         EXISTING_TAGS=$(git tag --list "$DATE-*")
-        # Loop through existing tags and check for releases
         TAG_TO_USE=""
         for TAG in $EXISTING_TAGS; do
           RELEASE_COUNT=$(gh release view $TAG --json tagName --jq '.tagName' | wc -l || true)
@@ -45,9 +47,10 @@ jobs:
           fi
         done
         if [[ -z "$TAG_TO_USE" ]]; then
-          # If no tag without a release was found, create a new one
           COUNT=$(echo "$EXISTING_TAGS" | wc -l)
           TAG_TO_USE="$DATE-$((COUNT+1))"
+          git tag $TAG_TO_USE
+          git push origin $TAG_TO_USE
         fi
         echo "tag=$TAG_TO_USE" >> $GITHUB_ENV
 
@@ -55,26 +58,30 @@ jobs:
       # Step 5: Run the Python build script
       run: python tools/build.py
 
-    # Step 6: Zip the QuaziiUIInstaller directory
-    - name: Zip QuaziiUIInstaller
+    # Step 6: Zip the QuaziiUI directory
+    - name: Zip QuaziiUI directory
       run: zip -r QuaziiUI.zip QuaziiUI
 
-    # Step 7: Create or update a GitHub Release
-    - name: Create or Update GitHub Release
-      uses: actions/create-release@v1
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-        tag_name: ${{ env.tag }}
-        release_name: QuaziiUIInstaller ${{ env.tag }}
-        draft: false
-        prerelease: false
+    # Step 7: Generate changelog from commit messages since last tag
+    - name: Generate changelog
+      run: |
+        LAST_TAG=$(git describe --tags --abbrev=0)
+        echo "Changes since $LAST_TAG:" > CHANGELOG.md
+        git log $LAST_TAG..HEAD --oneline >> CHANGELOG.md
+    - name: Output changelog
+      id: changelog
+      run: cat CHANGELOG.md
 
-    # Step 8: Upload the zipped file as release asset
+    # Step 8: Create or update a GitHub Release using gh CLI
+    - name: Create or Update GitHub Release
+      run: |
+        gh release create ${{ env.tag }} \
+          QuaziiUI.zip \
+          --title "QuaziiUI ${{ env.tag }}" \
+          --notes-file CHANGELOG.md \
+          --target main
+
     - name: Upload Release Asset
-      uses: actions/upload-release-asset@v1
-      with:
-        upload_url: ${{ steps.tag_check.outputs.upload_url }}
-        asset_path: QuaziiUIInstaller.zip
-        asset_name: QuaziiUIInstaller.zip
-        asset_content_type: application/zip
+      # Step 9: Upload the zipped file as release asset
+      run: |
+        gh release upload ${{ env.tag }} QuaziiUI.zip
