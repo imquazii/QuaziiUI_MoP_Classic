@@ -15,9 +15,9 @@ local function updateElvUIDisplay()
         end
     end
 
-    updateImportInfo("ElvUIHeals", "lastHImportTime", "lastHVersion")
+    updateImportInfo("healer.normal", "lastHImportTime", "lastHVersion")
     --[[updateImportInfo("ElvUIHealsCell", "lastHCImportTime", "lastHCVersion")]]
-    updateImportInfo("ElvUITank", "lastTImportTime", "lastTVersion")
+    updateImportInfo("tankdps", "lastTImportTime", "lastTVersion")
 end
 
 local function updateScaleDisplay()
@@ -63,17 +63,17 @@ local function autoUIScale()
 end
 
 -- Import Profile Functions
-local function importProfile(profileType, dataKey)
+local function importProfile(profileType, dbKey, dataKey)
     return function()
         QuaziiUI.DF:ShowPromptPanel(
             string.format("Are you sure you want to import/update Quazii's %s ElvUI profile?", profileType),
             function()
-                QuaziiUI.db.profile.imports[dataKey] = {
+                QuaziiUI.db.profile.imports[dbKey] = {
                     date = GetServerTime(),
                     version = QuaziiUI.versionNumber
                 }
                 local Profile = ElvUI[1].Distributor
-                Profile:ImportProfile(QuaziiUI.imports.ElvUI[dataKey].data)
+                Profile:ImportProfile(dataKey)
                 QuaziiUI.db.char.openPage = 3
                 updateElvUIDisplay()
             end,
@@ -84,9 +84,9 @@ local function importProfile(profileType, dataKey)
     end
 end
 
-local importHealerProfile = importProfile("Healer", "healer.normal")
+local importHealerProfile = importProfile("Healer", "healer.normal", QuaziiUI.imports.ElvUI.healer.normal.data)
 --[[local importHealerCellProfile = importProfile("Healer - Cell", "healer.cell")--]]
-local importTankProfile = importProfile("Tank/DPS", "tankdps")
+local importTankProfile = importProfile("Tank/DPS", "tankdps", QuaziiUI.imports.ElvUI.tankdps.data)
 
 -- Page Creation
 function page:Create(parent)
@@ -112,14 +112,16 @@ function page:CreateElvUISection(frame)
     elvHeader:SetJustifyH("CENTER")
     elvHeader:SetJustifyV("TOP")
 
-    local elvDescription = QuaziiUI.DF:CreateLabel(frame, L["ElvUIText"]:gsub("QHCH", QuaziiUI.highlightColorHex), QuaziiUI.PageTextSize)
+    local elvDescription =
+        QuaziiUI.DF:CreateLabel(frame, L["ElvUIText"]:gsub("QHCH", QuaziiUI.highlightColorHex), QuaziiUI.PageTextSize)
     elvDescription:SetWordWrap(true)
     elvDescription:SetPoint("TOPLEFT", elvHeader.widget, "BOTTOMLEFT", 0, -10)
     elvDescription:SetPoint("TOPRIGHT", elvHeader.widget, "BOTTOMRIGHT", 0, -10)
     elvDescription:SetJustifyH("LEFT")
     elvDescription:SetJustifyV("TOP")
 
-    local importTankContainer = QuaziiUI:CreateImportFrame(frame, "ElvUI", L["Tank"] .. "/" .. L["DPS"], importTankProfile)
+    local importTankContainer =
+        QuaziiUI:CreateImportFrame(frame, "ElvUI", L["Tank"] .. "/" .. L["DPS"], importTankProfile)
     importTankContainer:SetPoint("TOP", elvDescription.widget, "BOTTOM", 0, -20)
 
     local importHealerContainer = QuaziiUI:CreateImportFrame(frame, "ElvUI", L["Healer"], importHealerProfile)
@@ -144,7 +146,11 @@ end
 
 function page:CreateUIScaleSection(frame)
     local uiHeader =
-        QuaziiUI.DF:CreateLabel(frame, "|c" .. QuaziiUI.highlightColorHex .. L["UIScaleHeader"] .. "|r", QuaziiUI.PageHeaderSize)
+        QuaziiUI.DF:CreateLabel(
+        frame,
+        "|c" .. QuaziiUI.highlightColorHex .. L["UIScaleHeader"] .. "|r",
+        QuaziiUI.PageHeaderSize
+    )
     uiHeader:SetPoint("TOPLEFT", frame, "TOP", 10, -10)
     uiHeader:SetPoint("TOPRIGHT", frame, "TOPRIGHT", -10, -10)
     uiHeader:SetJustifyH("CENTER")
@@ -175,7 +181,21 @@ function page:CreateScaleButtons(frame)
 
     local lastButton
     for i, config in ipairs(buttonConfig) do
-        local button = QuaziiUI.DF:CreateButton(frame, config.func, 90, 30, config.text, nil, nil, nil, nil, nil, nil, QuaziiUI.ODT)
+        local button =
+            QuaziiUI.DF:CreateButton(
+            frame,
+            config.func,
+            90,
+            30,
+            config.text,
+            nil,
+            nil,
+            nil,
+            nil,
+            nil,
+            nil,
+            QuaziiUI.ODT
+        )
         if i == 1 then
             button:SetPoint("TOP", self.uiScaleText.widget, "BOTTOM", 0, -10)
         else
