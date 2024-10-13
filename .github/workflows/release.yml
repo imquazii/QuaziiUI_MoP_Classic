@@ -45,27 +45,18 @@ jobs:
 
                   DATE=$(date +'%Y%m%d')
                   EXISTING_TAGS=$(git tag --list "$DATE*")
-                  TAG_TO_USE=""
+                  TAG_TO_USE="$DATE" # Default to just the date
 
-                  # Check for existing tags and whether they have a release
-                  for TAG in $EXISTING_TAGS; do
-                    RELEASE_COUNT=$(gh release view $TAG --json tagName --jq '.tagName' | wc -l || true)
-                    if [[ $RELEASE_COUNT -eq 0 ]]; then
-                      TAG_TO_USE=$TAG
-                      break
-                    fi
-                  done
-
-                  # If no existing tag without a release is found, create a new one
-                  if [[ -z "$TAG_TO_USE" ]]; then
-                    COUNT=$(echo "$EXISTING_TAGS" | wc -l)
+                  # Check if there's already a tag with the exact date
+                  if echo "$EXISTING_TAGS" | grep -q "^$DATE$"; then
+                    COUNT=$(echo "$EXISTING_TAGS" | grep -E "^$DATE-[0-9]+$" | wc -l)
                     TAG_TO_USE="$DATE-$((COUNT+1))"
+                  fi
 
-                    # Check if the tag exists remotely
-                    if ! git ls-remote --tags origin | grep -q "refs/tags/$TAG_TO_USE"; then
-                      git tag $TAG_TO_USE
-                      git push origin $TAG_TO_USE
-                    fi
+                  # Check if the tag exists remotely and push if not
+                  if ! git ls-remote --tags origin | grep -q "refs/tags/$TAG_TO_USE"; then
+                    git tag $TAG_TO_USE
+                    git push origin $TAG_TO_USE
                   fi
 
                   echo "tag=$TAG_TO_USE" >> $GITHUB_ENV
