@@ -120,7 +120,7 @@ jobs:
                   GH_TOKEN: ${{ secrets.GITHUB_TOKEN }} # Set GH_TOKEN here
               run: |
                   ASSET_NAME="QuaziiUI_${{ env.tag }}.zip"
-                  EXISTING_ASSET_ID=$(gh release view ${{ env.tag }} --json assets --jq ".assets | .[] | select(.name == \"$ASSET_NAME\") | .id")
+                  EXISTING_ASSET_ID=$(gh release view ${{ env.tag }} --json assets --jq ".assets | .[] | select(.name == \"$ASSET_NAME\") | .id" || true)
 
                   if [ ! -z "$EXISTING_ASSET_ID" ]; then
                     echo "Deleting existing asset: $ASSET_NAME"
