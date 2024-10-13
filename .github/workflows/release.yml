@@ -44,7 +44,7 @@ jobs:
                   git config --global user.name "github-actions[bot]"
 
                   DATE=$(date +'%Y%m%d')
-                  EXISTING_TAGS=$(git tag --list "$DATE-*")
+                  EXISTING_TAGS=$(git tag --list "$DATE*")
                   TAG_TO_USE=""
 
                   # Check for existing tags and whether they have a release
@@ -96,7 +96,7 @@ jobs:
               id: changelog
               run: cat CHANGELOG.md
 
-              - name: Check if Release Exists
+            - name: Check if Release Exists
               # Step 8: Check if the release already exists
               id: release_check
               run: |
