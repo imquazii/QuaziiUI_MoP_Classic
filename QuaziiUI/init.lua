@@ -4,7 +4,6 @@ QuaziiUI = LibStub("AceAddon-3.0"):NewAddon("QuaziiUI", "AceConsole-3.0", "AceEv
 ---@type table
 QuaziiUI.DF = _G["DetailsFramework"]
 
-
 ---@type table
 QuaziiUI.defaults = {
     profile = {
@@ -54,9 +53,7 @@ end
 function QuaziiUI:PLAYER_ENTERING_WORLD()
     local isNotDone = not self.db.char.isDone -- Has not finished installer before
     local newVersion = (self.db.char.lastVersion or 0) < self.versionNumber -- Attempts to set to lastVersion, if not found sets to 0
-    local hasopenPage = self.db.char.openPage ~= nil -- Hasn't finished on a page before
-
-    if (isNotDone) or (newVersion) or (hasopenPage) then
+    if (isNotDone) or (newVersion) then
         self:selectPage((self.db.char.openPage or 1))
         self:Show()
         self.db.char.lastVersion = self.versionNumber

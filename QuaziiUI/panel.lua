@@ -73,7 +73,7 @@ function QuaziiUI:CreateImportFrame(parentPanel, addonName, importLabel, importF
 
     local lastImportLabel = self.DF:CreateLabel(frame, L["ImportLastImportText"], self.TableTextSize)
     lastImportLabel:SetPoint("TOPRIGHT", profileText, "BOTTOMRIGHT", 0, -3)
-    local versionLabel = self.DF:CreateLabel(frame, L["Version"] ..": ", self.TableTextSize)
+    local versionLabel = self.DF:CreateLabel(frame, L["Version"] .. ": ", self.TableTextSize)
     versionLabel:SetPoint("TOPRIGHT", lastImportLabel, "BOTTOMRIGHT", 4, -3)
 
     local lastImportText = self.DF:CreateLabel(frame, "", self.TableTextSize)
@@ -115,7 +115,7 @@ end
 -- Create Main UI Frame
 local function createPanel()
     -- Init panel
-    
+
     local panel = QuaziiUI.DF:CreateSimplePanel(UIParent, 600, 500, L["AddonName"] .. QuaziiUI.versionString) -- Create a 600x500 panel
     QuaziiUI.DF:ApplyStandardBackdrop(panel) -- Give it a basic backdrop
 
@@ -127,6 +127,13 @@ local function createPanel()
     panel.Title:SetFont(panel.Title:GetFont(), 18) -- Set Title Font Size to 18
     panel.Title:SetTextColor(unpack(QuaziiUI.textColorRGBA)) -- Set Text Color
     panel.Title:SetPoint("CENTER", panel.TitleBar, "CENTER", 0, 1) -- Center Title Text in the Title Bar, offset 1 Y pixel
+    panel.Close:SetScript(
+        "OnClick",
+        function(self)
+            self:GetParent():GetParent():Hide()
+            QuaziiUI.db.char.isDone = true
+        end
+    )
 
     -- Panel Options
     panel:ClearAllPoints() -- Resets Panel Anchor point
@@ -137,21 +144,60 @@ local function createPanel()
 
     -- Previous Button
     local previousButton =
-        QuaziiUI.DF:CreateButton(panel, selectPreviousPage, 90, 40, "<- " .. L["Back"], nil, nil, nil, nil, nil, nil, QuaziiUI.ODT)
+        QuaziiUI.DF:CreateButton(
+        panel,
+        selectPreviousPage,
+        90,
+        40,
+        "<- " .. L["Back"],
+        nil,
+        nil,
+        nil,
+        nil,
+        nil,
+        nil,
+        QuaziiUI.ODT
+    )
     previousButton:SetPoint("BOTTOMLEFT", panel, "BOTTOMLEFT", 10, 5) -- Anchor Button to Bottom Left of Panel, with 5 pixel buffer
     previousButton.text_overlay:SetFont(previousButton.text_overlay:GetFont(), 18) -- Set Font Size
     previousButton:SetTextColor(unpack(QuaziiUI.textColorRGBA)) -- Set Text to Text Color
 
     -- Index Button
     local indexButton =
-        QuaziiUI.DF:CreateButton(panel, selectIndexPage, 90, 40, "- " .. L["Index"] .. " -", nil, nil, nil, nil, nil, nil, QuaziiUI.ODT)
+        QuaziiUI.DF:CreateButton(
+        panel,
+        selectIndexPage,
+        90,
+        40,
+        "- " .. L["Index"] .. " -",
+        nil,
+        nil,
+        nil,
+        nil,
+        nil,
+        nil,
+        QuaziiUI.ODT
+    )
     indexButton:SetPoint("BOTTOM", panel, "BOTTOM", 0, 5) -- Anchor Button to Bottom Left of Panel, with 5 pixel buffer
     indexButton.text_overlay:SetFont(indexButton.text_overlay:GetFont(), 18) -- Set Font Size
     indexButton:SetTextColor(unpack(QuaziiUI.textColorRGBA)) -- Set Text to Text Color
 
     -- Next Button
     local nextButton =
-        QuaziiUI.DF:CreateButton(panel, selectNextPage, 90, 40, L["Next"] .. " ->", nil, nil, nil, nil, nil, nil, QuaziiUI.ODT)
+        QuaziiUI.DF:CreateButton(
+        panel,
+        selectNextPage,
+        90,
+        40,
+        L["Next"] .. " ->",
+        nil,
+        nil,
+        nil,
+        nil,
+        nil,
+        nil,
+        QuaziiUI.ODT
+    )
     nextButton:SetPoint("BOTTOMRIGHT", panel, "BOTTOMRIGHT", -10, 5) -- Anchor Button to Bottom Right of Panel, with 5 pixel buffer
     nextButton.text_overlay:SetFont(nextButton.text_overlay:GetFont(), 18) -- Set Font Size
     nextButton:SetTextColor(unpack(QuaziiUI.textColorRGBA)) -- Set Text to Text Color
@@ -165,6 +211,7 @@ local function createPanel()
 
     panel.frameContent = panelContentFrame
     QuaziiUI.panel = panel
+
     createPages(panel)
 end
 
