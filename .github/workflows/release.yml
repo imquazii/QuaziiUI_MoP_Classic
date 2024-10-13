@@ -82,18 +82,18 @@ jobs:
             # Step 7: Generate changelog from commit messages since last tag
             - name: Generate changelog
               run: |
-                # Check if there are any tags
-                if git describe --tags --abbrev=0 > /dev/null 2>&1; then
-                    LAST_TAG=$(git describe --tags --abbrev=0)
-                    echo "Debug: Last tag found: $LAST_TAG"
-                    echo "Changes since $LAST_TAG:" > CHANGELOG.md
-                    git log $LAST_TAG..HEAD --oneline >> CHANGELOG.md
-                else
-                    # If no tags exist, generate changelog for all commits
-                    echo "Debug: No tags found, generating changelog for all commits."
-                    echo "Changes since the beginning:" > CHANGELOG.md
-                    git log --oneline >> CHANGELOG.md
-                fi
+                  # Check if there are any tags
+                  if git describe --tags --abbrev=0 > /dev/null 2>&1; then
+                      LAST_TAG=$(git describe --tags --abbrev=0)
+                      echo "Debug: Last tag found: $LAST_TAG"
+                      echo "Changes since $LAST_TAG:" > CHANGELOG.md
+                      git log $LAST_TAG..HEAD --oneline >> CHANGELOG.md
+                  else
+                      # If no tags exist, generate changelog for all commits
+                      echo "Debug: No tags found, generating changelog for all commits."
+                      echo "Changes since the beginning:" > CHANGELOG.md
+                      git log --oneline >> CHANGELOG.md
+                  fi
 
             - name: Output changelog
               id: changelog
@@ -105,7 +105,9 @@ jobs:
             - name: Check if Release Exists
               id: release_check
               run: |
+                  echo "Debug: Checking if the release exists for tag ${{ env.tag }}"
                   if git tag --list | grep -q "${{ env.tag }}"; then
+                      echo "Debug: Tag ${{ env.tag }} exists."
                       if gh release view ${{ env.tag }} > /dev/null 2>&1; then
                           echo "Debug: Release for tag ${{ env.tag }} already exists."
                           echo "release_exists=true" >> $GITHUB_ENV
@@ -116,6 +118,7 @@ jobs:
                   else
                       echo "Debug: Tag ${{ env.tag }} does not exist."
                       echo "release_exists=false" >> $GITHUB_ENV
+                  fi
 
             # Step 9: Check and Delete Existing Asset
             - name: Check and Delete Existing Asset
