@@ -53,6 +53,8 @@ jobs:
                     TAG_TO_USE="$DATE-$((COUNT+1))"
                   fi
 
+                  echo "Using Tag: $TAG_TO_USE"
+
                   # Check if the tag exists remotely and push if not
                   if ! git ls-remote --tags origin | grep -q "refs/tags/$TAG_TO_USE"; then
                     git tag $TAG_TO_USE
