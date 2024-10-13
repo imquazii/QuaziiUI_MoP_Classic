@@ -125,6 +125,11 @@ function page:CreateElvUISection(frame)
     local importHealerContainer = QuaziiUI:CreateImportFrame(frame, "ElvUI", L["Healer"], importHealerProfile)
     importHealerContainer:SetPoint("TOPRIGHT", importTankContainer, "BOTTOMRIGHT", 0, 10)
 
+    local cellNotice = QuaziiUI.DF:CreateLabel(frame, L["CellNotice"], QuaziiUI.PageTextSize - 3)
+    cellNotice:SetWordWrap(true)
+    cellNotice:SetPoint("TOP", importHealerContainer.versionText.widget, "BOTTOM", 0, -10)
+    cellNotice:SetJustifyH("CENTER")
+
     self.lastHImportTime = importHealerContainer.lastImportText
     self.lastTImportTime = importTankContainer.lastImportText
     self.lastHVersion = importHealerContainer.versionText

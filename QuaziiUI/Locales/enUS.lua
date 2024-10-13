@@ -57,6 +57,7 @@ if L then
     L["ElvUIHeader"] = "ElvUI Imports"
     L["ElvUIText"] =
         "Here you can import or update any of |cQHCHQuazii's|r ElvUI Profiles.\n|cQHCHNOTE:|r If you import multiple profiles, you can switch in ElvUI's profile settings."
+    L["CellNotice"] = "Cell users visit https://quazii.com\nfor the cell compatible profile."
     L["UIScaleHeader"] = "UI Scale"
     L["UIScaleText"] =
         "Adjust your UI Scaling below.\nIf the UI looks off or too big/small, you may wish to try a different setting."
