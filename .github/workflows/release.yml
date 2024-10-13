@@ -49,7 +49,7 @@ jobs:
 
                   # Check if there's already a tag with the exact date
                   if echo "$EXISTING_TAGS" | grep -q "^$DATE$"; then
-                    COUNT=$(echo "$EXISTING_TAGS" | grep -E "^$DATE-[0-9]+$" | wc -l)
+                    COUNT=$(echo "$EXISTING_TAGS" | grep -E "^$DATE.?[0-9]?+$" | wc -l)
                     TAG_TO_USE="$DATE-$((COUNT+1))"
                   fi
 
