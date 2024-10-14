@@ -4,6 +4,34 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+## [2024.10.14](https://github.com/chatterchats/QuaziiUIInstaller/compare/20241013-2...20241014)
+### Changed:
+- Corrected Locales to not all be set to default
+### Added 
+- Custom MDT Import
+
+## [2024.10.13-2](https://github.com/chatterchats/QuaziiUIInstaller/compare/20241013...20241013-2)
+### Added
+- Logic for closing with the X close button to not reopen on reload
+- Template files for all supported languages
+### Fixed: 
+- ElvUI Logic for accessing import strings
+
+## [2024.10.13-1](https://github.com/chatterchats/QuaziiUIInstaller/compare/2024.10.12-beta...20241013)
+## Changed
+- Fixed auto release pipeline
+
+## [2024.10.12-beta](https://github.com/chatterchats/QuaziiUIInstaller/compare/2024.10.11-alpha3...2024.10.12-beta)
+## Added
+- MDT Advanced Routes
+
+## Changed
+- Build process to accommodate advanced routes
+- Refactor build process slightly to make it more resilient against errors
+
+## Fixed
+- File names not being updated properly due to git case-insensitivit
+
 ## [2024.10.11-alpha3](https://github.com/chatterchats/QuaziiUIInstaller/compare/2024.10.11-alpha2...2024.10.11-alpha3)
 ## Changed
 - Updated Plater Import

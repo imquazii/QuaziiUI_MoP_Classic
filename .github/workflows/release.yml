@@ -54,6 +54,8 @@ jobs:
                   if echo "$EXISTING_TAGS" | grep -q "^$DATE$"; then
                     COUNT=$(echo "$EXISTING_TAGS" | grep -E "^$DATE.?[0-9]?+$" | wc -l)
                     TAG_TO_USE="$DATE-$((COUNT+1))"
+                  else
+                    TAG_TO_USE="$DATE-1"
                   fi
 
                   echo "Debug: Using Tag: $TAG_TO_USE"
