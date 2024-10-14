@@ -74,7 +74,7 @@ local function mdtScrollBoxUpdate(self, data, offset, totalLines)
                     function()
                         local MDTPreset = MDT:StringToTable(QuaziiUI.imports.MDT[currentCategory].Routes[index], true)
                         if MDT:ValidateImportPreset(MDTPreset) then
-                            MDT:ImportPreset(MDTPreset, false)
+                            QuaziiUI:importMDTRoute(MDTPreset)
                         end
                     end
                 )
