@@ -1,91 +1,91 @@
 -- Localization file for english/United States
-local L = LibStub("AceLocale-3.0"):NewLocale("QuaziiUI", "esES", true, true)
+local L = LibStub("AceLocale-3.0"):NewLocale("QuaziiUI", "esES", false, true)
 
 if L then
     -- Generic
-    L["AddonName"] = "Quazii UI"
-    L["Tank"] = "Tank"
-    L["DPS"] = "DPS"
-    L["Healer"] = "Healer"
-    L["Import"] = "Import"
-    L["Imports"] = "Imports"
-    L["Next"] = "Next"
-    L["Index"] = "Index"
-    L["Prev"] = "Prev" --Shorthand for Previous
-    L["Back"] = "Back"
-    L["Icon"] = "Icon"
-    L["Name"] = "Name"
-    L["Update"] = "Update Needed?"
-    L["Version"] = "Version"
+    L["AddonName"] = false
+    L["Tank"] = false
+    L["DPS"] = false
+    L["Healer"] = false
+    L["Import"] = false
+    L["Imports"] = false
+    L["Next"] = false
+    L["Index"] = false
+    L["Prev"] = false
+    L["Back"] = false
+    L["Icon"] = false
+    L["Name"] = false
+    L["Update"] = false
+    L["Version"] = false
 
-    L["NA"] = "N/A"
-    L["Yes"] = "Yes"
-    L["No"] = "No"
-    L["True"] = "True"
-    L["False"] = "False"
+    L["NA"] = false
+    L["Yes"] = false
+    L["No"] = false
+    L["True"] = false
+    L["False"] = false
 
     -- Import Frame
-    L["ImportProfileText"] = " Profile:"
-    L["ImportLastImportText"] = "Last Import Time:"
+    L["ImportProfileText"] = false
+    L["ImportLastImportText"] = false
 
     -- Addons
-    L["ElvUI"] = "ElvUI"
-    L["Cell"] = "Cell"
-    L["Details"] = "Details!"
-    L["BigWigs"] = "BigWigs"
-    L["OmniCD"] = "OmniCD"
-    L["WeakAuras"] = "WeakAuras"
-    L["MDT"] = "MDT"
+    L["ElvUI"] = false
+    L["Cell"] = false
+    L["Details"] = false
+    L["BigWigs"] = false
+    L["OmniCD"] = false
+    L["WeakAuras"] = false
+    L["MDT"] = false
 
     -- Welcome Page
-    L["WelcomeHeader"] = "Quazii UI"
+    L["WelcomeHeader"] = false
     L["WelcomeText1"] =
-        "This installer will take you through the steps needed to import and install all aspects of Quazii UI."
+        false
     L["WelcomeText2"] =
-        "Each step can be considered optional, however, it is recommended to at least use ElvUI and Weakauras."
-    L["WelcomeText3"] = "Let's get started!"
+        false
+    L["WelcomeText3"] = false
 
     -- Supported Addon Check
-    L["SupportedAddonsHeader"] = "Quazii UI Homepage"
+    L["SupportedAddonsHeader"] = false
     L["SupportedAddonsText"] =
-        "Below shows the addon profiles are supported by Quazii UI.\nIf you have the respective addon installed, you can proceed to import the profiles\n"
-    L["SupportedAddonsTable1stHeader"] = "Supported|r Addons"
-    L["SupportedAddonsTable2ndHeader"] = "Enabled"
-    L["SupportedAddonsTable3rdHeader"] = "Installed Version"
+        false
+    L["SupportedAddonsTable1stHeader"] = false
+    L["SupportedAddonsTable2ndHeader"] = false
+    L["SupportedAddonsTable3rdHeader"] = false
 
     -- ElvUI / UI Scale
-    L["ElvUIHeader"] = "ElvUI Imports"
+    L["ElvUIHeader"] = false
     L["ElvUIText"] =
-        "Here you can import or update any of |cQHCHQuazii's|r ElvUI Profiles.\n|cQHCHNOTE:|r If you import multiple profiles, you can switch in ElvUI's profile settings."
-    L["UIScaleHeader"] = "UI Scale"
+        false
+    L["UIScaleHeader"] = false
     L["UIScaleText"] =
-        "Adjust your UI Scaling below.\nIf the UI looks off or too big/small, you may wish to try a different setting."
-    L["CurrentUIScale"] = "Current UI Scale"
-    L["ScaleButtonAuto"] = "Auto"
-    L["ScaleButtonSmall"] = "Small"
-    L["ScaleButtonMedium"] = "Medium"
-    L["ScaleButtonLarge"] = "Large"
+        false
+    L["CurrentUIScale"] = false
+    L["ScaleButtonAuto"] = false
+    L["ScaleButtonSmall"] = false
+    L["ScaleButtonMedium"] = false
+    L["ScaleButtonLarge"] = false
 
     -- Other Addons
     -- No strings need to be translated for this page
 
     -- WeakAuras
-    L["WeakAuraText"] = "Here you can choose which WAs you would like to import or update."
-    L["ClassWA"] = "Class WeakAuras"
-    L["NonClassWA"] = "Non-Class WeakAuras"
-    L["ClassWA"] = "Class WeakAuras"
-    L["WeakAuraNotFound"] = "WeakAura not installed or has been renamed"
+    L["WeakAuraText"] = false
+    L["ClassWA"] = false
+    L["NonClassWA"] = false
+    L["ClassWA"] = false
+    L["WeakAuraNotFound"] = false
     -- All WA names are pulled from the import string, so cannot be translated
 
     -- MDT
-    L["MDTHeader"] = "MDT Route Import"
-    L["MDTText"] = "Here you can choose which MDT Routes you would like to import."
-    L["MDTNotLoaded"] = "MDT Addon not loaded"
-    L["PUG 'Push W' Routes"] = "PUG 'Push W' Routes"
-    L["AdvRoutes"] = "Advanced Routes"
+    L["MDTHeader"] = false
+    L["MDTText"] = false
+    L["MDTNotLoaded"] = false
+    L["PUG 'Push W' Routes"] = false
+    L["AdvRoutes"] = false
     -- All MDT Names are pulled from the import string, so cannot be translated
 
     -- Finish Page
-    L["FinishHeader"] = "Congratulations!"
-    L["FinishedText"] = "You have reached the end of the installation!\nHave fun with your new UI!"
+    L["FinishHeader"] = false
+    L["FinishedText"] = false
 end
