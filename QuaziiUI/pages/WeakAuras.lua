@@ -36,7 +36,9 @@ local function parseWAData(index)
         local waTable = decodeWAPacket(importString) or {}
 
         if waTable and waTable.d then
-            print("WA ID: ", waTable.d.id)
+            if DEBUG_MODE then
+                print("WA ID: ", waTable.d.id)
+            end
             table.insert(
                 data,
                 {
