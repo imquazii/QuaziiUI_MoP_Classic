@@ -4,7 +4,11 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
-## [2024.10.14](https://github.com/chatterchats/QuaziiUIInstaller/compare/20241013-2...20241014)
+## [2024.10.15-1](https://github.com/chatterchats/QuaziiUIInstaller/compare/20241014-1...20241015-1)
+### Changed:
+- Fixed error in Plater import function by removing redefined self.
+
+## [2024.10.14-1](https://github.com/chatterchats/QuaziiUIInstaller/compare/20241013-2...20241014-1)
 ### Changed:
 - Corrected Locales to not all be set to default
 ### Added 
