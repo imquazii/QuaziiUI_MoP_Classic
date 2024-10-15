@@ -1,7 +1,5 @@
 local L = QuaziiUI.L
 
-DEBUG_MODE = false
-
 -- Page Functions
 ---@param parentFrame table|Frame
 local function createPages(parentFrame)
