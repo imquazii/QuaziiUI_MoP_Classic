@@ -1,4 +1,4 @@
-function QuaziiUI:importPlaterProfile(self)
+function QuaziiUI:importPlaterProfile()
     self.DF:ShowTextPromptPanel(
         "Insert a Name for the New Plater Profile:",
         function(newProfileName)
