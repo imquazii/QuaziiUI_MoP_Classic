@@ -3,7 +3,7 @@ QuaziiUI = LibStub("AceAddon-3.0"):NewAddon("QuaziiUI", "AceConsole-3.0", "AceEv
 
 ---@type table
 QuaziiUI.DF = _G["DetailsFramework"]
-QuaziiUI.DEBUG_MODE = true
+QuaziiUI.DEBUG_MODE = false
 
 ---@type table
 QuaziiUI.defaults = {

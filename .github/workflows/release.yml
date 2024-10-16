@@ -70,6 +70,32 @@ jobs:
 
                   echo "tag=$TAG_TO_USE" >> $GITHUB_ENV
 
+            
+            # Step 5: Modify QuaziiUI/init.lua if DEBUG_MODE is true
+            - name: Check and update QuaziiUI.DEBUG_MODE in init.lua
+              run: |
+                  INIT_FILE="./QuaziiUI/init.lua"
+                  
+                  if grep -q "QuaziiUI.DEBUG_MODE = true" "$INIT_FILE"; then
+                      echo "Debug: DEBUG_MODE is set to true. Updating to false."
+                      sed -i 's/QuaziiUI.DEBUG_MODE = true/QuaziiUI.DEBUG_MODE = false/' "$INIT_FILE"
+                  else
+                      echo "Debug: DEBUG_MODE is already false or not found."
+                  fi
+
+            # Step 6: Ensure the version matches the current date in QuaziiUI.toc
+            - name: Check and update version in QuaziiUI.toc
+              run: |
+                  TOC_FILE="./QuaziiUI/QuaziiUI.toc"
+                  DATE=$(date +'%Y%m%d')
+                  
+                  if grep -q "## Version: $DATE" "$TOC_FILE"; then
+                      echo "Debug: Version is already up to date ($DATE)."
+                  else
+                      echo "Debug: Updating version to $DATE."
+                      sed -i "s/## Version:.*/## Version: $DATE/" "$TOC_FILE"
+                  fi
+
             # Step 5: Run build.py
             - name: Run build.py
               run: python tools/build.py
