@@ -3,7 +3,7 @@ QuaziiUI.L = LibStub("AceLocale-3.0"):GetLocale("QuaziiUI")
 ---@type table
 QuaziiUI.ODT = QuaziiUI.DF:GetTemplate("dropdown", "OPTIONS_DROPDOWN_TEMPLATE")
 ---@type boolean
-DEBUG_MODE = false
+
 
 ---@type number
 QuaziiUI.versionNumber = tonumber(C_AddOns.GetAddOnMetadata(QuaziiUI:GetName(), "Version")) or 0 -- Get Addon Version from .toc and convert to number
