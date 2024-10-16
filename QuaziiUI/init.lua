@@ -3,6 +3,7 @@ QuaziiUI = LibStub("AceAddon-3.0"):NewAddon("QuaziiUI", "AceConsole-3.0", "AceEv
 
 ---@type table
 QuaziiUI.DF = _G["DetailsFramework"]
+QuaziiUI.DEBUG_MODE = true
 
 ---@type table
 QuaziiUI.defaults = {
@@ -20,7 +21,12 @@ QuaziiUI.defaults = {
         ---@type integer
         selectedPage = 1,
         ---@type integer
-        openPage = 1
+        openPage = 1,
+        ---@type table
+        debug = {
+            ---@type boolean
+            reload = false
+        }
     }
 }
 
@@ -37,7 +43,11 @@ function QuaziiUI:OnInitialize()
     self:RegisterChatCommand("rl", "SlashCommandReload")
 end
 
-function QuaziiUI:SlashCommandOpen()
+function QuaziiUI:SlashCommandOpen(input)
+    if input and input == "debug" then
+        self.db.char.debug.reload = true
+        ReloadUI()
+    end
     self:selectPage(QuaziiUI.db.char.openPage or 1)
     self:Show()
 end
@@ -53,9 +63,22 @@ end
 function QuaziiUI:PLAYER_ENTERING_WORLD()
     local isNotDone = not self.db.char.isDone -- Has not finished installer before
     local newVersion = (self.db.char.lastVersion or 0) < self.versionNumber -- Attempts to set to lastVersion, if not found sets to 0
+
+    if not self.DEBUG_MODE then
+        if self.db.char.debug.reload then
+            self.DEBUG_MODE = true
+            self.db.char.debug.reload = false
+            QuaziiUI:DebugPrint("Debug Mode Enabled")
+        end
+    else
+        QuaziiUI:DebugPrint("Debug Mode Enabled")
+    end
     if (isNotDone) or (newVersion) then
+        QuaziiUI:DebugPrint("Is Not Done?: ", isNotDone, " | New Version?: ", newVersion)
         self:selectPage((self.db.char.openPage or 1))
         self:Show()
         self.db.char.lastVersion = self.versionNumber
+    else
+        QuaziiUI:DebugPrint("Is Not Done?: ", isNotDone, " | New Version?: ", newVersion)
     end
 end

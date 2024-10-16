@@ -3,9 +3,12 @@ local L = QuaziiUI.L
 -- Page Functions
 ---@param parentFrame table|Frame
 local function createPages(parentFrame)
+    local pageCount = 0
     for _, page in ipairs(QuaziiUI.pagePrototypes) do
+        pageCount = pageCount + 1
         page:Create(parentFrame)
     end
+    QuaziiUI:DebugPrint("Pages Created:", pageCount)
 end
 
 ---@param pageIndex integer
@@ -13,6 +16,7 @@ function QuaziiUI:selectPage(pageIndex)
     self.db.char.selectedPage = pageIndex
     self.db.char.shownPages = 0
 
+    QuaziiUI:DebugPrint("Selected Page:", pageIndex)
     for _, page in ipairs(self.pagePrototypes) do
         if not page:ShouldShow() then
             page:Hide()
@@ -61,7 +65,7 @@ end
 function QuaziiUI:CreateImportFrame(parentPanel, addonName, importLabel, importFunction)
     local frame = CreateFrame("Frame", nil, parentPanel)
     frame:SetHeight(100)
-
+    
     local profileText = self.DF:CreateLabel(frame, "", self.TableHeaderSize)
     profileText:SetPoint("TOPLEFT", frame, "TOPLEFT")
 

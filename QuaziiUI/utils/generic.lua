@@ -12,3 +12,9 @@ function QuaziiUI.VersionToString(inputVersion) -- I
     local Y, M, D = string.match(tostring(inputVersion), "(%d%d%d%d)(%d%d)(%d%d)")
     return " v" .. Y .. "." .. M .. "." .. D
 end
+
+function QuaziiUI:DebugPrint(...)
+    if self.DEBUG_MODE then
+        self:Print(...)
+    end
+end
