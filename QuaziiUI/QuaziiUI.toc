@@ -3,7 +3,7 @@
 ## IconTexture: Interface\AddOns\QuaziiUI\assets\quaziiLogo
 ## Notes: Installer for |cFF30D1FFQuazii|r UI
 ## Author: Chats
-## Version: 20241016
+## Version: 20241017
 ## DefaultState: Enabled
 ## LoadOnDemand: 0
 ## SavedVariables: QuaziiUI_DB
