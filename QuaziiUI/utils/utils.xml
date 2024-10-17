@@ -2,5 +2,5 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.blizzard.com/wow/ui/..\FrameXML\UI.xsd">
     <Script file="generic.lua"/>
     <Script file="constants.lua"/>
-    <Include file="imports\imports.xml"/>
+    <Include file="addons\addons.xml"/>
 </Ui>

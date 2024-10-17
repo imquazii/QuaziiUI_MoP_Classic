@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
+## [2024.10.17-2](https://github.com/chatterchats/QuaziiUIInstaller/compare/20241017-1...20241017-2)
+## Added
+- Version support for DH, DK, Druid, Evoker
+- Support for 3rd rown on DH, DK, Evoker
+
+## Changed
+- Misc updates and fixes for Warrior and Druid
+
+
+## [2024.10.17-1](https://github.com/chatterchats/QuaziiUIInstaller/compare/20241016-2...20241017-1)
+### Added
+- Confirmation Frame for Cell Import
+- Quazii's Edit for Reloe's M+ Timer
 
 ## [2024.10.16-1](https://github.com/chatterchats/QuaziiUIInstaller/compare/20241015-1...20241016-1)
 ### Changed:
