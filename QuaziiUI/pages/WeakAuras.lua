@@ -16,14 +16,17 @@ end
 local function getWAUpdateStatus(waTable)
     if WeakAuras then
         ---@type table
-        local WAData = WeakAuras.GetData(waTable.d.id)
-        if not WAData then
-            return L["NA"]
-        end
+        if waTable and waTable.d then
+            local WAData = WeakAuras.GetData(waTable.d.id)
+            if not WAData then
+                return L["NA"]
+            end
 
-        local installedVersion = tonumber(string.match(WAData.desc or "Version 0", "Version (%d+)")) or 0
-        local newVersion = tonumber(string.match(waTable.d.desc or "Version 0", "Version (%d+)")) or 0
-        return newVersion > installedVersion and "|cFFbc1f00" .. L["Yes"] .. "|r" or "|cFF28bc00" .. L["No"] .. "|r"
+            local installedVersion = tonumber(string.match(WAData.desc or "Version 0", "Version (%d+)")) or 0
+            local newVersion = tonumber(string.match(waTable.d.desc or "Version 0", "Version (%d+)")) or 0
+            return newVersion > installedVersion and "|cFFbc1f00" .. L["Yes"] .. "|r" or "|cFF28bc00" .. L["No"] .. "|r"
+        end
+        return L["NA"]
     end
     return L["NA"]
 end
@@ -115,6 +118,7 @@ local function waScrollBoxUpdate(self, data, offset, totalLines)
                 line.importButton:SetClickFunction(
                     function()
                         WeakAuras.Import(QuaziiUI.imports.WAStrings[currentCategory].WAs[index])
+                        line.updateLabel:SetText(getWAUpdateStatus(QuaziiUI.imports.WAStrings[currentCategory].WAs[index]))
                     end
                 )
             end
