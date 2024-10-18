@@ -104,7 +104,7 @@ jobs:
             - name: Zip QuaziiUI directory
               run: |
                   echo "Debug: Zipping QuaziiUI directory with tag ${{ env.tag }}"
-                  zip -r QuaziiUI_${{ env.tag }}.zip QuaziiUI
+                  zip -r QuaziiUI.zip QuaziiUI
 
             # Step 7: Generate changelog from commit messages since last tag
             - name: Generate changelog
@@ -153,7 +153,7 @@ jobs:
               env:
                   GH_TOKEN: ${{ secrets.GITHUB_TOKEN }} # Set GH_TOKEN here
               run: |
-                  ASSET_NAME="QuaziiUI_${{ env.tag }}.zip"
+                  ASSET_NAME="QuaziiUI.zip"
                   echo "Debug: Checking for existing asset: $ASSET_NAME"
                   EXISTING_ASSET_ID=$(gh release view ${{ env.tag }} --json assets --jq ".assets | .[] | select(.name == \"$ASSET_NAME\") | .id" || true)
                   echo "Debug: Existing Asset ID: $EXISTING_ASSET_ID"
@@ -173,7 +173,7 @@ jobs:
               run: |
                   echo "Debug: Creating release for tag ${{ env.tag }}"
                   gh release create ${{ env.tag }} \
-                    QuaziiUI_${{ env.tag }}.zip \
+                    QuaziiUI.zip \
                     --title "QuaziiUI ${{ env.tag }}" \
                     --notes-file CHANGELOG.md \
                     --target main
