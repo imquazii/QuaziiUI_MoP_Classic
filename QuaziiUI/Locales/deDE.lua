@@ -80,7 +80,7 @@ if L then
 
     -- MDT
     L["MDTHeader"] = "MDT-Routen-Import"
-    L["MDTText"] = "Hier können Sie auswählen, welche MDT-Routen Sie importieren möchten.\nBitte /reload nach dem Import, um sicherzustellen, dass die Routen richtig importiert wurden!"
+    L["MDTText"] = "Hier können Sie auswählen, welche MDT-Routen importiert werden sollen.\nBitte /reload nach dem Import, um sicherzustellen, dass die Routen importiert wurden!"
     L["MDTNotLoaded"] = "MDT-Addon nicht geladen"
     L["PUG 'Push W' Routes"] = "PUG 'Push W' Routen"
     L["AdvRoutes"] = "Fortgeschrittene Routen"
