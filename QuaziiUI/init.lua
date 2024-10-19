@@ -40,6 +40,7 @@ function QuaziiUI:OnInitialize()
     self.db = LibStub("AceDB-3.0"):New("QuaziiUI_DB", self.defaults, true)
 
     self:RegisterChatCommand("qui", "SlashCommandOpen")
+    self:RegisterChatCommand("quaziiui", "SlashCommandOpen")
     self:RegisterChatCommand("rl", "SlashCommandReload")
 end
 
