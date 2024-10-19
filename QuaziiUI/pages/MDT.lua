@@ -163,7 +163,7 @@ function page:CreateMDTList(frame)
         {text = L["Version"], width = 81},
         {text = L["Import"], width = 110}
     }
-    local options = {text_size = 16}
+    local options = {text_size = QuaziiUI.TableHeaderSize}
     frame.addonHeader = QuaziiUI.DF:CreateHeader(frame, headerTable, options, "QuaziiUIInstallMDTHeader")
     frame.addonHeader:SetPoint("TOPLEFT", self.descriptionText.widget, "BOTTOMLEFT", -2, -35)
 

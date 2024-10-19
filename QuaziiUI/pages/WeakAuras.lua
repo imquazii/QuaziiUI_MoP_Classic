@@ -224,7 +224,7 @@ function page:CreateWAList(frame)
     }
 
     ---@type table
-    local options = {text_size = 16}
+    local options = {text_size = QuaziiUI.TableHeaderSize}
 
     frame.addonHeader = QuaziiUI.DF:CreateHeader(frame, headerTable, options, "QuaziiUIInstallWAHeader")
     frame.addonHeader:SetPoint("TOPLEFT", self.descriptionText.widget, "BOTTOMLEFT", -2, -35)

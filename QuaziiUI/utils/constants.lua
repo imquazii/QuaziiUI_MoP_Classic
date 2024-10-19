@@ -4,7 +4,6 @@ QuaziiUI.L = LibStub("AceLocale-3.0"):GetLocale("QuaziiUI")
 QuaziiUI.ODT = QuaziiUI.DF:GetTemplate("dropdown", "OPTIONS_DROPDOWN_TEMPLATE")
 ---@type boolean
 
-
 ---@type number
 QuaziiUI.versionNumber = tonumber(C_AddOns.GetAddOnMetadata(QuaziiUI:GetName(), "Version")) or 0 -- Get Addon Version from .toc and convert to number
 ---@type string
@@ -34,7 +33,12 @@ QuaziiUI.PageHeaderSize = 24
 ---@type integer
 QuaziiUI.PageTextSize = 18
 
----@type integer
-QuaziiUI.TableHeaderSize = 17
+if not (not ElvUI) then
+    ---@type integer
+    QuaziiUI.TableHeaderSize = 17
+else
+    ---@type integer
+    QuaziiUI.TableHeaderSize = 12
+end
 ---@type integer
 QuaziiUI.TableTextSize = 15
