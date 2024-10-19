@@ -1,6 +1,6 @@
 ---
 name: Bug Report
-about: Report a bug to help us improve QuaziiUI Addon Importer
+about: Report a bug to help us improve QuaziiUI
 title: "[BUG]"
 labels: bug
 assignees: ''

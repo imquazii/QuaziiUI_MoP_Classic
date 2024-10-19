@@ -1,6 +1,6 @@
 ---
 name: Feature Request
-about: Suggest an idea for QuaziiUI Addon Importer
+about: Suggest an idea for QuaziiUI
 title: "[FEATURE]"
 labels: enhancement
 assignees: ''
