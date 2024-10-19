@@ -3,9 +3,15 @@
 All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
-## [2024.19.19-2](https://github.com/QuaziiUI/Installer/compare/20241019-1...20241019-2)
+
+## [2024.19.19-2](https://github.com/QuaziiUI/Installer/compare/20241019-2...20241019-3)
 ### Changed:
 - Fixed Localization Files causing failure to load
+
+## [2024.19.19-2](https://github.com/QuaziiUI/Installer/compare/20241019-1...20241019-2)
+### Changed
+- Updated OmniCD Profile (Placement Changes)
+- Update Plater Profile (Added Interrupt Indicator to Plater  Castbar if int becomes avail mid cast)
 
 ## [2024.10.19-1](https://github.com/QuaziiUI/Installer/compare/20241018-1...20241019-1)
 ### Added
