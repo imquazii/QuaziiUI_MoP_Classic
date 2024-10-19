@@ -1,5 +1,5 @@
 -- Localization file for english/United States
-local L = LibStub("AceLocale-3.0"):NewLocale("QuaziiUI", "esES", false, true)
+local L = LibStub("AceLocale-3.0"):NewLocale("QuaziiUI", "esMX", false, true)
 
 if L then
     -- Generic
