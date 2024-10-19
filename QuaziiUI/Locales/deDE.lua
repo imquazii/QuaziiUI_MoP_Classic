@@ -1,5 +1,5 @@
 -- Localization file for German/Germany
-local L = LibStub("AceLocale-3.0"):NewLocale("QuaziiUI", "deDE", false)
+local L = LibStub("AceLocale-3.0"):NewLocale("QuaziiUI", "deDE", false, true)
 
 if L then
     -- Generic

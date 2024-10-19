@@ -3,6 +3,31 @@
 All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
+## [2024.19.19-2](https://github.com/QuaziiUI/Installer/compare/20241019-1...20241019-2)
+### Changed:
+- Fixed Localization Files causing failure to load
+
+## [2024.10.19-1](https://github.com/QuaziiUI/Installer/compare/20241018-1...20241019-1)
+### Added
+- Standard GitHub Boilerplates
+- Version Support for All Remaining Class WAs
+- 3rd Row Support for all classes
+- Warrior Class WA Buff Tracking Optimizations
+
+### Changed
+- deDE Translation change on MDT Route Import text.
+
+
+## [2024.10.18-1](https://github.com/QuaziiUI/Installer/compare/20241017-2...20241018-1)
+### Added:
+- German Translation courtesy of @Knuffelpanda 
+- null checking to WA Import Scripts
+
+### Changed:
+- Moved Repo to QuaziiUI Org
+- Release assets to use QuaziiUI.zip instead of QuaziiUI_DATE.zip for easier latest release linking
+
+
 ## [2024.10.17-2](https://github.com/chatterchats/QuaziiUIInstaller/compare/20241017-1...20241017-2)
 ## Added
 - Version support for DH, DK, Druid, Evoker
