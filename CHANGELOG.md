@@ -4,11 +4,28 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
-## [2024.19.19-2](https://github.com/QuaziiUI/Installer/compare/20241019-2...20241019-3)
+## [2024.10.19-5](https://github.com/QuaziiUI/Installer/compare/20241019-4...20241019-3)
+### Added
+- Missing Embedded Libs
+- `/quaziiui` chat command to accompany `/qui` for languages where that is reserved.
+
+### Changed
+- Font size issues when not using ElvUI
+
+## [2024.10.19-4](https://github.com/QuaziiUI/Installer/compare/20241019-3...20241019-3)
+### Added
+- Accidental Presidency Font file
+
+### Changed
+- Set interrupt mod to be DISABLED by default.
+  - new interrupt mod comes with indicator to show interrupt availability if it comes back up during mid-cast.
+- Corrected LocaleCodes
+
+## [2024.10.19-3](https://github.com/QuaziiUI/Installer/compare/20241019-2...20241019-3)
 ### Changed:
 - Fixed Localization Files causing failure to load
 
-## [2024.19.19-2](https://github.com/QuaziiUI/Installer/compare/20241019-1...20241019-2)
+## [2024.10.19-2](https://github.com/QuaziiUI/Installer/compare/20241019-1...20241019-2)
 ### Changed
 - Updated OmniCD Profile (Placement Changes)
 - Update Plater Profile (Added Interrupt Indicator to Plater  Castbar if int becomes avail mid cast)
