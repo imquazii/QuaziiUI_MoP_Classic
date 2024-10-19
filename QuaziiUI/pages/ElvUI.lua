@@ -107,6 +107,7 @@ function page:CreateElvUISection(frame)
         "|c" .. QuaziiUI.highlightColorHex .. L["ElvUI"] .. " " .. L["Imports"] .. "|r",
         QuaziiUI.PageHeaderSize
     )
+    elvHeader:SetFont("Interface\\AddOns\\QuaziiUI\\assets\\accidental_pres.ttf", QuaziiUI.PageHeaderSize)
     elvHeader:SetPoint("TOPLEFT", frame, "TOPLEFT", 10, -10)
     elvHeader:SetPoint("TOPRIGHT", frame, "TOP", -10, -10)
     elvHeader:SetJustifyH("CENTER")
@@ -114,6 +115,7 @@ function page:CreateElvUISection(frame)
 
     local elvDescription =
         QuaziiUI.DF:CreateLabel(frame, L["ElvUIText"]:gsub("QHCH", QuaziiUI.highlightColorHex), QuaziiUI.PageTextSize)
+    elvDescription:SetFont("Interface\\AddOns\\QuaziiUI\\assets\\accidental_pres.ttf", QuaziiUI.PageTextSize)
     elvDescription:SetWordWrap(true)
     elvDescription:SetPoint("TOPLEFT", elvHeader.widget, "BOTTOMLEFT", 0, -10)
     elvDescription:SetPoint("TOPRIGHT", elvHeader.widget, "BOTTOMRIGHT", 0, -10)
@@ -128,8 +130,9 @@ function page:CreateElvUISection(frame)
     importHealerContainer:SetPoint("TOPRIGHT", importTankContainer, "BOTTOMRIGHT", 0, 10)
 
     local cellNotice = QuaziiUI.DF:CreateLabel(frame, L["CellNotice"], QuaziiUI.PageTextSize - 3)
+    cellNotice:SetFont("Interface\\AddOns\\QuaziiUI\\assets\\accidental_pres.ttf", QuaziiUI.TableTextSize)
     cellNotice:SetWordWrap(true)
-    cellNotice:SetPoint("TOP", importHealerContainer.versionText.widget, "BOTTOM", 0, -10)
+    cellNotice:SetPoint("TOP", importHealerContainer.versionText.widget, "BOTTOMLEFT", -5, -10)
     cellNotice:SetJustifyH("CENTER")
 
     self.lastHImportTime = importHealerContainer.lastImportText
@@ -151,11 +154,13 @@ function page:CreateUIScaleSection(frame)
         "|c" .. QuaziiUI.highlightColorHex .. L["UIScaleHeader"] .. "|r",
         QuaziiUI.PageHeaderSize
     )
+    uiHeader:SetFont("Interface\\AddOns\\QuaziiUI\\assets\\accidental_pres.ttf", QuaziiUI.PageHeaderSize)
     uiHeader:SetPoint("TOPLEFT", frame, "TOP", 10, -10)
     uiHeader:SetPoint("TOPRIGHT", frame, "TOPRIGHT", -10, -10)
     uiHeader:SetJustifyH("CENTER")
 
     local uiDescription = QuaziiUI.DF:CreateLabel(frame, L["UIScaleText"], QuaziiUI.PageTextSize)
+    uiDescription:SetFont("Interface\\AddOns\\QuaziiUI\\assets\\accidental_pres.ttf", QuaziiUI.PageTextSize)
     uiDescription:SetWordWrap(true)
     uiDescription:SetPoint("TOPLEFT", uiHeader.widget, "BOTTOMLEFT", 0, -10)
     uiDescription:SetPoint("TOPRIGHT", uiHeader.widget, "BOTTOMRIGHT", 0, -10)
@@ -163,9 +168,11 @@ function page:CreateUIScaleSection(frame)
     uiDescription:SetJustifyV("TOP")
 
     local uiScaleLabel = QuaziiUI.DF:CreateLabel(frame, L["CurrentUIScale"], QuaziiUI.PageTextSize)
+    uiScaleLabel:SetFont("Interface\\AddOns\\QuaziiUI\\assets\\accidental_pres.ttf", QuaziiUI.PageTextSize)
     uiScaleLabel:SetPoint("TOP", uiDescription.widget, "BOTTOM", 0, -35)
 
     self.uiScaleText = QuaziiUI.DF:CreateLabel(frame, "", QuaziiUI.PageTextSize)
+    self.uiScaleText:SetFont("Interface\\AddOns\\QuaziiUI\\assets\\accidental_pres.ttf", QuaziiUI.PageTextSize)
     self.uiScaleText:SetPoint("TOP", uiScaleLabel, "BOTTOM", 0, -10)
 
     self:CreateScaleButtons(frame)
@@ -201,7 +208,7 @@ function page:CreateScaleButtons(frame)
         else
             button:SetPoint("TOP", lastButton, "BOTTOM", 0, -10)
         end
-        button.text_overlay:SetFont(button.text_overlay:GetFont(), QuaziiUI.PageTextSize)
+        button.text_overlay:SetFont("Interface\\AddOns\\QuaziiUI\\assets\\accidental_pres.ttf", QuaziiUI.PageTextSize)
         lastButton = button
     end
 end

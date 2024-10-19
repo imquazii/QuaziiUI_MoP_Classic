@@ -141,10 +141,13 @@ local function createAddonButton(self, index)
     QuaziiUI.DF:Mixin(line, QuaziiUI.DF.HeaderFunctions)
 
     line.addonLabel = QuaziiUI.DF:CreateLabel(line, nil, QuaziiUI.TableTextSize)
+    line.addonLabel:SetFont("Interface\\AddOns\\QuaziiUI\\assets\\accidental_pres.ttf", QuaziiUI.TableTextSize)
     line.versionLabel = QuaziiUI.DF:CreateLabel(line, nil, QuaziiUI.TableTextSize)
+    line.versionLabel:SetFont("Interface\\AddOns\\QuaziiUI\\assets\\accidental_pres.ttf", QuaziiUI.TableTextSize)
     line.enabledLabel = QuaziiUI.DF:CreateLabel(line, nil, QuaziiUI.TableTextSize)
+    line.enabledLabel:SetFont("Interface\\AddOns\\QuaziiUI\\assets\\accidental_pres.ttf", QuaziiUI.TableTextSize)
     line.importButton = QuaziiUI.DF:CreateButton(line, nil, 105, 30, L["Import"], nil, nil, nil, nil, nil, nil, QuaziiUI.ODT)
-    line.importButton.text_overlay:SetFont(line.importButton.text_overlay:GetFont(), 16)
+    line.importButton.text_overlay:SetFont("Interface\\AddOns\\QuaziiUI\\assets\\accidental_pres.ttf", QuaziiUI.TableTextSize)
 
     line:AddFrameToHeaderAlignment(line.addonLabel)
     line:AddFrameToHeaderAlignment(line.enabledLabel)
@@ -170,11 +173,13 @@ end
 function page:CreateHeader(frame)
     local header =
         QuaziiUI.DF:CreateLabel(frame, "|c" .. QuaziiUI.highlightColorHex .. L["SupportedAddonsHeader"] .. "|r", QuaziiUI.PageHeaderSize)
+    header:SetFont("Interface\\AddOns\\QuaziiUI\\assets\\accidental_pres.ttf", QuaziiUI.PageHeaderSize)
     header:SetPoint("TOP", frame, "TOP", 0, -10)
 end
 
 function page:CreateDescription(frame)
     local description = QuaziiUI.DF:CreateLabel(frame, L["SupportedAddonsText"], QuaziiUI.PageTextSize)
+    description:SetFont("Interface\\AddOns\\QuaziiUI\\assets\\accidental_pres.ttf", QuaziiUI.PageTextSize)
     description:SetWordWrap(true)
     description:SetPoint("TOPLEFT", frame, "TOPLEFT", 10, -40)
     description:SetPoint("TOPRIGHT", frame, "TOPRIGHT", -10, -40)

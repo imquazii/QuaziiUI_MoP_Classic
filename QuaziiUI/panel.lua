@@ -67,22 +67,27 @@ function QuaziiUI:CreateImportFrame(parentPanel, addonName, importLabel, importF
     frame:SetHeight(100)
     
     local profileText = self.DF:CreateLabel(frame, "", self.TableHeaderSize)
+    profileText:SetFont("Interface\\AddOns\\QuaziiUI\\assets\\accidental_pres.ttf", QuaziiUI.TableHeaderSize)
     profileText:SetPoint("TOPLEFT", frame, "TOPLEFT")
 
     -- Button Template
     local importProfileButton =
         self.DF:CreateButton(frame, importFunction, 90, 25, L["Import"], nil, nil, nil, nil, nil, nil, self.ODT)
     importProfileButton:SetPoint("LEFT", profileText, "RIGHT", 10) -- Attach Button to profileText Label
-    importProfileButton.text_overlay:SetFont(importProfileButton.text_overlay:GetFont(), self.TableTextSize) -- Set Button Font Size
+    importProfileButton.text_overlay:SetFont("Interface\\AddOns\\QuaziiUI\\assets\\accidental_pres.ttf", self.TableTextSize) -- Set Button Font Size
 
     local lastImportLabel = self.DF:CreateLabel(frame, L["ImportLastImportText"], self.TableTextSize)
+    lastImportLabel:SetFont("Interface\\AddOns\\QuaziiUI\\assets\\accidental_pres.ttf", QuaziiUI.TableTextSize)
     lastImportLabel:SetPoint("TOPRIGHT", profileText, "BOTTOMRIGHT", 0, -3)
     local versionLabel = self.DF:CreateLabel(frame, L["Version"] .. ": ", self.TableTextSize)
+    versionLabel:SetFont("Interface\\AddOns\\QuaziiUI\\assets\\accidental_pres.ttf", QuaziiUI.TableTextSize)
     versionLabel:SetPoint("TOPRIGHT", lastImportLabel, "BOTTOMRIGHT", 4, -3)
 
     local lastImportText = self.DF:CreateLabel(frame, "", self.TableTextSize)
+    lastImportText:SetFont("Interface\\AddOns\\QuaziiUI\\assets\\accidental_pres.ttf", QuaziiUI.TableTextSize)
     lastImportText:SetPoint("LEFT", lastImportLabel, "RIGHT", 10, 0)
     local versionText = self.DF:CreateLabel(frame, "", self.TableTextSize)
+    versionText:SetFont("Interface\\AddOns\\QuaziiUI\\assets\\accidental_pres.ttf", QuaziiUI.TableTextSize)
     versionText:SetPoint("LEFT", versionLabel, "RIGHT", 6, 0)
 
     local function update()
@@ -128,7 +133,7 @@ local function createPanel()
     panel:SetBorderColor(unpack(QuaziiUI.highlightColorRGBA)) -- Sets border color to Quazii Blue RGBA
 
     -- Panel Title Bar
-    panel.Title:SetFont(panel.Title:GetFont(), 18) -- Set Title Font Size to 18
+    panel.Title:SetFont("Interface\\AddOns\\QuaziiUI\\assets\\accidental_pres.ttf", 18) -- Set Title Font Size to 18
     panel.Title:SetTextColor(unpack(QuaziiUI.textColorRGBA)) -- Set Text Color
     panel.Title:SetPoint("CENTER", panel.TitleBar, "CENTER", 0, 1) -- Center Title Text in the Title Bar, offset 1 Y pixel
     panel.Close:SetScript(
@@ -163,7 +168,7 @@ local function createPanel()
         QuaziiUI.ODT
     )
     previousButton:SetPoint("BOTTOMLEFT", panel, "BOTTOMLEFT", 10, 5) -- Anchor Button to Bottom Left of Panel, with 5 pixel buffer
-    previousButton.text_overlay:SetFont(previousButton.text_overlay:GetFont(), 18) -- Set Font Size
+    previousButton.text_overlay:SetFont("Interface\\AddOns\\QuaziiUI\\assets\\accidental_pres.ttf", 18) -- Set Font Size
     previousButton:SetTextColor(unpack(QuaziiUI.textColorRGBA)) -- Set Text to Text Color
 
     -- Index Button
@@ -183,7 +188,7 @@ local function createPanel()
         QuaziiUI.ODT
     )
     indexButton:SetPoint("BOTTOM", panel, "BOTTOM", 0, 5) -- Anchor Button to Bottom Left of Panel, with 5 pixel buffer
-    indexButton.text_overlay:SetFont(indexButton.text_overlay:GetFont(), 18) -- Set Font Size
+    indexButton.text_overlay:SetFont("Interface\\AddOns\\QuaziiUI\\assets\\accidental_pres.ttf", 18) -- Set Font Size
     indexButton:SetTextColor(unpack(QuaziiUI.textColorRGBA)) -- Set Text to Text Color
 
     -- Next Button
@@ -203,7 +208,7 @@ local function createPanel()
         QuaziiUI.ODT
     )
     nextButton:SetPoint("BOTTOMRIGHT", panel, "BOTTOMRIGHT", -10, 5) -- Anchor Button to Bottom Right of Panel, with 5 pixel buffer
-    nextButton.text_overlay:SetFont(nextButton.text_overlay:GetFont(), 18) -- Set Font Size
+    nextButton.text_overlay:SetFont("Interface\\AddOns\\QuaziiUI\\assets\\accidental_pres.ttf", 18) -- Set Font Size
     nextButton:SetTextColor(unpack(QuaziiUI.textColorRGBA)) -- Set Text to Text Color
 
     -- Panel Content Frame

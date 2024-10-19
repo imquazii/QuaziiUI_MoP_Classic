@@ -149,13 +149,16 @@ local function createWAButton(self, index)
 
     line.icon:SetSize(42, 42)
     line.nameLabel:SetSize(318, self.LineHeight / 2)
+    line.nameLabel:SetFont("Interface\\AddOns\\QuaziiUI\\assets\\accidental_pres.ttf", QuaziiUI.PageTextSize)
     line.versionLabel:SetSize(68, self.LineHeight / 2)
+    line.versionLabel:SetFont("Interface\\AddOns\\QuaziiUI\\assets\\accidental_pres.ttf", QuaziiUI.PageTextSize)
     line.updateLabel:SetSize(68, self.LineHeight / 2)
+    line.updateLabel:SetFont("Interface\\AddOns\\QuaziiUI\\assets\\accidental_pres.ttf", QuaziiUI.PageTextSize)
     line.updateLabel:SetJustifyH("CENTER")
 
     line.importButton =
         QuaziiUI.DF:CreateButton(line, nil, 105, 30, L["Import"], nil, nil, nil, nil, nil, nil, QuaziiUI.ODT)
-    line.importButton.text_overlay:SetFont(line.importButton.text_overlay:GetFont(), 16)
+    line.importButton.text_overlay:SetFont("Interface\\AddOns\\QuaziiUI\\assets\\accidental_pres.ttf", 16)
 
     line:AddFrameToHeaderAlignment(line.icon)
     line:AddFrameToHeaderAlignment(line.nameLabel)
@@ -188,11 +191,13 @@ function page:CreateHeader(frame)
         "|c" .. QuaziiUI.highlightColorHex .. L["WeakAuras"] .. " " .. L["Imports"] .. "|r",
         QuaziiUI.PageHeaderSize
     )
+    header:SetFont("Interface\\AddOns\\QuaziiUI\\assets\\accidental_pres.ttf", QuaziiUI.PageHeaderSize)
     header:SetPoint("TOP", frame, "TOP", 0, -10)
 end
 
 function page:CreateDescription(frame)
     local text = QuaziiUI.DF:CreateLabel(frame, L["WeakAuraText"], QuaziiUI.PageTextSize)
+    text:SetFont("Interface\\AddOns\\QuaziiUI\\assets\\accidental_pres.ttf", QuaziiUI.PageTextSize)
     text:SetWordWrap(true)
     text:SetPoint("TOPLEFT", frame, "TOPLEFT", 10, -40)
     text:SetPoint("TOPRIGHT", frame, "TOPRIGHT", -10, -40)
@@ -205,7 +210,7 @@ function page:CreateSelectionDropdown(frame)
     local selectionDropdown =
         QuaziiUI.DF:CreateDropDown(frame, fillSelectionDropdown, nil, 200, 25, nil, nil, QuaziiUI.ODT)
     selectionDropdown:SetPoint("TOPLEFT", self.descriptionText, "BOTTOMLEFT", -1, -5)
-    selectionDropdown.label:SetFont(selectionDropdown.label:GetFont(), 16)
+    selectionDropdown.label:SetFont("Interface\\AddOns\\QuaziiUI\\assets\\accidental_pres.ttf", 16)
 end
 
 function page:CreateWAList(frame)
