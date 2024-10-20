@@ -18,7 +18,8 @@ if L then
     L["Name"] = "Name"
     L["Update"] = "Update Needed?"
     L["Version"] = "Version"
-
+    L["LeftClickOpen"] = "Left Click: Open Installer"
+    
     L["NA"] = "N/A"
     L["Yes"] = "Yes"
     L["No"] = "No"
