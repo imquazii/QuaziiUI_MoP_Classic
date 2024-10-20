@@ -71,7 +71,8 @@
         "IsSecureCmd",
         "NUM_CHAT_WINDOWS",
         "ChatEdit_GetActiveWindow",
-        "MythicDungeonToolsDB"
+        "MythicDungeonToolsDB",
+        "AddonCompartmentFrame"
     ],
     "colorize.languages": ["lua", "xml"]
 }

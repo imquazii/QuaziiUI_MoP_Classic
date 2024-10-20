@@ -1,5 +1,10 @@
 ---@type table|AceAddon
 QuaziiUI = LibStub("AceAddon-3.0"):NewAddon("QuaziiUI", "AceConsole-3.0", "AceEvent-3.0")
+---@type table<string, string>
+QuaziiUI.L = LibStub("AceLocale-3.0"):GetLocale("QuaziiUI")
+
+local L = QuaziiUI.L
+
 
 ---@type table
 QuaziiUI.DF = _G["DetailsFramework"]
@@ -49,8 +54,7 @@ function QuaziiUI:SlashCommandOpen(input)
         self.db.char.debug.reload = true
         ReloadUI()
     end
-    self:selectPage(QuaziiUI.db.char.openPage or 1)
-    self:Show()
+    QuaziiUI_CompartmentClick()
 end
 
 function QuaziiUI:SlashCommandReload()
@@ -82,4 +86,23 @@ function QuaziiUI:PLAYER_ENTERING_WORLD()
     else
         QuaziiUI:DebugPrint("Is Not Done?: ", isNotDone, " | New Version?: ", newVersion)
     end
+end
+
+
+-- ADDON COMPARTMENT FUNCTIONS --
+function QuaziiUI_CompartmentClick()
+    QuaziiUI:selectPage(QuaziiUI.db.char.openPage or 1)
+    QuaziiUI:Show()
+end
+local GameTooltip = GameTooltip
+function QuaziiUI_CompartmentOnEnter(self, button)
+    GameTooltip:ClearLines()
+    GameTooltip:SetOwner(type(self) ~= "string" and self or button, "ANCHOR_LEFT")
+    GameTooltip:AddLine(L["AddonName"] .. QuaziiUI.versionString)
+    GameTooltip:AddLine(L["LeftClickOpen"])
+    GameTooltip:Show()
+end
+
+function QuaziiUI_CompartmentOnLeave()
+    GameTooltip:Hide()
 end

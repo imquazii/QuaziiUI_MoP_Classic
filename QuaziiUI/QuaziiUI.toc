@@ -1,6 +1,9 @@
 ## Interface: 110002
 ## Title: |cFF30D1FFQuazii|r UI (Retail)
 ## IconTexture: Interface\AddOns\QuaziiUI\assets\quaziiLogo
+## AddonCompartmentFunc: QuaziiUI_CompartmentClick
+## AddonCompartmentFuncOnEnter: QuaziiUI_CompartmentOnEnter
+## AddonCompartmentFuncOnLeave: QuaziiUI_CompartmentOnLeave
 ## Notes: Installer for |cFF30D1FFQuazii|r UI
 ## Author: Chats
 ## Version: 20241019
