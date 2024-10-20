@@ -1,5 +1,10 @@
 ---@type table|AceAddon
 QuaziiUI = LibStub("AceAddon-3.0"):NewAddon("QuaziiUI", "AceConsole-3.0", "AceEvent-3.0")
+---@type table<string, string>
+QuaziiUI.L = LibStub("AceLocale-3.0"):GetLocale("QuaziiUI")
+
+local L = QuaziiUI.L
+
 
 ---@type table
 QuaziiUI.DF = _G["DetailsFramework"]

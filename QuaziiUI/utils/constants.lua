@@ -1,5 +1,3 @@
----@type table<string, string>
-QuaziiUI.L = LibStub("AceLocale-3.0"):GetLocale("QuaziiUI")
 ---@type table
 QuaziiUI.ODT = QuaziiUI.DF:GetTemplate("dropdown", "OPTIONS_DROPDOWN_TEMPLATE")
 ---@type boolean
