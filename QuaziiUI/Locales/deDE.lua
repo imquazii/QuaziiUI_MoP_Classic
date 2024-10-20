@@ -13,8 +13,7 @@ if L then
     L["Index"] = "Index"
     L["Prev"] = "Zurück" --Shorthand for Previous
     L["Back"] = "Zurück"
-    --[[ TRANSLATION REQUIRED ]]
-    L["GoToPage"] = "Go To Page"
+    L["GoToPage"] = "Zur Seite gehen"
     L["Icon"] = "Symbol"
     L["Name"] = "Name"
     L["Update"] = "Update benötigt?"
@@ -71,15 +70,11 @@ if L then
 
     
     -- Addon Import Messages
-    --[[ TRANSLATION REQUIRED ]]
-    L["DetailsPrompt"] = "Insert a Name for the New Details Profile:"
-    --[[ TRANSLATION REQUIRED ]]
-    local AddonImportMessage = "Are you sure you want to import the ADDONNAME Profile?"
+    L["DetailsPrompt"] = "Geben Sie einen Namen für das neue Details-Profil ein:"
+    local AddonImportMessage = "Sind Sie sicher, dass Sie das ADDONNAME-Profil importieren möchten?"
     L["OmniCDPrompt"] = AddonImportMessage:gsub("ADDONNAME", "OmnicD")
-    --[[ TRANSLATION REQUIRED ]]
-    L["CellPrompt"] = AddonImportMessage:gsub("ADDONNAME", "Cell") .. "\n!- This will overwrite your current cell setup -!"
-    --[[ TRANSLATION REQUIRED ]]
-    L["PlaterPrompt"] = "Insert a Name for the New Plater Profile:"
+    L["CellPrompt"] = AddonImportMessage:gsub("ADDONNAME", "Cell") .. "\n!- Dies überschreibt Ihre aktuelle Cell-Einrichtung -!"
+    L["PlaterPrompt"] = "Geben Sie einen Namen für das neue Plater-Profil ein:"
 
     -- WeakAuras
     L["WeakAuraText"] = "Hier können Sie auswählen, welche WeakAuras Sie importieren oder aktualisieren möchten."
@@ -87,7 +82,6 @@ if L then
     L["NonClassWA"] = "Nicht-Klassen-WeakAuras"
     L["ClassWA"] = "Klassen-WeakAuras"
     L["WeakAuraNotFound"] = "WeakAura nicht installiert oder wurde umbenannt"
-    -- All WA names are pulled from the import string, so cannot be translated
 
     -- MDT
     L["MDTHeader"] = "MDT-Routen-Import"
@@ -95,7 +89,6 @@ if L then
     L["MDTNotLoaded"] = "MDT-Addon nicht geladen"
     L["PUG 'Push W' Routes"] = "PUG 'Push W' Routen"
     L["AdvRoutes"] = "Fortgeschrittene Routen"
-    -- All MDT Names are pulled from the import string, so cannot be translated
 
     -- Finish Page
     L["FinishHeader"] = "Glückwunsch!"
