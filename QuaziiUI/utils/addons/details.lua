@@ -1,6 +1,8 @@
+local L = QuaziiUI.L
+
 function QuaziiUI:importDetailsProfile()
     self.DF:ShowTextPromptPanel(
-        "Insert a Name for the New Details Profile:",
+        L["DetailsPropmpt"],
         function(newProfileName)
             self.db.profile.imports.Details = {}
             self.db.profile.imports.Details.date = GetServerTime()

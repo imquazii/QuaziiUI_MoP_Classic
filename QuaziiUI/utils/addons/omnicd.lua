@@ -1,6 +1,8 @@
+local L = QuaziiUI.L
+
 function QuaziiUI:importOmniCDProfile()
     self.DF:ShowPromptPanel(
-        "Are you sure you want to import/update OmniCD profile?",
+        L["OmniCDPrompt"],
         function()
             self.db.profile.imports.OmniCD = {}
             self.db.profile.imports.OmniCD.date = GetServerTime()

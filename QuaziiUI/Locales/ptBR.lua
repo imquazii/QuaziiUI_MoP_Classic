@@ -13,6 +13,7 @@ if L then
     L["Index"] = "Index"
     L["Prev"] = "Prev" --Shorthand for Previous
     L["Back"] = "Back"
+    L["GoToPage"] = "Go To Page"
     L["Icon"] = "Icon"
     L["Name"] = "Name"
     L["Update"] = "Update Needed?"
@@ -67,8 +68,12 @@ if L then
     L["ScaleButtonMedium"] = "Medium"
     L["ScaleButtonLarge"] = "Large"
 
-    -- Other Addons
-    -- No strings need to be translated for this page
+    -- Addon Import Messages
+    L["DetailsPrompt"] = "Insert a Name for the New Details Profile:"
+    local AddonImportMessage = "Are you sure you want to import the ADDONNAME Profile?"
+    L["OmniCDPrompt"] = AddonImportMessage:gsub("ADDONNAME", "OmnicD")
+    L["CellPrompt"] = AddonImportMessage:gsub("ADDONNAME", "Cell") .. "\n!- This will overwrite your current cell setup -!"
+    L["PlaterPrompt"] = "Insert a Name for the New Plater Profile:"
 
     -- WeakAuras
     L["WeakAuraText"] = "Here you can choose which WAs you would like to import or update."

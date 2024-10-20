@@ -1,6 +1,8 @@
+local L = QuaziiUI.L
+
 function QuaziiUI:importPlaterProfile()
     self.DF:ShowTextPromptPanel(
-        "Insert a Name for the New Plater Profile:",
+        L["PlaterPrompt"],
         function(newProfileName)
             self.db.profile.imports.Plater = {}
             self.db.profile.imports.Plater.date = GetServerTime()

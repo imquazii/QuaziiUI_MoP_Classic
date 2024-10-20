@@ -1,9 +1,10 @@
 local Serializer = LibStub:GetLibrary("LibSerialize")
 local LibDeflate = LibStub:GetLibrary("LibDeflate")
+local L = QuaziiUI.L
 
 function QuaziiUI:importCellProfile()
     self.DF:ShowPromptPanel(
-        "Are you sure you want to import/update the Cell Profile?\n!- This will overwrite your current cell setup -!",
+        L["CellPrompt"],
         function()
             QuaziiUI:CellImport()
         end,
