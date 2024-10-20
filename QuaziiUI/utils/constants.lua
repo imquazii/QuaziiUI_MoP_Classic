@@ -8,9 +8,24 @@ QuaziiUI.ODT = QuaziiUI.DF:GetTemplate("dropdown", "OPTIONS_DROPDOWN_TEMPLATE")
 QuaziiUI.versionNumber = tonumber(C_AddOns.GetAddOnMetadata(QuaziiUI:GetName(), "Version")) or 0 -- Get Addon Version from .toc and convert to number
 ---@type string
 QuaziiUI.versionString = QuaziiUI.VersionToString(QuaziiUI.versionNumber)
+---@type string
+QuaziiUI.assetPath = "Interface\\AddOns\\" .. QuaziiUI:GetName() .. "\\assets\\"
+
+QuaziiUI.logoPath = QuaziiUI.assetPath .. "quaziiLogo.tga"
 
 ---@type table
 QuaziiUI.frames = {} -- Frames holder object
+---@type table<string>
+QuaziiUI.supportedAddons = {
+    "ElvUI",
+    "WeakAuras",
+    "MythicDungeonTools",
+    "Details",
+    "Plater",
+    "BigWigs",
+    "Cell",
+    "OmniCD"
+}
 
 -- Define Basic Colors
 ---@type string
@@ -27,6 +42,9 @@ QuaziiUI.textColorRGB = {1, 0.976, 0.964} -- Off White RGB no Alpha
 ---@type table
 QuaziiUI.textColorRGBA = {1, 0.976, 0.964, 1} -- Off White RGB with Alpha
 
+-- Text Font Face
+QuaziiUI.FontFace = QuaziiUI.assetPath .. "accidental_pres.ttf"
+
 -- Define Text Sizes
 ---@type integer
 QuaziiUI.PageHeaderSize = 24
@@ -42,3 +60,9 @@ else
 end
 ---@type integer
 QuaziiUI.TableTextSize = 15
+
+
+-- UI Scales
+QuaziiUI.smallScale = 0.64
+QuaziiUI.mediumScale = 0.71
+QuaziiUI.largeScale = 0.78

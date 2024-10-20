@@ -3,7 +3,6 @@
     <Script file="Welcome.lua"/>
     <Script file="Home.lua"/>
     <Script file="ElvUI.lua"/>
-    <!--Script file="OtherAddons.lua"/-->
     <Script file="WeakAuras.lua"/>
     <Script file="MDT.lua" />
     <Script file="Done.lua"/>

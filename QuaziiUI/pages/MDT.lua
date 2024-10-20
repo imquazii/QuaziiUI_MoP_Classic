@@ -23,7 +23,7 @@ local function fillMDTFromCategoryIndex(index)
                     {
                         name = MDTPreset["text"],
                         version = MDTPreset["uid"],
-                        icon = "Interface\\AddOns\\" .. QuaziiUI:GetName() .. "\\assets\\quaziiLogo.tga"
+                        icon = QuaziiUI.logoPath
                     }
                 )
             end
@@ -34,7 +34,7 @@ local function fillMDTFromCategoryIndex(index)
             {
                 name = L["MDTNotLoaded"],
                 version = "",
-                icon = "Interface\\AddOns\\" .. QuaziiUI:GetName() .. "\\assets\\quaziiLogo.tga"
+                icon = QuaziiUI.logoPath
             }
         )
     end
@@ -107,7 +107,7 @@ local function createMDTButton(self, index)
     line.versionLabel:SetJustifyH("CENTER")
 
     line.importButton = QuaziiUI.DF:CreateButton(line, nil, 105, 30, L["Import"], nil, nil, nil, nil, nil, nil, QuaziiUI.ODT)
-    line.importButton.text_overlay:SetFont("Interface\\AddOns\\QuaziiUI\\assets\\accidental_pres.ttf", 16)
+    line.importButton.text_overlay:SetFont(QuaziiUI.FontFace, 16)
 
     line:AddFrameToHeaderAlignment(line.icon)
     line:AddFrameToHeaderAlignment(line.nameLabel)
@@ -135,13 +135,13 @@ end
 
 function page:CreateHeader(frame)
     local header = QuaziiUI.DF:CreateLabel(frame, "|c" .. QuaziiUI.highlightColorHex .. L["MDTHeader"] .. "|r", QuaziiUI.PageHeaderSize)
-    header:SetFont("Interface\\AddOns\\QuaziiUI\\assets\\accidental_pres.ttf", QuaziiUI.PageHeaderSize)
+    header:SetFont(QuaziiUI.FontFace, QuaziiUI.PageHeaderSize)
     header:SetPoint("TOP", frame, "TOP", 0, -10)
 end
 
 function page:CreateDescription(frame)
     local text = QuaziiUI.DF:CreateLabel(frame, L["MDTText"], QuaziiUI.PageTextSize)
-    text:SetFont("Interface\\AddOns\\QuaziiUI\\assets\\accidental_pres.ttf", QuaziiUI.PageTextSize)
+    text:SetFont(QuaziiUI.FontFace, QuaziiUI.PageTextSize)
     text:SetWordWrap(true)
     text:SetPoint("TOPLEFT", frame, "TOPLEFT", 10, -40)
     text:SetPoint("TOPRIGHT", frame, "TOPRIGHT", -10, -40)
@@ -153,7 +153,7 @@ end
 function page:CreateSelectionDropdown(frame)
     local selectionDropdown = QuaziiUI.DF:CreateDropDown(frame, fillSelectionDropdown, nil, 200, 25, nil, nil, QuaziiUI.ODT)
     selectionDropdown:SetPoint("TOPLEFT", self.descriptionText, "BOTTOMLEFT", -1, -5)
-    selectionDropdown.label:SetFont("Interface\\AddOns\\QuaziiUI\\assets\\accidental_pres.ttf", 16)
+    selectionDropdown.label:SetFont(QuaziiUI.FontFace, 16)
 end
 
 function page:CreateMDTList(frame)

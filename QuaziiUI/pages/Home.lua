@@ -3,18 +3,6 @@ local L = QuaziiUI.L
 local page = {}
 table.insert(QuaziiUI.pagePrototypes, page)
 
----@type table<string>
-QuaziiUI.supportedAddons = {
-    "ElvUI",
-    "WeakAuras",
-    "MythicDungeonTools",
-    "Details",
-    "Plater",
-    "BigWigs",
-    "Cell",
-    "OmniCD"
-}
-
 local function addonScrollBoxUpdate(self, data, offset, totalLines)
     for i = 1, totalLines do
         local index = i + offset
@@ -30,7 +18,7 @@ local function addonScrollBoxUpdate(self, data, offset, totalLines)
             )
             if addonTitle == "ElvUI" then
                 if addonEnabled then
-                    line.importButton:SetText("Go To Page")
+                    line.importButton:SetText(L["GoToPage"])
                     line.importButton:SetClickFunction(
                         function()
                             QuaziiUI:selectPage(3)
@@ -42,7 +30,7 @@ local function addonScrollBoxUpdate(self, data, offset, totalLines)
                 end
             elseif addonTitle == "WeakAuras" then
                 if addonEnabled then
-                    line.importButton:SetText("Go To Page")
+                    line.importButton:SetText(L["GoToPage"])
                     line.importButton:SetClickFunction(
                         function()
                             QuaziiUI:selectPage(4)
@@ -54,7 +42,7 @@ local function addonScrollBoxUpdate(self, data, offset, totalLines)
                 end
             elseif addonTitle == "MythicDungeonTools" then
                 if addonEnabled then
-                    line.importButton:SetText("Go To Page")
+                    line.importButton:SetText(L["GoToPage"])
                     line.importButton:SetClickFunction(
                         function()
                             QuaziiUI:selectPage(5)
@@ -141,13 +129,13 @@ local function createAddonButton(self, index)
     QuaziiUI.DF:Mixin(line, QuaziiUI.DF.HeaderFunctions)
 
     line.addonLabel = QuaziiUI.DF:CreateLabel(line, nil, QuaziiUI.TableTextSize)
-    line.addonLabel:SetFont("Interface\\AddOns\\QuaziiUI\\assets\\accidental_pres.ttf", QuaziiUI.TableTextSize)
+    line.addonLabel:SetFont(QuaziiUI.FontFace, QuaziiUI.TableTextSize)
     line.versionLabel = QuaziiUI.DF:CreateLabel(line, nil, QuaziiUI.TableTextSize)
-    line.versionLabel:SetFont("Interface\\AddOns\\QuaziiUI\\assets\\accidental_pres.ttf", QuaziiUI.TableTextSize)
+    line.versionLabel:SetFont(QuaziiUI.FontFace, QuaziiUI.TableTextSize)
     line.enabledLabel = QuaziiUI.DF:CreateLabel(line, nil, QuaziiUI.TableTextSize)
-    line.enabledLabel:SetFont("Interface\\AddOns\\QuaziiUI\\assets\\accidental_pres.ttf", QuaziiUI.TableTextSize)
+    line.enabledLabel:SetFont(QuaziiUI.FontFace, QuaziiUI.TableTextSize)
     line.importButton = QuaziiUI.DF:CreateButton(line, nil, 105, 30, L["Import"], nil, nil, nil, nil, nil, nil, QuaziiUI.ODT)
-    line.importButton.text_overlay:SetFont("Interface\\AddOns\\QuaziiUI\\assets\\accidental_pres.ttf", QuaziiUI.TableTextSize)
+    line.importButton.text_overlay:SetFont(QuaziiUI.FontFace, QuaziiUI.TableTextSize)
 
     line:AddFrameToHeaderAlignment(line.addonLabel)
     line:AddFrameToHeaderAlignment(line.enabledLabel)
@@ -173,13 +161,13 @@ end
 function page:CreateHeader(frame)
     local header =
         QuaziiUI.DF:CreateLabel(frame, "|c" .. QuaziiUI.highlightColorHex .. L["SupportedAddonsHeader"] .. "|r", QuaziiUI.PageHeaderSize)
-    header:SetFont("Interface\\AddOns\\QuaziiUI\\assets\\accidental_pres.ttf", QuaziiUI.PageHeaderSize)
+    header:SetFont(QuaziiUI.FontFace, QuaziiUI.PageHeaderSize)
     header:SetPoint("TOP", frame, "TOP", 0, -10)
 end
 
 function page:CreateDescription(frame)
     local description = QuaziiUI.DF:CreateLabel(frame, L["SupportedAddonsText"], QuaziiUI.PageTextSize)
-    description:SetFont("Interface\\AddOns\\QuaziiUI\\assets\\accidental_pres.ttf", QuaziiUI.PageTextSize)
+    description:SetFont(QuaziiUI.FontFace, QuaziiUI.PageTextSize)
     description:SetWordWrap(true)
     description:SetPoint("TOPLEFT", frame, "TOPLEFT", 10, -40)
     description:SetPoint("TOPRIGHT", frame, "TOPRIGHT", -10, -40)
