@@ -1,7 +1,7 @@
 local L = QuaziiUI.L
 
 local page = {}
-table.insert(QuaziiUI.pagePrototypes, page)
+table.insert(QuaziiUI.pages, page)
 
 local function addonScrollBoxUpdate(self, data, offset, totalLines)
     for i = 1, totalLines do

@@ -1,7 +1,7 @@
 local L = QuaziiUI.L
 
 local page = {}
-table.insert(QuaziiUI.pagePrototypes, page)
+table.insert(QuaziiUI.pages, page)
 
 local currentCategory = 1
 local GameTooltip = GameTooltip

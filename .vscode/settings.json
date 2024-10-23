@@ -72,7 +72,8 @@
         "NUM_CHAT_WINDOWS",
         "ChatEdit_GetActiveWindow",
         "MythicDungeonToolsDB",
-        "AddonCompartmentFrame"
+        "AddonCompartmentFrame",
+        "QuaziiUI"
     ],
     "colorize.languages": ["lua", "xml"]
 }

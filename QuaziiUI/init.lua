@@ -38,7 +38,7 @@ QuaziiUI.defaults = {
 ---@type table
 QuaziiUI.imports = {}
 ---@type table
-QuaziiUI.pagePrototypes = QuaziiUI.pagePrototypes or {}
+QuaziiUI.pages = QuaziiUI.pages or {}
 
 function QuaziiUI:OnInitialize()
     ---@type AceDBObject-3.0

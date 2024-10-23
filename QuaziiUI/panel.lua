@@ -4,7 +4,7 @@ local L = QuaziiUI.L
 ---@param parentFrame table|Frame
 local function createPages(parentFrame)
     local pageCount = 0
-    for _, page in ipairs(QuaziiUI.pagePrototypes) do
+    for _, page in ipairs(QuaziiUI.pages) do
         pageCount = pageCount + 1
         page:Create(parentFrame)
     end
@@ -17,7 +17,7 @@ function QuaziiUI:selectPage(pageIndex)
     self.db.char.shownPages = 0
 
     QuaziiUI:DebugPrint("Selected Page:", pageIndex)
-    for _, page in ipairs(self.pagePrototypes) do
+    for _, page in ipairs(self.pages) do
         if not page:ShouldShow() then
             page:Hide()
         else
@@ -125,8 +125,12 @@ end
 local function createPanel()
     -- Init panel
 
-    local panel = QuaziiUI.DF:CreateSimplePanel(UIParent, 600, 500, L["AddonName"] .. QuaziiUI.versionString) -- Create a 600x500 panel
+    local panel = QuaziiUI.DF:CreateSimplePanel(UIParent, 600, 500, L["AddonName"], "QuaziiUIMainPanel") -- Create a 600x500 panel
     QuaziiUI.DF:ApplyStandardBackdrop(panel) -- Give it a basic backdrop
+
+    local versionLabel = QuaziiUI.DF:CreateLabel(panel.TitleBar, QuaziiUI.versionString, 14)
+    versionLabel:SetTextColor(unpack({0.439216, 0.501961, 0.564706, 1}))
+    versionLabel:SetPoint("LEFT", panel.TitleBar, "LEFT", 2, 1)
 
     -- Panel Border
     QuaziiUI.DF:CreateBorder(panel) -- Give it a border
