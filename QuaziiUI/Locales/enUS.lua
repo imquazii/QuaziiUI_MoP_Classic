@@ -70,6 +70,7 @@ if L then
     L["ScaleButtonLarge"] = "Large"
 
     -- Addon Import Messages
+    L["BigWigsNameplateDisable"] = "Would you like to disable BigWigs Nameplate CDs?"
     L["DetailsPrompt"] = "Insert a Name for the New Details Profile:"
     local AddonImportMessage = "Are you sure you want to import the ADDONNAME Profile?"
     L["OmniCDPrompt"] = AddonImportMessage:gsub("ADDONNAME", "OmnicD")

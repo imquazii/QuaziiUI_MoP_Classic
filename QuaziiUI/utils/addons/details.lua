@@ -2,7 +2,7 @@ local L = QuaziiUI.L
 
 function QuaziiUI:importDetailsProfile()
     self.DF:ShowTextPromptPanel(
-        L["DetailsPropmpt"],
+        L["DetailsPrompt"],
         function(newProfileName)
             self.db.profile.imports.Details = {}
             self.db.profile.imports.Details.date = GetServerTime()

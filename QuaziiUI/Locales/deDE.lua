@@ -71,6 +71,8 @@ if L then
 
     
     -- Addon Import Messages
+    -- @ UNTRANSLATED @ --
+    L["BigWigsNameplateDisable"] = "Would you like to disable BigWigs Nameplate CDs?"
     L["DetailsPrompt"] = "Geben Sie einen Namen für das neue Details-Profil ein:"
     local AddonImportMessage = "Sind Sie sicher, dass Sie das ADDONNAME-Profil importieren möchten?"
     L["OmniCDPrompt"] = AddonImportMessage:gsub("ADDONNAME", "OmnicD")
