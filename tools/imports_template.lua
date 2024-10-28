@@ -91,8 +91,14 @@ QuaziiUI.imports.Plater = {
 
 ---@type table
 QuaziiUI.imports.Cell = {
-    ---@type string
-    data = "{CELL}"
+    Healer = {
+        ---@type string
+        data = "{CELL_HEALER}"
+    },
+    TankDPS = {
+        ---@type string
+        data = "{CELL_TANK}"
+    }
 }
 
 ---@type table
