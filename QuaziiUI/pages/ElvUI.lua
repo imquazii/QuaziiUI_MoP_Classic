@@ -16,7 +16,7 @@ local function updateElvUIDisplay()
     end
 
     updateImportInfo("healer.normal", "lastHImportTime", "lastHVersion")
-    --[[updateImportInfo("ElvUIHealsCell", "lastHCImportTime", "lastHCVersion")]]
+    updateImportInfo("ElvUIHealsCell", "lastHCImportTime", "lastHCVersion")
     updateImportInfo("tankdps", "lastTImportTime", "lastTVersion")
 end
 
@@ -85,7 +85,7 @@ local function importProfile(profileType, dbKey, dataKey)
 end
 
 local importHealerProfile = importProfile("Healer", "healer.normal", QuaziiUI.imports.ElvUI.healer.normal.data)
---[[local importHealerCellProfile = importProfile("Healer - Cell", "healer.cell")--]]
+local importHealerCellProfile = importProfile("Cell", "healer.cell", QuaziiUI.imports.ElvUI.healer.cell.data)
 local importTankProfile = importProfile("Tank/DPS", "tankdps", QuaziiUI.imports.ElvUI.tankdps.data)
 
 -- Page Creation
@@ -127,24 +127,27 @@ function page:CreateElvUISection(frame)
     importTankContainer:SetPoint("TOP", elvDescription.widget, "BOTTOM", 0, -20)
 
     local importHealerContainer = QuaziiUI:CreateImportFrame(frame, "ElvUI", L["Healer"], importHealerProfile)
-    importHealerContainer:SetPoint("TOPRIGHT", importTankContainer, "BOTTOMRIGHT", 0, 10)
+    importHealerContainer:SetPoint("TOPRIGHT", importTankContainer, "BOTTOMRIGHT", 0, 0)
 
-    local cellNotice = QuaziiUI.DF:CreateLabel(frame, L["CellNotice"], QuaziiUI.PageTextSize - 3)
+    -- L["CellNotice"]
+    local cellNotice = QuaziiUI.DF:CreateLabel(frame, "Cell AddOn Users:\nBelow profile is specific for use with Cell", QuaziiUI.PageTextSize)
     cellNotice:SetFont(QuaziiUI.FontFace, QuaziiUI.TableTextSize)
     cellNotice:SetWordWrap(true)
-    cellNotice:SetPoint("TOP", importHealerContainer.versionText.widget, "BOTTOMLEFT", -5, -10)
+    cellNotice:SetPoint("TOP", importHealerContainer.versionText.widget, "BOTTOMLEFT", -5, -15)
     cellNotice:SetJustifyH("CENTER")
+
+    local importHealerCellContainer =
+        QuaziiUI:CreateImportFrame(frame, "ElvUI", L["ElvUI"], importHealerCellProfile)
+    importHealerCellContainer:SetPoint("TOP", cellNotice.widget, "BOTTOM", 0, -10)
+    self.lastHCVersion = importHealerCellContainer.versionText
+    self.lastHCImportTime = importHealerCellContainer.lastImportText
 
     self.lastHImportTime = importHealerContainer.lastImportText
     self.lastTImportTime = importTankContainer.lastImportText
     self.lastHVersion = importHealerContainer.versionText
     self.lastTVersion = importTankContainer.versionText
 
-    --[[local importHealerCellContainer =
-        QuaziiUI:CreateImportFrame(frame, "ElvUI", L["Healer"] .. " - " .. L["Cell"], importHealerCellProfile)
-    importHealerCellContainer:SetPoint("TOPRIGHT", importHealerContainer, "BOTTOMRIGHT", 0, 10)
-    self.lastHCVersion = importHealerCellContainer.versionText
-    self.lastHCImportTime = importHealerCellContainer.lastImportText--]]
+    
 end
 
 function page:CreateUIScaleSection(frame)

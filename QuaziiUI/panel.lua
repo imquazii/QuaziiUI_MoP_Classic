@@ -64,7 +64,7 @@ end
 ---@return table|Frame
 function QuaziiUI:CreateImportFrame(parentPanel, addonName, importLabel, importFunction)
     local frame = CreateFrame("Frame", nil, parentPanel)
-    frame:SetHeight(100)
+    frame:SetHeight(60)
     
     local profileText = self.DF:CreateLabel(frame, "", self.TableHeaderSize)
     profileText:SetFont(QuaziiUI.FontFace, QuaziiUI.TableHeaderSize)
