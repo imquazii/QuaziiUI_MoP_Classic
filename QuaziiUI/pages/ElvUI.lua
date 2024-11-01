@@ -84,8 +84,8 @@ local function importProfile(profileType, dbKey, dataKey)
     end
 end
 
-local importHealerProfile = importProfile("Healer", "healer.normal", QuaziiUI.imports.ElvUI.healer.normal.data)
-local importHealerCellProfile = importProfile("Cell", "healer.cell", QuaziiUI.imports.ElvUI.healer.cell.data)
+local importHealerProfile = importProfile("Healer", "healer.normal", QuaziiUI.imports.ElvUI.healer.data)
+local importHealerCellProfile = importProfile("Cell", "healer.cell", QuaziiUI.imports.ElvUI.cell.data)
 local importTankProfile = importProfile("Tank/DPS", "tankdps", QuaziiUI.imports.ElvUI.tankdps.data)
 
 -- Page Creation

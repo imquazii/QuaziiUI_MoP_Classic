@@ -24,18 +24,13 @@ QuaziiUI.imports.MDT = {
 
 ---@type table
 QuaziiUI.imports.ElvUI = {
+    cell = {
+        ---@type string
+        data = "{CELL_IMPORT}"
+    },
     ---@type table
     healer = {
-        ---@type table
-        cell = {
-            ---@type string
-            data = "{HEALER_CELL_IMPORT}"
-        },
-        ---@type table
-        normal = {
-            ---@type string
-            data = "{HEALER_IMPORT}"
-        }
+        data = "{HEALER_IMPORT}"
     },
     ---@type table
     tankdps = {
