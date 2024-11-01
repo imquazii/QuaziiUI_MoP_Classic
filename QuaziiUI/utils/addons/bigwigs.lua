@@ -2,7 +2,7 @@ local L = QuaziiUI.L
 
 function QuaziiUI:importBigWigsProfile()
     local profileName = "QuaziiUI"
-    BigWigsAPI:ImportProfileString(
+    BigWigsAPI.RegisterProfile(
         self:GetName(),
         self.imports.BigWigs.data,
         profileName,
