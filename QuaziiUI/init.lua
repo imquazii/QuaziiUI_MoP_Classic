@@ -36,7 +36,7 @@ QuaziiUI.defaults = {
 }
 
 ---@type table
-QuaziiUI.imports = {}
+QuaziiUI.imports = QuaziiUI.imports or {}
 ---@type table
 QuaziiUI.pages = QuaziiUI.pages or {}
 
