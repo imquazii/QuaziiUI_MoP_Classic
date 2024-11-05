@@ -38,7 +38,7 @@ local function selectNextPage()
         QuaziiUI:selectPage(QuaziiUI.db.char.openPage) -- Show next page
     else -- If last page or higher
         QuaziiUI.panel:Hide() -- Hide installer UI
-        QuaziiUI.db.char.isDone = true -- Set done as true
+        QuaziiUI.db.global.isDone = true -- Set done as true
         ReloadUI() -- reload UI
     end
     QuaziiUI.db.char.openPage = nil
@@ -140,13 +140,6 @@ local function createPanel()
     panel.Title:SetFont(QuaziiUI.FontFace, 18) -- Set Title Font Size to 18
     panel.Title:SetTextColor(unpack(QuaziiUI.textColorRGBA)) -- Set Text Color
     panel.Title:SetPoint("CENTER", panel.TitleBar, "CENTER", 0, 1) -- Center Title Text in the Title Bar, offset 1 Y pixel
-    panel.Close:SetScript(
-        "OnClick",
-        function(self)
-            self:GetParent():GetParent():Hide()
-            QuaziiUI.db.char.isDone = true
-        end
-    )
 
     -- Panel Options
     panel:ClearAllPoints() -- Resets Panel Anchor point
@@ -222,8 +215,14 @@ local function createPanel()
     panelContentFrame:SetPoint("BOTTOMLEFT", panel, "BOTTOMLEFT", 0, 48) -- Set Bottom Left Anchor to Bottom Left anchor of panel, with 48px buffer for buttons
     panelContentFrame:SetPoint("BOTTOMRIGHT", panel, "BOTTOMRIGHT", 0, 48) -- Above for Bottom Right
 
+    panel:HookScript("OnHide", function()
+        QuaziiUI:Hide()
+        QuaziiUI:DebugPrint("Set isDone to " .. tostring(QuaziiUI.db.global.isDone))
+    end)
+
     panel.frameContent = panelContentFrame
     QuaziiUI.panel = panel
+
 
     createPages(panel)
 end

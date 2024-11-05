@@ -1,8 +1,11 @@
 function QuaziiUI:Show()
+    self:DebugPrint("Show Quazii UI Frame")
     self.panel:Show()
 end -- Makes the installer UI visible
 
 function QuaziiUI:Hide()
+    self:DebugPrint("Hide Quazii UI Frame")
+    QuaziiUI.db.global.isDone = true
     self.panel:Hide()
 end -- Makes the installer UI hidden
 

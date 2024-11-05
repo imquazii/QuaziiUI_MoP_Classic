@@ -6,9 +6,9 @@ table.insert(QuaziiUI.pages, page)
 -- Helper Functions
 local function updateElvUIDisplay()
     local function updateImportInfo(importType, dateField, versionField)
-        if QuaziiUI.db.profile and QuaziiUI.db.profile.imports[importType] then
-            page[dateField]:SetText(date("%m/%d/%y", QuaziiUI.db.profile.imports[importType].date))
-            page[versionField]:SetText(QuaziiUI.db.profile.imports[importType].version)
+        if QuaziiUI.db.global and QuaziiUI.db.global.imports and QuaziiUI.db.global.imports[importType] then
+            page[dateField]:SetText(date("%m/%d/%y", QuaziiUI.db.global.imports[importType].date))
+            page[versionField]:SetText(QuaziiUI.db.global.imports[importType].version)
         else
             page[dateField]:SetText(L["NA"])
             page[versionField]:SetText(L["NA"])
@@ -68,7 +68,7 @@ local function importProfile(profileType, dbKey, dataKey)
         QuaziiUI.DF:ShowPromptPanel(
             string.format("Are you sure you want to import/update Quazii's %s ElvUI profile?", profileType),
             function()
-                QuaziiUI.db.profile.imports[dbKey] = {
+                QuaziiUI.db.global.imports[dbKey] = {
                     date = GetServerTime(),
                     version = QuaziiUI.versionNumber
                 }

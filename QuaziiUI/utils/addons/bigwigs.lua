@@ -8,9 +8,9 @@ function QuaziiUI:importBigWigsProfile()
         profileName,
         function(accepted)
             if accepted then
-                self.db.profile.imports.BigWigs = {}
-                self.db.profile.imports.BigWigs.date = GetServerTime()
-                self.db.profile.imports.BigWigs.versionNumber = self.versionNumber
+                self.db.global.imports.BigWigs = {}
+                self.db.global.imports.BigWigs.date = GetServerTime()
+                self.db.global.imports.BigWigs.versionNumber = self.versionNumber
                 self.db.char.openPage = 1
                 BigWigs3DB.namespaces = BigWigs3DB.namespaces or {}
                 self.DF:ShowPromptPanel(

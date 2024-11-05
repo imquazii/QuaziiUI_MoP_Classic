@@ -12,13 +12,13 @@ QuaziiUI.DEBUG_MODE = false
 
 ---@type table
 QuaziiUI.defaults = {
-    profile = {
+    global = {
+        ---@type boolean
+        isDone = false,
         ---@type table
         imports = {}
     },
     char = {
-        ---@type boolean
-        isDone = false,
         ---@type integer
         lastVersion = 0,
         ---@type integer
@@ -42,7 +42,7 @@ QuaziiUI.pages = QuaziiUI.pages or {}
 
 function QuaziiUI:OnInitialize()
     ---@type AceDBObject-3.0
-    self.db = LibStub("AceDB-3.0"):New("QuaziiUI_DB", self.defaults, true)
+    self.db = LibStub("AceDB-3.0"):New("QuaziiUI_DB", self.defaults, "Default")
 
     self:RegisterChatCommand("qui", "SlashCommandOpen")
     self:RegisterChatCommand("quaziiui", "SlashCommandOpen")
@@ -66,8 +66,11 @@ function QuaziiUI:OnEnable()
 end
 
 function QuaziiUI:PLAYER_ENTERING_WORLD()
-    local isNotDone = not self.db.char.isDone -- Has not finished installer before
-    local newVersion = (self.db.char.lastVersion or 0) < self.versionNumber -- Attempts to set to lastVersion, if not found sets to 0
+    QuaziiUI:BackwardsCompat()
+    local isNotDone = not self.db.global.isDone -- Has not finished installer before
+    local newVersion = (self.db.global.lastVersion or 0) < self.versionNumber -- Attempts to set to lastVersion, if not found sets to 0
+
+    self:Print("Thank you for using QuaziiUI!")
 
     if not self.DEBUG_MODE then
         if self.db.char.debug.reload then
@@ -79,12 +82,13 @@ function QuaziiUI:PLAYER_ENTERING_WORLD()
         QuaziiUI:DebugPrint("Debug Mode Enabled")
     end
     if (isNotDone) or (newVersion) then
-        QuaziiUI:DebugPrint("Is Not Done?: ", isNotDone, " | New Version?: ", newVersion)
+        self:DebugPrint("Is Not Done?: ", isNotDone, " | New Version?: ", newVersion)
         self:selectPage((self.db.char.openPage or 1))
         self:Show()
         self.db.char.lastVersion = self.versionNumber
     else
-        QuaziiUI:DebugPrint("Is Not Done?: ", isNotDone, " | New Version?: ", newVersion)
+        self:Print("You may access the installer by using /qui or /quaziiui at anytime!")
+        self:DebugPrint("Is Not Done?: ", isNotDone, " | New Version?: ", newVersion)
     end
 end
 

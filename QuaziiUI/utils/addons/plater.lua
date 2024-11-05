@@ -4,9 +4,9 @@ function QuaziiUI:importPlaterProfile()
     self.DF:ShowTextPromptPanel(
         L["PlaterPrompt"],
         function(newProfileName)
-            self.db.profile.imports.Plater = {}
-            self.db.profile.imports.Plater.date = GetServerTime()
-            self.db.profile.imports.Plater.versionNumber = self.versionNumber
+            self.db.global.imports.Plater = {}
+            self.db.global.imports.Plater.date = GetServerTime()
+            self.db.global.imports.Plater.versionNumber = self.versionNumber
             Plater.OpenOptionsPanel()
             PlaterOptionsPanelFrame:Hide()
 

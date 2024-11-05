@@ -16,6 +16,7 @@ function QuaziiUI:importCellProfile()
         end,
         true
     )
+    
 end
 
 ---@param healer boolean Whether importing healer or tank/dps 
@@ -134,4 +135,8 @@ function QuaziiUI:CellImport(healer)
             end
         end
     end
+    self.db.global.imports.Cell = {}
+    self.db.global.imports.Cell.date = GetServerTime()
+    self.db.global.imports.Cell.versionNumber = self.versionNumber
+    self.db.char.openPage = 2
 end

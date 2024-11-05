@@ -4,9 +4,9 @@ function QuaziiUI:importOmniCDProfile()
     self.DF:ShowPromptPanel(
         L["OmniCDPrompt"],
         function()
-            self.db.profile.imports.OmniCD = {}
-            self.db.profile.imports.OmniCD.date = GetServerTime()
-            self.db.profile.imports.OmniCD.versionNumber = self.versionNumber
+            self.db.global.imports.OmniCD = {}
+            self.db.global.imports.OmniCD.date = GetServerTime()
+            self.db.global.imports.OmniCD.versionNumber = self.versionNumber
             local OmniCD = OmniCD[1]
             local Profile = OmniCD.ProfileSharing
             local profileType, profileKey, profileData = Profile:Decode(self.imports.OmniCD.data)
