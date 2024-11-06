@@ -16,7 +16,6 @@ function QuaziiUI:BackwardsCompat()
             table.remove(self.db.char, 1)
         end
     end
-    self:DebugPrint("Profiles.Default Exists: " .. tostring(not (not QuaziiUI_DB.profiles.Default)))
     if QuaziiUI_DB.profiles and QuaziiUI_DB.profiles.Default then
         self:DebugPrint("Profiles.Default.imports Exists: " .. tostring(not (not QuaziiUI_DB.profiles.Default.imports)))
         self:DebugPrint("global.imports Exists: " .. tostring(not (not self.db.global.imports)))

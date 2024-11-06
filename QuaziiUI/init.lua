@@ -85,7 +85,7 @@ function QuaziiUI:PLAYER_ENTERING_WORLD()
         self:DebugPrint("Is Not Done?: ", isNotDone, " | New Version?: ", newVersion)
         self:selectPage((self.db.char.openPage or 1))
         self:Show()
-        self.db.char.lastVersion = self.versionNumber
+        self.db.global.lastVersion = self.versionNumber
     else
         self:Print("You may access the installer by using /qui or /quaziiui at anytime!")
         self:DebugPrint("Is Not Done?: ", isNotDone, " | New Version?: ", newVersion)
