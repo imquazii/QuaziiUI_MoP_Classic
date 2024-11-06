@@ -15,12 +15,12 @@ QuaziiUI.defaults = {
     global = {
         ---@type boolean
         isDone = false,
+        ---@type integer
+        lastVersion = 0,
         ---@type table
         imports = {}
     },
     char = {
-        ---@type integer
-        lastVersion = 0,
         ---@type integer
         shownPages = 0,
         ---@type integer
