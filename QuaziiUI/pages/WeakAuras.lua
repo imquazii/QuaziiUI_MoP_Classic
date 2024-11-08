@@ -80,7 +80,8 @@ local function onCategoryClick(frame, index)
         frame.classButton:SetTemplate(QuaziiUI.ODT)
         frame.utilButton:SetTemplate(QuaziiUI.ODTS)
     end
-    fillWAFromCategoryIndex(index)
+    currentCategory = index
+    fillWAFromCategoryIndex(currentCategory)
 end
 
 local function waScrollBoxUpdate(self, data, offset, totalLines)

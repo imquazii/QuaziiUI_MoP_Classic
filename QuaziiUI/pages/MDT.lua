@@ -50,7 +50,8 @@ local function onCategoryClick(frame, index)
         frame.pugButton:SetTemplate(QuaziiUI.ODT)
         frame.advButton:SetTemplate(QuaziiUI.ODTS)
     end
-    fillMDTFromCategoryIndex(index)
+    currentCategory = index
+    fillMDTFromCategoryIndex(currentCategory)
 end
 
 local function mdtScrollBoxUpdate(self, data, offset, totalLines)
