@@ -23,7 +23,6 @@ local function fillMDTFromCategoryIndex(index)
                     {
                         name = MDTPreset["text"],
                         version = MDTPreset["uid"],
-                        icon = QuaziiUI.logoPath
                     }
                 )
             end
@@ -34,7 +33,6 @@ local function fillMDTFromCategoryIndex(index)
             {
                 name = L["MDTNotLoaded"],
                 version = "",
-                icon = QuaziiUI.logoPath
             }
         )
     end
@@ -43,18 +41,16 @@ local function fillMDTFromCategoryIndex(index)
 end
 
 ---@param index integer
-local function onCategoryClick(_, _, index)
-    currentCategory = index
-    fillMDTFromCategoryIndex(currentCategory)
-end
-
-local function fillSelectionDropdown()
-    local options = {}
-    for index, category in ipairs(QuaziiUI.imports.MDT) do
-        local label = category.color and "|c" .. category.color .. category.name .. "|r" or category.name
-        table.insert(options, {value = index, label = label, onclick = onCategoryClick})
+local function onCategoryClick(frame, index)
+    
+    if index == 1 then
+        frame.pugButton:SetTemplate(QuaziiUI.ODTS)
+        frame.advButton:SetTemplate(QuaziiUI.ODT)
+    else
+        frame.pugButton:SetTemplate(QuaziiUI.ODT)
+        frame.advButton:SetTemplate(QuaziiUI.ODTS)
     end
-    return options
+    fillMDTFromCategoryIndex(index)
 end
 
 local function mdtScrollBoxUpdate(self, data, offset, totalLines)
@@ -65,7 +61,6 @@ local function mdtScrollBoxUpdate(self, data, offset, totalLines)
             local line = self:GetLine(i)
             line.nameLabel:SetText(info.name)
             line.versionLabel:SetText(info.version)
-            line.icon:SetTexture(info.icon)
             if not MDT then
                 line.importButton:Disable()
                 line.importButton:SetText(L["NA"])
@@ -106,10 +101,10 @@ local function createMDTButton(self, index)
     line.versionLabel:SetSize(68, self.LineHeight / 2)
     line.versionLabel:SetJustifyH("CENTER")
 
-    line.importButton = QuaziiUI.DF:CreateButton(line, nil, 105, 30, L["Import"], nil, nil, nil, nil, nil, nil, QuaziiUI.ODT)
+    line.importButton =
+        QuaziiUI.DF:CreateButton(line, nil, 105, 30, L["Import"], nil, nil, nil, nil, nil, nil, QuaziiUI.ODT)
     line.importButton.text_overlay:SetFont(QuaziiUI.FontFace, 16)
 
-    line:AddFrameToHeaderAlignment(line.icon)
     line:AddFrameToHeaderAlignment(line.nameLabel)
     line:AddFrameToHeaderAlignment(line.versionLabel)
     line:AddFrameToHeaderAlignment(line.importButton)
@@ -125,8 +120,8 @@ function page:Create(parent)
 
     self:CreateHeader(frame)
     self:CreateDescription(frame)
-    self:CreateSelectionDropdown(frame)
     self:CreateMDTList(frame)
+    self:CreateSelectionButtons(frame)
 
     self.rootFrame = frame
     fillMDTFromCategoryIndex(1)
@@ -134,7 +129,12 @@ function page:Create(parent)
 end
 
 function page:CreateHeader(frame)
-    local header = QuaziiUI.DF:CreateLabel(frame, "|c" .. QuaziiUI.highlightColorHex .. L["MDTHeader"] .. "|r", QuaziiUI.PageHeaderSize)
+    local header =
+        QuaziiUI.DF:CreateLabel(
+        frame,
+        "|c" .. QuaziiUI.highlightColorHex .. L["MDTHeader"] .. "|r",
+        QuaziiUI.PageHeaderSize
+    )
     header:SetFont(QuaziiUI.FontFace, QuaziiUI.PageHeaderSize)
     header:SetPoint("TOP", frame, "TOP", 0, -10)
 end
@@ -150,26 +150,67 @@ function page:CreateDescription(frame)
     self.descriptionText = text
 end
 
-function page:CreateSelectionDropdown(frame)
-    local selectionDropdown = QuaziiUI.DF:CreateDropDown(frame, fillSelectionDropdown, nil, 200, 25, nil, nil, QuaziiUI.ODT)
-    selectionDropdown:SetPoint("TOPLEFT", self.descriptionText, "BOTTOMLEFT", -1, -5)
-    selectionDropdown.label:SetFont(QuaziiUI.FontFace, 16)
+function page:CreateSelectionButtons(frame)
+    local pugButton =
+        QuaziiUI.DF:CreateButton(
+        frame,
+        function()
+            onCategoryClick(frame, 1)
+        end,
+        80,
+        25,
+        L["PUG Routes"],
+        nil,
+        nil,
+        nil,
+        nil,
+        nil,
+        nil,
+        QuaziiUI.ODTS
+    )
+    pugButton:SetPoint("BOTTOMLEFT", frame.addonHeader, "TOPLEFT", 0, 1)
+    pugButton.text_overlay:SetFont(QuaziiUI.FontFace, 16)
+    pugButton:SetTextColor(unpack(QuaziiUI.textColorRGBA))
+    frame.pugButton = pugButton
+
+    local advButton =
+        QuaziiUI.DF:CreateButton(
+        frame,
+        function()
+            onCategoryClick(frame, 2)
+        end,
+        80,
+        25,
+        L["ADV Routes"],
+        nil,
+        nil,
+        nil,
+        nil,
+        nil,
+        nil,
+        QuaziiUI.ODT
+    )
+    advButton:SetPoint("LEFT", pugButton, "RIGHT", 4, 0)
+    advButton.text_overlay:SetFont(QuaziiUI.FontFace, 16)
+    advButton:SetTextColor(unpack(QuaziiUI.textColorRGBA))
+    frame.advButton = advButton
+
 end
 
 function page:CreateMDTList(frame)
     local headerTable = {
-        {text = L["Icon"], width = 50, offset = 1},
-        {text = L["Name"], width = 310},
-        {text = L["Version"], width = 81},
+        {text = L["Name"], width = 340},
+        {text = L["Version"], width = 101},
         {text = L["Import"], width = 110}
     }
     local options = {text_size = QuaziiUI.TableHeaderSize}
     frame.addonHeader = QuaziiUI.DF:CreateHeader(frame, headerTable, options, "QuaziiUIInstallMDTHeader")
     frame.addonHeader:SetPoint("TOPLEFT", self.descriptionText.widget, "BOTTOMLEFT", -2, -35)
 
-    local mdtScrollBox = QuaziiUI.DF:CreateScrollBox(frame, nil, mdtScrollBoxUpdate, {}, 557, 288, 0, 40, createMDTButton, true)
+    local mdtScrollBox =
+        QuaziiUI.DF:CreateScrollBox(frame, nil, mdtScrollBoxUpdate, {}, 557, 288, 0, 35, createMDTButton, true)
     mdtScrollBox:SetPoint("TOPLEFT", frame.addonHeader, "BOTTOMLEFT", 0, 0)
-    mdtScrollBox.ScrollBar.scrollStep = 40
+    mdtScrollBox.ScrollBar.scrollStep = 35
     QuaziiUI.DF:ReskinSlider(mdtScrollBox)
     self.mdtScrollBox = mdtScrollBox
 end

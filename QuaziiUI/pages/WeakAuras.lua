@@ -42,9 +42,11 @@ local function parseWAData(index)
             table.insert(
                 data,
                 {
-                    icon = waTable.d.groupIcon or waTable.d.displayIcon or
-                        QuaziiUI.logoPath,
-                    name = waTable.d.id:gsub("%[READ%sINFORMATION%sTAB%]", ""):gsub("Healthstone/Potions", "Consumables"),
+                    icon = waTable.d.groupIcon or waTable.d.displayIcon or QuaziiUI.logoPath,
+                    name = waTable.d.id:gsub("%[READ%sINFORMATION%sTAB%]", ""):gsub(
+                        "Healthstone/Potions",
+                        "Consumables"
+                    ),
                     version = string.match(waTable.d.desc or "", "Version (%d+)") or "0",
                     update = getWAUpdateStatus(waTable)
                 }
@@ -70,19 +72,15 @@ local function fillWAFromCategoryIndex(index)
 end
 
 ---@param index integer
-local function onCategoryClick(_, _, index)
-    currentCategory = index
-    fillWAFromCategoryIndex(currentCategory)
-end
-
----@return table
-local function fillSelectionDropdown()
-    local options = {}
-    for index, category in ipairs(QuaziiUI.imports.WAStrings) do
-        local label = category.color and "|c" .. category.color .. category.name .. "|r" or category.name
-        table.insert(options, {value = index, label = label, onclick = onCategoryClick})
+local function onCategoryClick(frame, index)
+    if index == 1 then
+        frame.classButton:SetTemplate(QuaziiUI.ODTS)
+        frame.utilButton:SetTemplate(QuaziiUI.ODT)
+    else 
+        frame.classButton:SetTemplate(QuaziiUI.ODT)
+        frame.utilButton:SetTemplate(QuaziiUI.ODTS)
     end
-    return options
+    fillWAFromCategoryIndex(index)
 end
 
 local function waScrollBoxUpdate(self, data, offset, totalLines)
@@ -118,7 +116,9 @@ local function waScrollBoxUpdate(self, data, offset, totalLines)
                 line.importButton:SetClickFunction(
                     function()
                         WeakAuras.Import(QuaziiUI.imports.WAStrings[currentCategory].WAs[index])
-                        line.updateLabel:SetText(getWAUpdateStatus(QuaziiUI.imports.WAStrings[currentCategory].WAs[index]))
+                        line.updateLabel:SetText(
+                            getWAUpdateStatus(QuaziiUI.imports.WAStrings[currentCategory].WAs[index])
+                        )
                     end
                 )
             end
@@ -176,8 +176,8 @@ function page:Create(parent)
 
     self:CreateHeader(frame)
     self:CreateDescription(frame)
-    self:CreateSelectionDropdown(frame)
     self:CreateWAList(frame)
+    self:CreateSelectionDropdown(frame)
 
     self.rootFrame = frame
     fillWAFromCategoryIndex(1)
@@ -207,10 +207,49 @@ function page:CreateDescription(frame)
 end
 
 function page:CreateSelectionDropdown(frame)
-    local selectionDropdown =
-        QuaziiUI.DF:CreateDropDown(frame, fillSelectionDropdown, nil, 200, 25, nil, nil, QuaziiUI.ODT)
-    selectionDropdown:SetPoint("TOPLEFT", self.descriptionText, "BOTTOMLEFT", -1, -5)
-    selectionDropdown.label:SetFont(QuaziiUI.FontFace, 16)
+    local classButton =
+        QuaziiUI.DF:CreateButton(
+        frame,
+        function()
+            onCategoryClick(frame, 1)
+        end,
+        75,
+        25,
+        L["Class WAs"],
+        nil,
+        nil,
+        nil,
+        nil,
+        nil,
+        nil,
+        QuaziiUI.ODTS
+    )
+    classButton:SetPoint("BOTTOMLEFT", frame.addonHeader, "TOPLEFT", 0, 1)
+    classButton.text_overlay:SetFont(QuaziiUI.FontFace, 16)
+    classButton:SetTextColor(unpack(QuaziiUI.textColorRGBA))
+    frame.classButton = classButton
+
+    local utilButton =
+        QuaziiUI.DF:CreateButton(
+        frame,
+        function()
+            onCategoryClick(frame, 2)
+        end,
+        75,
+        25,
+        L["Utility WAs"],
+        nil,
+        nil,
+        nil,
+        nil,
+        nil,
+        nil,
+        QuaziiUI.ODT
+    )
+    utilButton:SetPoint("LEFT", classButton, "RIGHT", 4, 0)
+    utilButton.text_overlay:SetFont(QuaziiUI.FontFace, 16)
+    utilButton:SetTextColor(unpack(QuaziiUI.textColorRGBA))
+    frame.utilButton = utilButton
 end
 
 function page:CreateWAList(frame)

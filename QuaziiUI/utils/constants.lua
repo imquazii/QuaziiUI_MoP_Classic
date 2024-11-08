@@ -1,5 +1,7 @@
 ---@type table
 QuaziiUI.ODT = QuaziiUI.DF:GetTemplate("dropdown", "OPTIONS_DROPDOWN_TEMPLATE")
+QuaziiUI.ODTS = QuaziiUI.DF.table.copy({}, QuaziiUI.DF:GetTemplate("button", "OPTIONS_BUTTON_TEMPLATE"))
+QuaziiUI.ODTS.backdropbordercolor = {0.188, 0.819, 1}
 ---@type boolean
 
 ---@type number
