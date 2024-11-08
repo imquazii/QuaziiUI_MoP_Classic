@@ -139,4 +139,5 @@ function QuaziiUI:CellImport(healer)
     self.db.global.imports.Cell.date = GetServerTime()
     self.db.global.imports.Cell.versionNumber = self.versionNumber
     self.db.char.openPage = 2
+    ReloadUI()
 end
