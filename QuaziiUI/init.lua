@@ -5,7 +5,6 @@ QuaziiUI.L = LibStub("AceLocale-3.0"):GetLocale("QuaziiUI")
 
 local L = QuaziiUI.L
 
-
 ---@type table
 QuaziiUI.DF = _G["DetailsFramework"]
 QuaziiUI.DEBUG_MODE = false
@@ -65,12 +64,10 @@ function QuaziiUI:OnEnable()
     self:RegisterEvent("PLAYER_ENTERING_WORLD")
 end
 
-function QuaziiUI:PLAYER_ENTERING_WORLD()
+function QuaziiUI:PLAYER_ENTERING_WORLD(_, isInitialLogin, isReloadingUi)
     QuaziiUI:BackwardsCompat()
     local isNotDone = not self.db.global.isDone -- Has not finished installer before
     local newVersion = (self.db.global.lastVersion or 0) < self.versionNumber -- Attempts to set to lastVersion, if not found sets to 0
-
-    self:Print("Thank you for using QuaziiUI!")
 
     if not self.DEBUG_MODE then
         if self.db.char.debug.reload then
@@ -81,17 +78,19 @@ function QuaziiUI:PLAYER_ENTERING_WORLD()
     else
         QuaziiUI:DebugPrint("Debug Mode Enabled")
     end
-    if (isNotDone) or (newVersion) then
-        self:DebugPrint("Is Not Done?: ", isNotDone, " | New Version?: ", newVersion)
-        self:selectPage((self.db.char.openPage or 1))
-        self:Show()
-        self.db.global.lastVersion = self.versionNumber
-    else
+
+    if (isInitialLogin and not isReloadingUi) or self.DEBUG_MODE then
+        self:Print("Thank you for using QuaziiUI!")
         self:Print("You may access the installer by using /qui or /quaziiui at anytime!")
+
         self:DebugPrint("Is Not Done?: ", isNotDone, " | New Version?: ", newVersion)
+        if (isNotDone) or (newVersion) then
+            self:selectPage((self.db.char.openPage or 1))
+            self:Show()
+            self.db.global.lastVersion = self.versionNumber
+        end
     end
 end
-
 
 -- ADDON COMPARTMENT FUNCTIONS --
 function QuaziiUI_CompartmentClick()
