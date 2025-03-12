@@ -1,19 +1,19 @@
 ## Proprietary Software License
 
-Copyright (C) 2024 [Your Name or Company Name]
+Copyright (C) 2024 Quazii
 
 All Rights Reserved
 
-This software and associated documentation files (the "Software") are the proprietary and confidential property of [Your Name or Company Name]. The Software is protected by copyright laws and international treaty provisions.
+This software and associated documentation files (the "Software") are the proprietary and confidential property of Quazii. The Software is protected by copyright laws and international treaty provisions.
 
 1. OWNERSHIP AND LICENSE
-   The Software is owned by [Your Name or Company Name] and is licensed, not sold, to the end user. [Your Name or Company Name] retains all rights, title, and interest in and to the Software.
+   The Software is owned by Quazii and is licensed, not sold, to the end user. Quazii retains all rights, title, and interest in and to the Software.
 
 2. RESTRICTIONS
-   Unauthorized copying, distribution, modification, public display, public performance, or creation of derivative works of the Software is strictly prohibited. No part of the Software may be reproduced, transmitted, or used in any form or by any means, electronic or mechanical, for any purpose, without the express written permission of [Your Name or Company Name].
+   Unauthorized copying, distribution, modification, public display, public performance, or creation of derivative works of the Software is strictly prohibited. No part of the Software may be reproduced, transmitted, or used in any form or by any means, electronic or mechanical, for any purpose, without the express written permission of Quazii.
 
 3. NO TRANSFER
-   This license is personal to you and may not be sublicensed, assigned, or transferred by you to any other person without the prior written consent of [Your Name or Company Name].
+   This license is personal to you and may not be sublicensed, assigned, or transferred by you to any other person without the prior written consent of Quazii.
 
 4. NO REVERSE ENGINEERING
    You may not reverse engineer, decompile, disassemble, or otherwise attempt to derive the source code of the Software.
@@ -22,16 +22,16 @@ This software and associated documentation files (the "Software") are the propri
    This license is effective until terminated. Your rights under this license will terminate automatically without notice if you fail to comply with any of its terms or conditions. Upon termination, you must cease all use of the Software and destroy all copies.
 
 6. DISCLAIMER OF WARRANTY
-   THE SOFTWARE IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND, EITHER EXPRESS OR IMPLIED, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, OR NON-INFRINGEMENT. [YOUR NAME OR COMPANY NAME] DOES NOT WARRANT THAT THE SOFTWARE WILL MEET YOUR REQUIREMENTS OR THAT THE OPERATION OF THE SOFTWARE WILL BE UNINTERRUPTED OR ERROR-FREE.
+   THE SOFTWARE IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND, EITHER EXPRESS OR IMPLIED, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, OR NON-INFRINGEMENT. Quazii DOES NOT WARRANT THAT THE SOFTWARE WILL MEET YOUR REQUIREMENTS OR THAT THE OPERATION OF THE SOFTWARE WILL BE UNINTERRUPTED OR ERROR-FREE.
 
 7. LIMITATION OF LIABILITY
-   IN NO EVENT SHALL [YOUR NAME OR COMPANY NAME] BE LIABLE FOR ANY SPECIAL, INCIDENTAL, INDIRECT, OR CONSEQUENTIAL DAMAGES WHATSOEVER (INCLUDING, WITHOUT LIMITATION, DAMAGES FOR LOSS OF BUSINESS PROFITS, BUSINESS INTERRUPTION, LOSS OF BUSINESS INFORMATION, OR ANY OTHER PECUNIARY LOSS) ARISING OUT OF THE USE OF OR INABILITY TO USE THE SOFTWARE, EVEN IF [YOUR NAME OR COMPANY NAME] HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
+   IN NO EVENT SHALL Quazii BE LIABLE FOR ANY SPECIAL, INCIDENTAL, INDIRECT, OR CONSEQUENTIAL DAMAGES WHATSOEVER (INCLUDING, WITHOUT LIMITATION, DAMAGES FOR LOSS OF BUSINESS PROFITS, BUSINESS INTERRUPTION, LOSS OF BUSINESS INFORMATION, OR ANY OTHER PECUNIARY LOSS) ARISING OUT OF THE USE OF OR INABILITY TO USE THE SOFTWARE, EVEN IF Quazii HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 
 8. GOVERNING LAW
-   This license shall be governed by and construed in accordance with the laws of [Your Country/State], without giving effect to any principles of conflicts of law.
+   This license shall be governed by and construed in accordance with the laws of Singapore, without giving effect to any principles of conflicts of law.
 
 By using, copying, or installing the Software, you agree to be bound by the terms of this license.
 
 ## Libraries and Dependencies
 
-This license does not apply to any third-party libraries or dependencies that may be included with the Software. Each third-party library or dependency is distributed with its own license, as specified in their respective LICENSE files. Please refer to those LICENSE files for the applicable terms and conditions for each library or dependency.
+This license does not apply to any third-party libraries or dependencies that may be included with the Software. Each third-party library or dependency is distributed with its own license, as specified in their respective LICENSE files. Please refer to those LICENSE files for the applicable terms and conditions for each library or dependency.endency is distributed with its own license, as specified in their respective LICENSE files. Please refer to those LICENSE files for the applicable terms and conditions for each library or dependency.
