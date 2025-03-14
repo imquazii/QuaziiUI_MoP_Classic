@@ -43,7 +43,7 @@ QuaziiUI.textColorRGB = {1, 0.976, 0.964} -- Off White RGB no Alpha
 QuaziiUI.textColorRGBA = {1, 0.976, 0.964, 1} -- Off White RGB with Alpha
 
 -- Text Font Face
-QuaziiUI.FontFace = QuaziiUI.assetPath .. "accidental_pres.ttf"
+QuaziiUI.FontFace = QuaziiUI.assetPath .. "Quazii.ttf"
 
 -- Define Text Sizes
 ---@type integer
