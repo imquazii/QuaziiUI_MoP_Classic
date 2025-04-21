@@ -3,8 +3,6 @@ import os
 from json import load
 
 raw_import_data: dict = {}
-mdt_w_routes_list: list = []
-mdt_adv_routes_list: list = []
 wa_class_list: list = []
 wa_non_class_list: list = []
 
@@ -64,13 +62,9 @@ def write_template(input):
 
 def process_temple():
     template = get_template()
-    w_routes_string = ",\n            ".join(mdt_w_routes_list)
-    adv_routes_string = ",\n            ".join(mdt_adv_routes_list)
     wa_class_string = ",\n            ".join(wa_class_list)
     wa_non_class_string = ",\n            ".join(wa_non_class_list)
 
-    template = template.replace('"{MDT_W_ROUTES}"', w_routes_string)
-    template = template.replace('"{MDT_ADV_ROUTES}"', adv_routes_string)
     template = template.replace('"{CLASS_WA}"', wa_class_string)
     template = template.replace('"{NON_CLASS_WA}"', wa_non_class_string)
 

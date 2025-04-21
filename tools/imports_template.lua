@@ -1,7 +1,7 @@
 ---@type table<string, string>
 local L = QuaziiUI.L
 
----@type table
+--[[ ---@type table
 QuaziiUI.imports.MDT = {
     ---@type table
     [1] = {
@@ -20,7 +20,7 @@ QuaziiUI.imports.MDT = {
             "{MDT_ADV_ROUTES}"
         }
     }
-}
+} ]]
 
 ---@type table
 QuaziiUI.imports.ElvUI = {
@@ -86,14 +86,8 @@ QuaziiUI.imports.Plater = {
 
 ---@type table
 QuaziiUI.imports.Cell = {
-    Healer = {
-        ---@type string
-        data = "{CELL_HEALER}"
-    },
-    TankDPS = {
-        ---@type string
-        data = "{CELL_TANK}"
-    }
+    ---@type string
+    data = "{CELL_TANK}"
 }
 
 ---@type table

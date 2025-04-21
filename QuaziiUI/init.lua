@@ -46,6 +46,9 @@ function QuaziiUI:OnInitialize()
     self:RegisterChatCommand("qui", "SlashCommandOpen")
     self:RegisterChatCommand("quaziiui", "SlashCommandOpen")
     self:RegisterChatCommand("rl", "SlashCommandReload")
+    
+    -- Register our media files with LibSharedMedia
+    self:CheckMediaRegistration()
 end
 
 function QuaziiUI:SlashCommandOpen(input)

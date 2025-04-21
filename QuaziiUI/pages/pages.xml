@@ -4,6 +4,5 @@
     <Script file="Home.lua"/>
     <Script file="ElvUI.lua"/>
     <Script file="WeakAuras.lua"/>
-    <Script file="MDT.lua" />
     <Script file="Done.lua"/>
 </Ui>

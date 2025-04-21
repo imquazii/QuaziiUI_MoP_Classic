@@ -40,18 +40,6 @@ local function addonScrollBoxUpdate(self, data, offset, totalLines)
                     line.importButton:Disable()
                     line.importButton:SetText(L["NA"])
                 end
-            elseif addonTitle == "MythicDungeonTools" then
-                if addonEnabled then
-                    line.importButton:SetText(L["GoToPage"])
-                    line.importButton:SetClickFunction(
-                        function()
-                            QuaziiUI:selectPage(5)
-                        end
-                    )
-                else
-                    line.importButton:Disable()
-                    line.importButton:SetText(L["NA"])
-                end
             elseif addonTitle == "Cell" then
                 if addonEnabled then
                     line.importButton:SetClickFunction(

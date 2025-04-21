@@ -19,7 +19,6 @@ QuaziiUI.frames = {} -- Frames holder object
 QuaziiUI.supportedAddons = {
     "ElvUI",
     "WeakAuras",
-    "MythicDungeonTools",
     "Details",
     "Plater",
     "BigWigs",

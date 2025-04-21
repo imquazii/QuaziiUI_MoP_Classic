@@ -3,32 +3,15 @@ local LibDeflate = LibStub:GetLibrary("LibDeflate")
 local L = QuaziiUI.L
 
 function QuaziiUI:importCellProfile()
-    self:Show2ChoicePromptPanel(
-        "Please select which Cell Profile that you would like to install!",
-        L["Cell"],
-        L["Healer"],
-        function()
-            QuaziiUI:CellImport(true)
-        end,
-        L["Tank"] .. "/" .. L["DPS"],
-        function()
-            QuaziiUI:CellImport(false)
-        end,
-        true
-    )
-    
+    -- Directly import the Tank/DPS profile without showing choice
+    QuaziiUI:CellImport(false)
 end
 
 ---@param healer boolean Whether importing healer or tank/dps 
 function QuaziiUI:CellImport(healer)
     local F = Cell.funcs
 
-    local importString
-    if healer then 
-        importString = self.imports.Cell.Healer.data
-    else
-        importString = self.imports.Cell.TankDPS.data
-    end
+    local importString = self.imports.Cell.data
 
     local version, data = string.match(importString, "^!CELL:(%d+):ALL!(.+)$")
     version = tonumber(version)
