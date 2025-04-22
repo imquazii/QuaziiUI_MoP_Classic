@@ -56,6 +56,7 @@ function QuaziiUI:SlashCommandOpen(input)
         self.db.char.debug.reload = true
         ReloadUI()
     end
+    self:InitializePanel() -- Ensure panel is created before showing
     QuaziiUI_CompartmentClick()
 end
 
@@ -69,8 +70,8 @@ end
 
 function QuaziiUI:PLAYER_ENTERING_WORLD(_, isInitialLogin, isReloadingUi)
     QuaziiUI:BackwardsCompat()
-    local isNotDone = not self.db.global.isDone -- Has not finished installer before
-    local newVersion = (self.db.global.lastVersion or 0) < self.versionNumber -- Attempts to set to lastVersion, if not found sets to 0
+    local isNotDone = not self.db.global.isDone
+    local newVersion = (self.db.global.lastVersion or 0) < self.versionNumber
 
     if not self.DEBUG_MODE then
         if self.db.char.debug.reload then
@@ -88,15 +89,15 @@ function QuaziiUI:PLAYER_ENTERING_WORLD(_, isInitialLogin, isReloadingUi)
 
         self:DebugPrint("Is Not Done?: ", isNotDone, " | New Version?: ", newVersion)
         if (isNotDone) or (newVersion) then
-            self:selectPage((self.db.char.openPage or 1))
-            self:Show()
             self.db.global.lastVersion = self.versionNumber
+            self:DebugPrint("Installer condition met (first run or new version), but not showing automatically.")
         end
     end
 end
 
 -- ADDON COMPARTMENT FUNCTIONS --
 function QuaziiUI_CompartmentClick()
+    QuaziiUI:InitializePanel() -- Ensure panel is created before showing
     QuaziiUI:selectPage(QuaziiUI.db.char.openPage or 1)
     QuaziiUI:Show()
 end

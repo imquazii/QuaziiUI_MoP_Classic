@@ -24,17 +24,17 @@ end
 function page:CreateText(frame)
     local text = QuaziiUI.DF:CreateLabel(frame, L["FinishedText"], QuaziiUI.PageTextSize)
     text:SetFont(QuaziiUI.FontFace, QuaziiUI.PageTextSize)
-    text:SetPoint("TOPLEFT", frame, "TOPLEFT", 10, -40)
-    text:SetPoint("BOTTOMRIGHT", frame, "BOTTOMRIGHT", -10, -40)
+    text:SetPoint("TOPLEFT", frame, "TOPLEFT", 40, -60)
+    text:SetPoint("TOPRIGHT", frame, "TOPRIGHT", -40, -60)
     text:SetSpacing(5)
-    text:SetJustifyH("CENTER")
+    text:SetJustifyH("LEFT")
     text:SetJustifyV("TOP")
     frame.textWidget = text.widget
 end
 
 function page:CreateImage(frame)
-    local image = QuaziiUI.DF:CreateImage(frame, QuaziiUI.logoPath, 256, 256)
-    image:SetPoint("CENTER", frame, "CENTER", 0, -10)
+    local image = QuaziiUI.DF:CreateImage(frame, QuaziiUI.logoPath, 200, 200)
+    image:SetPoint("CENTER", frame, "CENTER", 0, -150)
 end
 
 function page:ShouldShow()
@@ -42,9 +42,13 @@ function page:ShouldShow()
 end
 
 function page:Show()
-    self.rootFrame:Show()
+    if self.rootFrame then
+        self.rootFrame:Show()
+    end
 end
 
 function page:Hide()
-    self.rootFrame:Hide()
+    if self.rootFrame then
+        self.rootFrame:Hide()
+    end
 end

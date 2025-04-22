@@ -28,7 +28,6 @@ function page:CreateText(frame)
         {
             L["WelcomeText1"],
             L["WelcomeText2"],
-            "",
             L["WelcomeText3"]
         },
         "\n"

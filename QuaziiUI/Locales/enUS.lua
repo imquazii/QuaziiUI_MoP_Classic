@@ -10,7 +10,7 @@ if L then
     L["Import"] = "Import"
     L["Imports"] = "Imports"
     L["Next"] = "Next"
-    L["Index"] = "Index"
+    L["Index"] = "Home"
     L["Prev"] = "Prev" --Shorthand for Previous
     L["Back"] = "Back"
     L["GoToPage"] = "Go To Page"
@@ -42,15 +42,16 @@ if L then
     -- Welcome Page
     L["WelcomeHeader"] = "Quazii UI"
     L["WelcomeText1"] =
-        "This installer will take you through the steps needed to import and install all aspects of Quazii UI."
+        "Quazii UI comes in non-ElvUI OR ElvUI versions. More details on next page.\n"
     L["WelcomeText2"] =
-        "Each step can be considered optional, however, it is recommended to at least use ElvUI and Weakauras."
-    L["WelcomeText3"] = "Let's get started!"
+        "Note for Non-ElvUI version: Some addon profiles must be imported manually into your WoW folders. Please see the accompanying video guide for instructions.\n"
+    L["WelcomeText3"] =
+        "Click 'Next' to begin installation, or 'Home' at any time to return to the main menu."
 
     -- Supported Addon Check
     L["SupportedAddonsHeader"] = "Quazii UI Homepage"
     L["SupportedAddonsText"] =
-        "Below shows the addon profiles are supported by Quazii UI.\nIf you have the respective addon installed, you can proceed to import the profiles\n"
+        "|cffFFA500Imports in Orange are a MUST for non-ElvUI version.|r\n|cffFF00FFImports in Pink are a MUST for ElvUI version.|r\n|cffffffffImports in White apply to BOTH versions.|r"
     L["SupportedAddonsTable1stHeader"] = "Supported|r Addons"
     L["SupportedAddonsTable2ndHeader"] = "Enabled"
     L["SupportedAddonsTable3rdHeader"] = "Installed Version"
@@ -78,10 +79,10 @@ if L then
     L["PlaterPrompt"] = "Insert a Name for the New Plater Profile:"
 
     -- WeakAuras
-    L["WeakAuraText"] = "Here you can choose which WAs you would like to import or update."
-    L["ClassWA"] = "Class WeakAuras"
-    L["NonClassWA"] = "Non-Class WeakAuras"
-    L["ClassWA"] = "Class WeakAuras"
+    L["WeakAuraText"] = "Note: Scroll down if you cannot find what you want."
+    L["Class WAs"] = "Class WAs" -- Renamed from ClassWA for clarity in separate page title
+    L["Utility WAs"] = "Utility WAs" -- Added for separate page title
+    L["NonClassWA"] = "Non-Class WeakAuras" -- Kept for potential backend use, though page title uses Utility WAs
     L["WeakAuraNotFound"] = "WeakAura not installed or has been renamed"
     -- All WA names are pulled from the import string, so cannot be translated
 
@@ -95,5 +96,17 @@ if L then
 
     -- Finish Page
     L["FinishHeader"] = "Congratulations!"
-    L["FinishedText"] = "You have reached the end of the installation!\nHave fun with your new UI!"
+    L["FinishedText"] = [[
+Keep Quazii UI FREE for you. Support at |cff00ffffpatreon.com/quazii|r
+
+|cffffd700EXCLUSIVE PATREON PERKS|r
+• |cffffffffQuazii M+ Dungeon Pack:|r Clean text & audio alerts for M+ mechanics
+• |cffffffffQuazii Tankbuster Pack:|r Instant alerts for tank hits
+• |cffffffffQuazii AoE CC Shotcaller:|r Shows next 3 party CCs for mob lockdown
+• |cffffffffQuazii Mob Tankbuster CD:|r Exact countdown for tankbusters
+• |cffffffffQuazii Mob AoE CD:|r Precise timer for party-wide AoE
+• |cffffffffEarly Access:|r Alpha/Beta/PTR access to Plater & Class WAs
+• |cffffffffPriority Quazii UI Hotline:|r Private Discord help from Quazii
+• |cffffffffExtras:|r Ad-free podcast, credits, Discord roles & more
+]]
 end

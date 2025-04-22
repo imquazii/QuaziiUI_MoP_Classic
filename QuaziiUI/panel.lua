@@ -121,99 +121,64 @@ function QuaziiUI:CreateImportFrame(parentPanel, addonName, importLabel, importF
     return frame
 end
 
--- Create Main UI Frame
+-- Create Main UI Frame (function definition)
 local function createPanel()
     -- Init panel
 
-    local panel = QuaziiUI.DF:CreateSimplePanel(UIParent, 600, 500, L["AddonName"], "QuaziiUIMainPanel") -- Create a 600x500 panel
-    QuaziiUI.DF:ApplyStandardBackdrop(panel) -- Give it a basic backdrop
+    -- Set initial title to just "Quazii UI" temporarily, we'll override it below
+    local panel = QuaziiUI.DF:CreateSimplePanel(UIParent, 600, 700, "Quazii UI", "QuaziiUIMainPanel") 
+    QuaziiUI.DF:ApplyStandardBackdrop(panel)
 
-    local versionLabel = QuaziiUI.DF:CreateLabel(panel.TitleBar, QuaziiUI.versionString, 14)
-    versionLabel:SetTextColor(unpack({0.439216, 0.501961, 0.564706, 1}))
-    versionLabel:SetPoint("LEFT", panel.TitleBar, "LEFT", 2, 1)
+    -- Comment out the version label creation
+    -- local versionLabel = QuaziiUI.DF:CreateLabel(panel.TitleBar, QuaziiUI.versionString, 14)
+    -- versionLabel:SetTextColor(unpack({0.439216, 0.501961, 0.564706, 1}))
+    -- versionLabel:SetPoint("LEFT", panel.TitleBar, "LEFT", 2, 1)
 
     -- Panel Border
-    QuaziiUI.DF:CreateBorder(panel) -- Give it a border
-    panel:SetBorderColor(unpack(QuaziiUI.highlightColorRGBA)) -- Sets border color to Quazii Blue RGBA
+    QuaziiUI.DF:CreateBorder(panel)
+    panel:SetBorderColor(unpack(QuaziiUI.highlightColorRGBA))
 
     -- Panel Title Bar
-    panel.Title:SetFont(QuaziiUI.FontFace, 18) -- Set Title Font Size to 18
-    panel.Title:SetTextColor(unpack(QuaziiUI.textColorRGBA)) -- Set Text Color
-    panel.Title:SetPoint("CENTER", panel.TitleBar, "CENTER", 0, 1) -- Center Title Text in the Title Bar, offset 1 Y pixel
+    panel.Title:SetFont(QuaziiUI.FontFace, 18)
+    panel.Title:SetTextColor(unpack(QuaziiUI.textColorRGBA))
+    panel.Title:SetPoint("CENTER", panel.TitleBar, "CENTER", 0, 1)
+    -- Explicitly set the desired title text
+    panel.Title:SetText("Quazii UI Installer (2025.04.22)")
 
     -- Panel Options
-    panel:ClearAllPoints() -- Resets Panel Anchor point
-    panel:SetPoint("CENTER", UIParent, "CENTER") -- Centers Panel on Screen
-    panel:SetFrameStrata("DIALOG") -- We use Dialog to ensure it is above most other elements
-    panel:SetFrameLevel(100) -- Same as above line
-    panel:SetLayerVisibility(true, false, false) -- DFramework Layer Visibilty options, we only use layer 1, so others are set to false
+    panel:ClearAllPoints()
+    panel:SetPoint("CENTER", UIParent, "CENTER")
+    panel:SetFrameStrata("DIALOG")
+    panel:SetFrameLevel(100)
+    panel:SetLayerVisibility(true, false, false)
 
     -- Previous Button
     local previousButton =
-        QuaziiUI.DF:CreateButton(
-        panel,
-        selectPreviousPage,
-        90,
-        40,
-        "<- " .. L["Back"],
-        nil,
-        nil,
-        nil,
-        nil,
-        nil,
-        nil,
-        QuaziiUI.ODT
-    )
-    previousButton:SetPoint("BOTTOMLEFT", panel, "BOTTOMLEFT", 10, 5) -- Anchor Button to Bottom Left of Panel, with 5 pixel buffer
-    previousButton.text_overlay:SetFont(QuaziiUI.FontFace, 18) -- Set Font Size
-    previousButton:SetTextColor(unpack(QuaziiUI.textColorRGBA)) -- Set Text to Text Color
+        QuaziiUI.DF:CreateButton( panel, selectPreviousPage, 90, 40, "<- " .. L["Back"], nil, nil, nil, nil, nil, nil, QuaziiUI.ODT )
+    previousButton:SetPoint("BOTTOMLEFT", panel, "BOTTOMLEFT", 10, 5)
+    previousButton.text_overlay:SetFont(QuaziiUI.FontFace, 18)
+    previousButton:SetTextColor(unpack(QuaziiUI.textColorRGBA))
 
     -- Index Button
     local indexButton =
-        QuaziiUI.DF:CreateButton(
-        panel,
-        selectIndexPage,
-        90,
-        40,
-        "- " .. L["Index"] .. " -",
-        nil,
-        nil,
-        nil,
-        nil,
-        nil,
-        nil,
-        QuaziiUI.ODT
-    )
-    indexButton:SetPoint("BOTTOM", panel, "BOTTOM", 0, 5) -- Anchor Button to Bottom Left of Panel, with 5 pixel buffer
-    indexButton.text_overlay:SetFont(QuaziiUI.FontFace, 18) -- Set Font Size
-    indexButton:SetTextColor(unpack(QuaziiUI.textColorRGBA)) -- Set Text to Text Color
+        QuaziiUI.DF:CreateButton( panel, selectIndexPage, 90, 40, "- " .. L["Index"] .. " -", nil, nil, nil, nil, nil, nil, QuaziiUI.ODT )
+    indexButton:SetPoint("BOTTOM", panel, "BOTTOM", 0, 5)
+    indexButton.text_overlay:SetFont(QuaziiUI.FontFace, 18)
+    indexButton:SetTextColor(unpack(QuaziiUI.textColorRGBA))
 
     -- Next Button
     local nextButton =
-        QuaziiUI.DF:CreateButton(
-        panel,
-        selectNextPage,
-        90,
-        40,
-        L["Next"] .. " ->",
-        nil,
-        nil,
-        nil,
-        nil,
-        nil,
-        nil,
-        QuaziiUI.ODT
-    )
-    nextButton:SetPoint("BOTTOMRIGHT", panel, "BOTTOMRIGHT", -10, 5) -- Anchor Button to Bottom Right of Panel, with 5 pixel buffer
-    nextButton.text_overlay:SetFont(QuaziiUI.FontFace, 18) -- Set Font Size
-    nextButton:SetTextColor(unpack(QuaziiUI.textColorRGBA)) -- Set Text to Text Color
+        QuaziiUI.DF:CreateButton( panel, selectNextPage, 90, 40, L["Next"] .. " ->", nil, nil, nil, nil, nil, nil, QuaziiUI.ODT )
+    nextButton:SetPoint("BOTTOMRIGHT", panel, "BOTTOMRIGHT", -10, 5)
+    nextButton.text_overlay:SetFont(QuaziiUI.FontFace, 18)
+    nextButton:SetTextColor(unpack(QuaziiUI.textColorRGBA))
 
     -- Panel Content Frame
     local panelContentFrame = CreateFrame("Frame", nil, panel)
-    panelContentFrame:SetPoint("TOPLEFT", panel.TitleBar, "BOTTOMLEFT", 0, -5) -- Set Top Left anchor to Bottom Left anchor of TitleBar, with 5px buffer
-    panelContentFrame:SetPoint("TOPRIGHT", panel.TitleBar, "BOTTOMRIGHT", 0, -5) -- Above but for Top Right / Bottom Right
-    panelContentFrame:SetPoint("BOTTOMLEFT", panel, "BOTTOMLEFT", 0, 48) -- Set Bottom Left Anchor to Bottom Left anchor of panel, with 48px buffer for buttons
-    panelContentFrame:SetPoint("BOTTOMRIGHT", panel, "BOTTOMRIGHT", 0, 48) -- Above for Bottom Right
+    panelContentFrame:SetPoint("TOPLEFT", panel.TitleBar, "BOTTOMLEFT", 0, -5)
+    panelContentFrame:SetPoint("TOPRIGHT", panel.TitleBar, "BOTTOMRIGHT", 0, -5)
+    panelContentFrame:SetPoint("BOTTOMLEFT", panel, "BOTTOMLEFT", 0, 48)
+    panelContentFrame:SetPoint("BOTTOMRIGHT", panel, "BOTTOMRIGHT", 0, 48)
 
     panel:HookScript("OnHide", function()
         QuaziiUI:Hide()
@@ -223,8 +188,20 @@ local function createPanel()
     panel.frameContent = panelContentFrame
     QuaziiUI.panel = panel
 
-
-    createPages(panel)
+    createPages(panel) -- Keep page creation linked to panel creation
 end
 
-createPanel()
+-- New function to handle panel initialization
+function QuaziiUI:InitializePanel()
+    if self.panelInitialized then return end -- Only run once
+    self:DebugPrint("Initializing Panel UI...")
+    createPanel() -- Call the actual creation function
+    if self.panel then
+        self.panelInitialized = true
+        self:DebugPrint("Panel UI Initialized.")
+    else
+        self:DebugPrint("Panel UI Initialization failed - panel object not created.")
+    end
+end
+
+-- createPanel() -- Removed direct call from here

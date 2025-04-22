@@ -1,9 +1,10 @@
 local L = QuaziiUI.L
 
 local page = {}
-table.insert(QuaziiUI.pages, page)
+-- Add this new page to the sequence (will be ordered by pages.xml)
+table.insert(QuaziiUI.pages, page) 
 
-local currentCategory = 1
+-- Removed currentCategory, GameTooltip is still needed
 local GameTooltip = GameTooltip
 
 ---@param importString string
@@ -15,13 +16,9 @@ end
 ---@return string
 local function getWAUpdateStatus(waTable)
     if WeakAuras then
-        ---@type table
         if waTable and waTable.d then
             local WAData = WeakAuras.GetData(waTable.d.id)
-            if not WAData then
-                return L["NA"]
-            end
-
+            if not WAData then return L["NA"] end
             local installedVersion = tonumber(string.match(WAData.desc or "Version 0", "Version (%d+)")) or 0
             local newVersion = tonumber(string.match(waTable.d.desc or "Version 0", "Version (%d+)")) or 0
             return newVersion > installedVersion and "|cFFbc1f00" .. L["Yes"] .. "|r" or "|cFF28bc00" .. L["No"] .. "|r"
@@ -31,59 +28,37 @@ local function getWAUpdateStatus(waTable)
     return L["NA"]
 end
 
----@param index integer
+-- Modified parseWAData to only handle index 2 (Utility WAs)
 ---@return table
-local function parseWAData(index)
+local function parseUtilityWAData()
     local data = {}
-    for _, importString in ipairs(QuaziiUI.imports.WAStrings[index].WAs) do
+    -- Directly access category 2 WAs
+    for _, importString in ipairs(QuaziiUI.imports.WAStrings[2].WAs) do 
         local waTable = decodeWAPacket(importString) or {}
-
         if waTable and waTable.d then
-            table.insert(
-                data,
-                {
-                    icon = waTable.d.groupIcon or waTable.d.displayIcon or QuaziiUI.logoPath,
-                    name = waTable.d.id:gsub("%[READ%sINFORMATION%sTAB%]", ""):gsub(
-                        "Healthstone/Potions",
-                        "Consumables"
-                    ),
-                    version = string.match(waTable.d.desc or "", "Version (%d+)") or "0",
-                    update = getWAUpdateStatus(waTable)
-                }
-            )
+            table.insert( data, {
+                icon = waTable.d.groupIcon or waTable.d.displayIcon or QuaziiUI.logoPath,
+                name = waTable.d.id:gsub("%[READ%sINFORMATION%sTAB%]", ""):gsub("Healthstone/Potions", "Consumables"),
+                version = string.match(waTable.d.desc or "", "Version (%d+)") or "0",
+                update = getWAUpdateStatus(waTable)
+            })
         end
     end
+    
+    -- Sort the data alphabetically by name
+    table.sort(data, function(a, b) 
+        return a.name < b.name 
+    end)
+
     return data
 end
 
-local classData = parseWAData(1)
-local nonClassData = parseWAData(2)
+-- Renamed variable to be specific
+local utilityWADataList = parseUtilityWAData() 
 
----@param index integer
-local function fillWAFromCategoryIndex(index)
-    local data = {}
-    if index == 1 then
-        data = classData
-    else
-        data = nonClassData
-    end
-    page.waScrollBox:SetData(data)
-    page.waScrollBox:Refresh()
-end
+-- Removed fillWAFromCategoryIndex and onCategoryClick functions
 
----@param index integer
-local function onCategoryClick(frame, index)
-    if index == 1 then
-        frame.classButton:SetTemplate(QuaziiUI.ODTS)
-        frame.utilButton:SetTemplate(QuaziiUI.ODT)
-    else 
-        frame.classButton:SetTemplate(QuaziiUI.ODT)
-        frame.utilButton:SetTemplate(QuaziiUI.ODTS)
-    end
-    currentCategory = index
-    fillWAFromCategoryIndex(currentCategory)
-end
-
+-- Modified waScrollBoxUpdate to directly use category 2 data
 local function waScrollBoxUpdate(self, data, offset, totalLines)
     for i = 1, totalLines do
         local index = i + offset
@@ -96,14 +71,11 @@ local function waScrollBoxUpdate(self, data, offset, totalLines)
             line.updateLabel:SetText(info.update)
 
             if info.update == "N/A" then
-                line.updateLabel:SetScript(
-                    "OnEnter",
-                    function(self)
-                        GameTooltip:SetOwner(self, "ANCHOR_CURSOR_RIGHT")
-                        GameTooltip:AddLine(L["WeakAuraNotFound"])
-                        GameTooltip:Show()
-                    end
-                )
+                line.updateLabel:SetScript("OnEnter", function(self)
+                    GameTooltip:SetOwner(self, "ANCHOR_CURSOR_RIGHT")
+                    GameTooltip:AddLine(L["WeakAuraNotFound"])
+                    GameTooltip:Show()
+                end)
                 line.updateLabel:SetScript("OnLeave", GameTooltip_Hide)
             else
                 line.updateLabel:SetScript("OnEnter", nil)
@@ -114,14 +86,12 @@ local function waScrollBoxUpdate(self, data, offset, totalLines)
                 line.importButton:Disable()
                 line.importButton:SetText(L["NA"])
             else
-                line.importButton:SetClickFunction(
-                    function()
-                        WeakAuras.Import(QuaziiUI.imports.WAStrings[currentCategory].WAs[index])
-                        line.updateLabel:SetText(
-                            getWAUpdateStatus(QuaziiUI.imports.WAStrings[currentCategory].WAs[index])
-                        )
-                    end
-                )
+                line.importButton:SetClickFunction( function()
+                    -- Directly use category 2 string for import
+                    WeakAuras.Import(QuaziiUI.imports.WAStrings[2].WAs[index]) 
+                    -- Update status based on category 2 data
+                    line.updateLabel:SetText(getWAUpdateStatus(decodeWAPacket(QuaziiUI.imports.WAStrings[2].WAs[index]))) 
+                end)
             end
         end
     end
@@ -133,13 +103,7 @@ local function createWAButton(self, index)
     line:SetClipsChildren(true)
     line:SetPoint("TOPLEFT", self, "TOPLEFT", 1, -((index - 1) * (self.LineHeight + 1)) - 1)
     line:SetSize(555, self.LineHeight)
-    line:SetBackdrop(
-        {
-            bgFile = "Interface\\Tooltips\\UI-Tooltip-Background",
-            tileSize = 64,
-            tile = true
-        }
-    )
+    line:SetBackdrop( { bgFile = "Interface\Tooltips\UI-Tooltip-Background", tileSize = 64, tile = true } )
     line:SetBackdropColor(0.8, 0.8, 0.8, 0.2)
     QuaziiUI.DF:Mixin(line, QuaziiUI.DF.HeaderFunctions)
 
@@ -157,8 +121,7 @@ local function createWAButton(self, index)
     line.updateLabel:SetFont(QuaziiUI.FontFace, QuaziiUI.PageTextSize)
     line.updateLabel:SetJustifyH("CENTER")
 
-    line.importButton =
-        QuaziiUI.DF:CreateButton(line, nil, 105, 30, L["Import"], nil, nil, nil, nil, nil, nil, QuaziiUI.ODT)
+    line.importButton = QuaziiUI.DF:CreateButton(line, nil, 105, 30, L["Import"], nil, nil, nil, nil, nil, nil, QuaziiUI.ODT)
     line.importButton.text_overlay:SetFont(QuaziiUI.FontFace, 16)
 
     line:AddFrameToHeaderAlignment(line.icon)
@@ -178,18 +141,15 @@ function page:Create(parent)
     self:CreateHeader(frame)
     self:CreateDescription(frame)
     self:CreateWAList(frame)
-    self:CreateSelectionDropdown(frame)
+    -- Removed call to CreateSelectionDropdown (tab buttons)
 
     self.rootFrame = frame
-    fillWAFromCategoryIndex(1)
     return frame
 end
 
 function page:CreateHeader(frame)
-    local header =
-        QuaziiUI.DF:CreateLabel(
-        frame,
-        "|c" .. QuaziiUI.highlightColorHex .. L["WeakAuras"] .. " " .. L["Imports"] .. "|r",
+    local header = QuaziiUI.DF:CreateLabel( frame,
+        "|c" .. QuaziiUI.highlightColorHex .. L["Utility WAs"] .. " " .. L["Imports"] .. "|r", -- Updated Title
         QuaziiUI.PageHeaderSize
     )
     header:SetFont(QuaziiUI.FontFace, QuaziiUI.PageHeaderSize)
@@ -197,80 +157,32 @@ function page:CreateHeader(frame)
 end
 
 function page:CreateDescription(frame)
-    local text = QuaziiUI.DF:CreateLabel(frame, L["WeakAuraText"], QuaziiUI.PageTextSize)
+    local text = QuaziiUI.DF:CreateLabel(frame, L["WeakAuraText"], QuaziiUI.PageTextSize) 
     text:SetFont(QuaziiUI.FontFace, QuaziiUI.PageTextSize)
     text:SetWordWrap(true)
-    text:SetPoint("TOPLEFT", frame, "TOPLEFT", 10, -40)
-    text:SetPoint("TOPRIGHT", frame, "TOPRIGHT", -10, -40)
+    -- Adjust positioning slightly higher as there are no tabs now
+    text:SetPoint("TOPLEFT", frame, "TOPLEFT", 10, -45) 
+    text:SetPoint("TOPRIGHT", frame, "TOPRIGHT", -10, -45)
     text:SetJustifyH("LEFT")
     text:SetJustifyV("TOP")
     self.descriptionText = text
 end
 
-function page:CreateSelectionDropdown(frame)
-    local classButton =
-        QuaziiUI.DF:CreateButton(
-        frame,
-        function()
-            onCategoryClick(frame, 1)
-        end,
-        75,
-        25,
-        L["Class WAs"],
-        nil,
-        nil,
-        nil,
-        nil,
-        nil,
-        nil,
-        QuaziiUI.ODTS
-    )
-    classButton:SetPoint("BOTTOMLEFT", frame.addonHeader, "TOPLEFT", 0, 1)
-    classButton.text_overlay:SetFont(QuaziiUI.FontFace, 16)
-    classButton:SetTextColor(unpack(QuaziiUI.textColorRGBA))
-    frame.classButton = classButton
-
-    local utilButton =
-        QuaziiUI.DF:CreateButton(
-        frame,
-        function()
-            onCategoryClick(frame, 2)
-        end,
-        75,
-        25,
-        L["Utility WAs"],
-        nil,
-        nil,
-        nil,
-        nil,
-        nil,
-        nil,
-        QuaziiUI.ODT
-    )
-    utilButton:SetPoint("LEFT", classButton, "RIGHT", 4, 0)
-    utilButton.text_overlay:SetFont(QuaziiUI.FontFace, 16)
-    utilButton:SetTextColor(unpack(QuaziiUI.textColorRGBA))
-    frame.utilButton = utilButton
-end
+-- Removed CreateSelectionDropdown function
 
 function page:CreateWAList(frame)
-    ---@type table
     local headerTable = {
         {text = L["Icon"], width = 50, canSort = false},
-        {text = L["Name"], width = 209, canSort = false}, --284 w/ Update | 391 w/o Update
+        {text = L["Name"], width = 209, canSort = false}, 
         {text = L["Version"], width = 75, canSort = false},
         {text = L["Update"], width = 107, canSort = false},
         {text = L["Import"], width = 110, canSort = false}
     }
-
-    ---@type table
     local options = {text_size = QuaziiUI.TableHeaderSize}
-
     frame.addonHeader = QuaziiUI.DF:CreateHeader(frame, headerTable, options, "QuaziiUIInstallWAHeader")
-    frame.addonHeader:SetPoint("TOPLEFT", self.descriptionText.widget, "BOTTOMLEFT", -2, -35)
+    frame.addonHeader:SetPoint("TOPLEFT", self.descriptionText.widget, "BOTTOMLEFT", -2, -10)
 
-    local waScrollBox =
-        QuaziiUI.DF:CreateScrollBox(frame, nil, waScrollBoxUpdate, {}, 557, 288, 0, 40, createWAButton, true)
+    local waScrollBox = QuaziiUI.DF:CreateScrollBox(frame, nil, waScrollBoxUpdate, {}, 557, 488, 0, 40, createWAButton, true)
     waScrollBox:SetPoint("TOPLEFT", frame.addonHeader, "BOTTOMLEFT", 0, 0)
     waScrollBox.ScrollBar.scrollStep = 40
     QuaziiUI.DF:ReskinSlider(waScrollBox)
@@ -282,9 +194,13 @@ function page:ShouldShow()
 end
 
 function page:Show()
+    -- Directly set data for Utility WAs
+    self.waScrollBox:SetData(utilityWADataList) 
+    self.waScrollBox:Refresh()
+    -- Removed logic checking for initialWACategory
     self.rootFrame:Show()
 end
 
 function page:Hide()
     self.rootFrame:Hide()
-end
+end 

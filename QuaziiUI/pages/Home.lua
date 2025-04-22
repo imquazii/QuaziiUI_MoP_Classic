@@ -3,98 +3,410 @@ local L = QuaziiUI.L
 local page = {}
 table.insert(QuaziiUI.pages, page)
 
+-- Define the import function locally for Tank/DPS profile
+local function importTankDPSProfileFromHome()
+    if not (C_AddOns and C_AddOns.IsAddOnLoaded("ElvUI") and ElvUI and ElvUI[1]) then
+        print("QuaziiUI Error: ElvUI addon is not loaded or ElvUI[1] is not available.")
+        return
+    end
+
+    QuaziiUI.DF:ShowPromptPanel(
+        "Are you sure you want to import Quazii's Tank/DPS ElvUI profile?\nThis is the recommended profile for most users.",
+        function()
+            if C_AddOns and C_AddOns.IsAddOnLoaded("ElvUI") and ElvUI and ElvUI[1] then
+                QuaziiUI.db.global.imports.tankdps = {
+                    date = GetServerTime(),
+                    version = QuaziiUI.versionNumber
+                }
+                local Profile = ElvUI[1].Distributor
+                if Profile and Profile.ImportProfile then
+                    Profile:ImportProfile(QuaziiUI.imports.ElvUI.tankdps.data)
+                    print("QuaziiUI: ElvUI Tank/DPS profile imported successfully.")
+                    QuaziiUI.db.char.openPage = 1
+                else
+                    print("QuaziiUI Error: ElvUI Distributor or ImportProfile method not found.")
+                end
+            else
+                print("QuaziiUI Error: ElvUI addon is not loaded or ElvUI[1] is not available during import confirmation.")
+            end
+        end,
+        function()
+            print("QuaziiUI: ElvUI Tank/DPS profile import cancelled.")
+        end,
+        true
+    )
+end
+
+-- Define the import function locally for Healer profile
+local function importHealerProfileFromHome()
+    if not (C_AddOns and C_AddOns.IsAddOnLoaded("ElvUI") and ElvUI and ElvUI[1]) then
+        print("QuaziiUI Error: ElvUI addon is not loaded or ElvUI[1] is not available.")
+        return
+    end
+
+    QuaziiUI.DF:ShowPromptPanel(
+        "Are you sure you want to import Quazii's Healer ElvUI profile?",
+        function()
+            if C_AddOns and C_AddOns.IsAddOnLoaded("ElvUI") and ElvUI and ElvUI[1] then
+                QuaziiUI.db.global.imports.healer = { -- Use 'healer' key for db
+                    date = GetServerTime(),
+                    version = QuaziiUI.versionNumber
+                }
+                local Profile = ElvUI[1].Distributor
+                if Profile and Profile.ImportProfile then
+                    Profile:ImportProfile(QuaziiUI.imports.ElvUI.healer.data) -- Use healer data
+                    print("QuaziiUI: ElvUI Healer profile imported successfully.")
+                    QuaziiUI.db.char.openPage = 1
+                else
+                    print("QuaziiUI Error: ElvUI Distributor or ImportProfile method not found.")
+                end
+            else
+                print("QuaziiUI Error: ElvUI addon is not loaded or ElvUI[1] is not available during import confirmation.")
+            end
+        end,
+        function()
+            print("QuaziiUI: ElvUI Healer profile import cancelled.")
+        end,
+        true
+    )
+end
+
+-- Define the import function locally for Cell Tank/DPS profile
+local function importCellTankDPSProfileFromHome()
+    local F = Cell and Cell.funcs -- Ensure Cell and funcs exist
+    local Serializer = LibStub and LibStub:GetLibrary("LibSerialize", true)
+    local LibDeflate = LibStub and LibStub:GetLibrary("LibDeflate", true)
+
+    if not (Cell and F and Serializer and LibDeflate) then
+        print("QuaziiUI Error: Cell addon or required libraries (LibSerialize, LibDeflate) not loaded.")
+        return
+    end
+
+    local importString = QuaziiUI.imports.Cell.tankdps.data
+    if not importString or importString == "" then
+         print("QuaziiUI Error: Cell Tank/DPS import string is missing or empty.")
+         return
+    end
+
+    QuaziiUI.DF:ShowPromptPanel(
+        L["CellPrompt"]:gsub("ADDONNAME", "Cell (Tank/DPS)"), -- Modify prompt slightly
+        function()
+            local version, data = string.match(importString, "^!CELL:(%d+):ALL!(.+)$")
+            if not version or not data then
+                print("QuaziiUI Error: Invalid Cell import string format (Tank/DPS).")
+                return
+            end
+            version = tonumber(version)
+
+            if version >= Cell.MIN_VERSION and version <= Cell.versionNum then
+                local success_decode, decoded_data = pcall(LibDeflate.DecodeForPrint, LibDeflate, data)
+                if not success_decode then print("QuaziiUI Cell Import Error: DecodeForPrint failed.", decoded_data) return end
+
+                local success_decompress, decompressed_data = pcall(LibDeflate.DecompressDeflate, LibDeflate, decoded_data)
+                if not success_decompress then print("QuaziiUI Cell Import Error: DecompressDeflate failed.", decompressed_data) return end
+                
+                local success_deserialize, imported = Serializer:Deserialize(decompressed_data)
+                if not success_deserialize or not imported then print("QuaziiUI Cell Import Error: Deserialize failed.", imported) return end
+
+                -- Apply necessary filtering/defaults (adapted from original CellImport)
+                imported["raidDebuffs"] = nil -- Simplify: Assume raid debuffs are not kept from import
+                if Cell.isRetail then imported["appearance"]["useLibHealComm"] = false end
+                for _, layout in pairs(imported["layouts"] or {}) do
+                    for i = #layout["indicators"], 1, -1 do
+                        if layout["indicators"][i]["type"] == "built-in" then
+                            if not Cell.defaults.indicatorIndices[layout["indicators"][i]["indicatorName"]] then tremove(layout["indicators"], i) end
+                        else F:FilterInvalidSpells(layout["indicators"][i]["auras"]) end
+                    end
+                    if Cell.flavor ~= imported.flavor then layout.powerFilters = F:Copy(Cell.defaults.layout.powerFilters) end
+                end
+                -- Simplified: Assume missing indicators are not added back
+                if Cell.isRetail then CellDB["clickCastings"] = imported["clickCastings"] end -- Only copy if retail
+                if Cell.isRetail and imported["layoutAutoSwitch"] then CellDB["layoutAutoSwitch"] = imported["layoutAutoSwitch"] end
+                imported["clickCastings"] = nil
+                imported["layoutAutoSwitch"] = nil
+                imported["characterDB"] = nil
+                F:FilterInvalidSpells(imported["debuffBlacklist"])
+                F:FilterInvalidSpells(imported["bigDebuffs"])
+                F:FilterInvalidSpells(imported["actions"])
+                F:FilterInvalidSpells(imported["customDefensives"])
+                F:FilterInvalidSpells(imported["customExternals"])
+                F:FilterInvalidSpells(imported["targetedSpellsList"])
+
+                -- Overwrite CellDB with imported data
+                for k, v in pairs(imported) do CellDB[k] = v end
+                
+                print("QuaziiUI: Cell Tank/DPS Profile imported successfully. Reloading UI.")
+                QuaziiUI.db.global.imports.CellTankDPS = { date = GetServerTime(), version = QuaziiUI.versionNumber } -- Update DB
+                ReloadUI()
+            else
+                 print("QuaziiUI Error: Cell import string version mismatch.", "Imported:", version, "Current:", Cell.versionNum)
+            end
+        end,
+        function() print("QuaziiUI: Cell Tank/DPS profile import cancelled.") end,
+        true
+    )
+end
+
+-- Define the import function locally for Cell Healer profile
+local function importCellHealerProfileFromHome()
+    local F = Cell and Cell.funcs
+    local Serializer = LibStub and LibStub:GetLibrary("LibSerialize", true)
+    local LibDeflate = LibStub and LibStub:GetLibrary("LibDeflate", true)
+
+    if not (Cell and F and Serializer and LibDeflate) then
+        print("QuaziiUI Error: Cell addon or required libraries (LibSerialize, LibDeflate) not loaded.")
+        return
+    end
+
+    local importString = QuaziiUI.imports.Cell.healer.data
+     if not importString or importString == "" then
+         print("QuaziiUI Error: Cell Healer import string is missing or empty.")
+         return
+    end
+
+    QuaziiUI.DF:ShowPromptPanel(
+        L["CellPrompt"]:gsub("ADDONNAME", "Cell (Healer)"), -- Modify prompt slightly
+        function()
+            local version, data = string.match(importString, "^!CELL:(%d+):ALL!(.+)$")
+             if not version or not data then
+                print("QuaziiUI Error: Invalid Cell import string format (Healer).")
+                return
+            end
+            version = tonumber(version)
+
+            if version >= Cell.MIN_VERSION and version <= Cell.versionNum then
+                local success_decode, decoded_data = pcall(LibDeflate.DecodeForPrint, LibDeflate, data)
+                if not success_decode then print("QuaziiUI Cell Import Error: DecodeForPrint failed.", decoded_data) return end
+
+                local success_decompress, decompressed_data = pcall(LibDeflate.DecompressDeflate, LibDeflate, decoded_data)
+                if not success_decompress then print("QuaziiUI Cell Import Error: DecompressDeflate failed.", decompressed_data) return end
+                
+                local success_deserialize, imported = Serializer:Deserialize(decompressed_data)
+                 if not success_deserialize or not imported then print("QuaziiUI Cell Import Error: Deserialize failed.", imported) return end
+
+                -- Apply filtering/defaults (same logic as Tank/DPS for simplicity here)
+                imported["raidDebuffs"] = nil
+                if Cell.isRetail then imported["appearance"]["useLibHealComm"] = false end
+                for _, layout in pairs(imported["layouts"] or {}) do
+                    for i = #layout["indicators"], 1, -1 do
+                        if layout["indicators"][i]["type"] == "built-in" then
+                            if not Cell.defaults.indicatorIndices[layout["indicators"][i]["indicatorName"]] then tremove(layout["indicators"], i) end
+                        else F:FilterInvalidSpells(layout["indicators"][i]["auras"]) end
+                    end
+                     if Cell.flavor ~= imported.flavor then layout.powerFilters = F:Copy(Cell.defaults.layout.powerFilters) end
+                end
+                if Cell.isRetail then CellDB["clickCastings"] = imported["clickCastings"] end
+                if Cell.isRetail and imported["layoutAutoSwitch"] then CellDB["layoutAutoSwitch"] = imported["layoutAutoSwitch"] end
+                imported["clickCastings"] = nil
+                imported["layoutAutoSwitch"] = nil
+                imported["characterDB"] = nil
+                F:FilterInvalidSpells(imported["debuffBlacklist"])
+                F:FilterInvalidSpells(imported["bigDebuffs"])
+                F:FilterInvalidSpells(imported["actions"])
+                F:FilterInvalidSpells(imported["customDefensives"])
+                F:FilterInvalidSpells(imported["customExternals"])
+                F:FilterInvalidSpells(imported["targetedSpellsList"])
+
+                -- Overwrite CellDB
+                for k, v in pairs(imported) do CellDB[k] = v end
+
+                print("QuaziiUI: Cell Healer Profile imported successfully. Reloading UI.")
+                QuaziiUI.db.global.imports.CellHealer = { date = GetServerTime(), version = QuaziiUI.versionNumber } -- Update DB
+                ReloadUI()
+            else
+                 print("QuaziiUI Error: Cell import string version mismatch.", "Imported:", version, "Current:", Cell.versionNum)
+            end
+        end,
+        function() print("QuaziiUI: Cell Healer profile import cancelled.") end,
+        true
+    )
+end
+
+-- Navigation function for Class WAs
+local function goToClassWAs()
+    -- QuaziiUI.initialWACategory = 1 -- No longer needed
+    QuaziiUI:selectPage(3)      -- Navigate to ClassWeakAuras page (index 3)
+end
+
+-- Navigation function for Utility WAs
+local function goToUtilityWAs()
+    -- QuaziiUI.initialWACategory = 2 -- No longer needed
+    QuaziiUI:selectPage(4)      -- Navigate to UtilityWeakAuras page (index 4)
+end
+
+-- Create a modified list for the Home page display, with Cell first and ElvUI last
+local homePageDisplayList = {}
+do
+    local elvuiEntries = {}
+    local cellEntries = {}
+    local weakAuraEntries = {}
+    local otherEntries = {}
+    for _, addonName in ipairs(QuaziiUI.supportedAddons) do
+        if addonName == "Cell" then
+            table.insert(cellEntries, { addonName = addonName, profileType = "TankDPS" })
+            table.insert(cellEntries, { addonName = addonName, profileType = "Healer" })
+        elseif addonName == "ElvUI" then
+            table.insert(elvuiEntries, { addonName = addonName, profileType = "TankDPS" })
+            table.insert(elvuiEntries, { addonName = addonName, profileType = "Healer" })
+        elseif addonName == "WeakAuras" then
+             -- Store WeakAura entries separately
+             table.insert(weakAuraEntries, { addonName = addonName, profileType = "Class" })
+             table.insert(weakAuraEntries, { addonName = addonName, profileType = "Utility" })
+        else
+            table.insert(otherEntries, { addonName = addonName })
+        end
+    end
+    -- Construct the final list order: Cell -> WeakAuras -> Others -> ElvUI
+    for _, entry in ipairs(cellEntries) do
+        table.insert(homePageDisplayList, entry)
+    end
+    for _, entry in ipairs(weakAuraEntries) do
+        table.insert(homePageDisplayList, entry)
+    end
+    for _, entry in ipairs(otherEntries) do
+        table.insert(homePageDisplayList, entry)
+    end
+    for _, entry in ipairs(elvuiEntries) do
+        table.insert(homePageDisplayList, entry)
+    end
+end
+
 local function addonScrollBoxUpdate(self, data, offset, totalLines)
     for i = 1, totalLines do
         local index = i + offset
-        local info = data[index]
-        if info then
+        local entry = data[index]
+        if entry then
             local line = self:GetLine(i)
-            local addonTitle = C_AddOns and C_AddOns.GetAddOnInfo(info)
-            local addonEnabled = C_AddOns and C_AddOns.IsAddOnLoaded(info)
-            line.addonLabel:SetText(addonTitle or info)
-            line.versionLabel:SetText(addonTitle and C_AddOns and C_AddOns.GetAddOnMetadata(info, "Version") or L["NA"])
-            line.enabledLabel:SetText(
-                addonEnabled and "|cff00ff00" .. L["True"] .. "|r" or "|cffff0000" .. L["False"] .. "|r"
-            )
-            if addonTitle == "ElvUI" then
-                if addonEnabled then
-                    line.importButton:SetText(L["GoToPage"])
-                    line.importButton:SetClickFunction(
-                        function()
-                            QuaziiUI:selectPage(3)
-                        end
-                    )
-                else
-                    line.importButton:Disable()
-                    line.importButton:SetText(L["NA"])
+            local addonName = entry.addonName
+            local profileType = entry.profileType
+
+            local addonTitle = C_AddOns and C_AddOns.GetAddOnInfo(addonName)
+            local addonEnabled = C_AddOns and C_AddOns.IsAddOnLoaded(addonName)
+
+            local addonLabelBaseText = addonTitle or addonName
+            local versionLabelText = addonTitle and C_AddOns and C_AddOns.GetAddOnMetadata(addonName, "Version") or L["NA"]
+            local enabledStatusText = addonEnabled and L["True"] or L["False"]
+
+            line.addonLabel:SetTextColor(1, 1, 1, 1)
+            line.versionLabel:SetTextColor(1, 1, 1, 1)
+            line.enabledLabel:SetTextColor(1, 1, 1, 1)
+
+            if addonName == "Cell" then
+                line.addonLabel:SetTextColor(1, 0.647, 0, 1)
+                line.versionLabel:SetTextColor(1, 0.647, 0, 1)
+                line.enabledLabel:SetTextColor(1, 0.647, 0, 1)
+                if profileType == "TankDPS" then
+                    addonLabelBaseText = addonTitle .. " (" .. L["Tank"] .. "/" .. L["DPS"] .. ")"
+                elseif profileType == "Healer" then
+                     addonLabelBaseText = addonTitle .. " (" .. L["Healer"] .. ")"
                 end
-            elseif addonTitle == "WeakAuras" then
-                if addonEnabled then
-                    line.importButton:SetText(L["GoToPage"])
-                    line.importButton:SetClickFunction(
-                        function()
-                            QuaziiUI:selectPage(4)
-                        end
-                    )
-                else
-                    line.importButton:Disable()
-                    line.importButton:SetText(L["NA"])
+            elseif addonName == "ElvUI" then
+                line.addonLabel:SetTextColor(1, 0, 1, 1)
+                line.versionLabel:SetTextColor(1, 0, 1, 1)
+                line.enabledLabel:SetTextColor(1, 0, 1, 1)
+                if profileType == "TankDPS" then
+                    addonLabelBaseText = addonTitle .. " (" .. L["Tank"] .. "/" .. L["DPS"] .. ")"
+                elseif profileType == "Healer" then
+                    addonLabelBaseText = addonTitle .. " (" .. L["Healer"] .. ")"
                 end
-            elseif addonTitle == "Cell" then
-                if addonEnabled then
-                    line.importButton:SetClickFunction(
-                        function()
-                            QuaziiUI:importCellProfile()
-                        end
-                    )
-                else
-                    line.importButton:Disable()
-                    line.importButton:SetText(L["NA"])
-                end
-            elseif addonTitle == "Plater" then
-                if addonEnabled then
-                    line.importButton:SetClickFunction(
-                        function()
-                            QuaziiUI:importPlaterProfile()
-                        end
-                    )
-                else
-                    line.importButton:Disable()
-                    line.importButton:SetText(L["NA"])
-                end
-            elseif addonTitle == "BigWigs" then
-                if addonEnabled then
-                    line.importButton:SetClickFunction(
-                        function()
-                            QuaziiUI:importBigWigsProfile()
-                        end
-                    )
-                else
-                    line.importButton:Disable()
-                    line.importButton:SetText(L["NA"])
-                end
-            elseif addonTitle == "Details" then
-                if addonEnabled then
-                    line.importButton:SetClickFunction(
-                        function()
-                            QuaziiUI:importDetailsProfile()
-                        end
-                    )
-                else
-                    line.importButton:Disable()
-                    line.importButton:SetText(L["NA"])
-                end
-            elseif addonTitle == "OmniCD" then
-                if addonEnabled then
-                    line.importButton:SetClickFunction(
-                        function()
-                            QuaziiUI:importOmniCDProfile()
-                        end
-                    )
-                else
-                    line.importButton:Disable()
-                    line.importButton:SetText(L["NA"])
-                end
+            elseif addonName == "WeakAuras" then
+                 -- Keep default white color
+                 if profileType == "Class" then
+                    addonLabelBaseText = addonTitle .. " (" .. L["Class WAs"] .. ")" 
+                 elseif profileType == "Utility" then
+                    addonLabelBaseText = addonTitle .. " (" .. L["Utility WAs"] .. ")"
+                 end
+            else -- Default white for other addons
+                addonLabelBaseText = addonLabelBaseText
+            end
+            
+            line.addonLabel:SetText(addonLabelBaseText)
+            line.versionLabel:SetText(versionLabelText)
+            line.enabledLabel:SetText(enabledStatusText)
+
+            -- Configure buttons
+            if addonName == "Cell" then
+                 if addonEnabled then
+                     line.importButton:SetText(L["Import"])
+                     if profileType == "TankDPS" then
+                         line.importButton:SetClickFunction(importCellTankDPSProfileFromHome)
+                     elseif profileType == "Healer" then
+                          line.importButton:SetClickFunction(importCellHealerProfileFromHome)
+                     else
+                        line.importButton:Disable()
+                        line.importButton:SetText(L["NA"])
+                     end
+                 else
+                     line.importButton:Disable()
+                     line.importButton:SetText(L["NA"])
+                 end
+            elseif addonName == "ElvUI" then
+                 if addonEnabled then
+                     if profileType == "TankDPS" then
+                         line.importButton:SetText(L["Tank"] .. "/" .. L["DPS"] .. " " .. L["Import"])
+                         line.importButton:SetClickFunction(importTankDPSProfileFromHome)
+                     elseif profileType == "Healer" then
+                         line.importButton:SetText(L["Healer"] .. " " .. L["Import"])
+                         line.importButton:SetClickFunction(importHealerProfileFromHome)
+                     else
+                         line.importButton:Disable()
+                         line.importButton:SetText(L["NA"])
+                     end
+                 else
+                     line.importButton:Disable()
+                     line.importButton:SetText(L["NA"])
+                 end
+             elseif addonName == "WeakAuras" then
+                  if addonEnabled then
+                     line.importButton:SetText(L["GoToPage"]) -- Keep text as Go To Page
+                     if profileType == "Class" then
+                        line.importButton:SetClickFunction(goToClassWAs)
+                     elseif profileType == "Utility" then
+                        line.importButton:SetClickFunction(goToUtilityWAs)
+                     else
+                        line.importButton:Disable()
+                        line.importButton:SetText(L["NA"])
+                     end
+                 else
+                     line.importButton:Disable()
+                     line.importButton:SetText(L["NA"])
+                 end
+             elseif addonName == "Plater" then
+                 if addonEnabled then
+                     line.importButton:SetClickFunction(function() QuaziiUI:importPlaterProfile() end)
+                     line.importButton:SetText(L["Import"])
+                 else
+                     line.importButton:Disable()
+                     line.importButton:SetText(L["NA"])
+                 end
+             elseif addonName == "BigWigs" then
+                 if addonEnabled then
+                     line.importButton:SetClickFunction(function() QuaziiUI:importBigWigsProfile() end)
+                     line.importButton:SetText(L["Import"])
+                 else
+                     line.importButton:Disable()
+                     line.importButton:SetText(L["NA"])
+                 end
+             elseif addonName == "Details" then
+                 if addonEnabled then
+                     line.importButton:SetClickFunction(function() QuaziiUI:importDetailsProfile() end)
+                     line.importButton:SetText(L["Import"])
+                 else
+                     line.importButton:Disable()
+                     line.importButton:SetText(L["NA"])
+                 end
+             elseif addonName == "OmniCD" then
+                 if addonEnabled then
+                     line.importButton:SetClickFunction(function() QuaziiUI:importOmniCDProfile() end)
+                     line.importButton:SetText(L["Import"])
+                 else
+                     line.importButton:Disable()
+                     line.importButton:SetText(L["NA"])
+                 end
+            else
+                -- Fallback
+                line.importButton:Disable()
+                line.importButton:SetText(L["NA"]) 
             end
         end
     end
@@ -166,7 +478,6 @@ end
 
 function page:CreateAddonList(frame)
     local headerTable = {
-        -- Widths should add to 551
         {text = "|c" .. QuaziiUI.highlightColorHex .. L["SupportedAddonsTable1stHeader"], width = 221, offset = 2},
         {text = L["SupportedAddonsTable2ndHeader"], width = 70},
         {text = L["SupportedAddonsTable3rdHeader"], width = 150},
@@ -177,11 +488,12 @@ function page:CreateAddonList(frame)
     frame.addonHeader:SetPoint("TOPLEFT", self.description.widget, "BOTTOMLEFT", -2, -10)
 
     local addonScrollBox =
-        QuaziiUI.DF:CreateScrollBox(frame, nil, addonScrollBoxUpdate, {}, 557, 281, 0, 34, createAddonButton, true)
+        QuaziiUI.DF:CreateScrollBox(frame, nil, addonScrollBoxUpdate, {}, 557, 481, 0, 34, createAddonButton, true)
     addonScrollBox:SetPoint("TOPLEFT", frame.addonHeader, "BOTTOMLEFT", 0, 0)
     addonScrollBox.ScrollBar.scrollStep = 34
     QuaziiUI.DF:ReskinSlider(addonScrollBox)
-    addonScrollBox:SetData(QuaziiUI.supportedAddons)
+    -- Use the new display list
+    addonScrollBox:SetData(homePageDisplayList)
     addonScrollBox:Refresh()
 end
 
