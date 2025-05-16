@@ -33,14 +33,15 @@ end
 local function parseUtilityWAData()
     local data = {}
     -- Directly access category 2 WAs
-    for _, importString in ipairs(QuaziiUI.imports.WAStrings[2].WAs) do 
+    for i, importString in ipairs(QuaziiUI.imports.WAStrings[2].WAs) do 
         local waTable = decodeWAPacket(importString) or {}
         if waTable and waTable.d then
             table.insert( data, {
                 icon = waTable.d.groupIcon or waTable.d.displayIcon or QuaziiUI.logoPath,
                 name = waTable.d.id:gsub("%[READ%sINFORMATION%sTAB%]", ""):gsub("Healthstone/Potions", "Consumables"),
                 version = string.match(waTable.d.desc or "", "Version (%d+)") or "0",
-                update = getWAUpdateStatus(waTable)
+                update = getWAUpdateStatus(waTable),
+                importString = importString -- Store the original import string
             })
         end
     end
@@ -61,7 +62,7 @@ local utilityWADataList = parseUtilityWAData()
 -- Modified waScrollBoxUpdate to directly use category 2 data
 local function waScrollBoxUpdate(self, data, offset, totalLines)
     for i = 1, totalLines do
-        local index = i + offset
+        local index = i + offset -- index relative to the *sorted* data array
         local info = data[index]
         if info then
             local line = self:GetLine(i)
@@ -87,10 +88,14 @@ local function waScrollBoxUpdate(self, data, offset, totalLines)
                 line.importButton:SetText(L["NA"])
             else
                 line.importButton:SetClickFunction( function()
-                    -- Directly use category 2 string for import
-                    WeakAuras.Import(QuaziiUI.imports.WAStrings[2].WAs[index]) 
-                    -- Update status based on category 2 data
-                    line.updateLabel:SetText(getWAUpdateStatus(decodeWAPacket(QuaziiUI.imports.WAStrings[2].WAs[index]))) 
+                    if info.importString then -- Check if import string exists in info
+                        local waTableForUpdateCheck = decodeWAPacket(info.importString) -- Decode again for update check
+                        WeakAuras.Import(info.importString) -- Use the import string from the specific row's data
+                        -- Update status based on the correct waTable
+                        line.updateLabel:SetText(getWAUpdateStatus(waTableForUpdateCheck)) 
+                    else
+                        print("QuaziiUI Error: Missing import string for WA:", info.name)
+                    end
                 end)
             end
         end

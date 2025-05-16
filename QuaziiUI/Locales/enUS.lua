@@ -78,6 +78,8 @@ if L then
     L["CellPrompt"] = AddonImportMessage:gsub("ADDONNAME", "Cell") .. "\n!- This will overwrite your current cell setup -!"
     L["PlaterPrompt"] = "Insert a Name for the New Plater Profile:"
 
+    L["PressCtrlCToCopy"] = "Press Ctrl+C to copy" -- Added for Copy EditBox
+
     -- WeakAuras
     L["WeakAuraText"] = "Note: Scroll down if you cannot find what you want."
     L["Class WAs"] = "Class WAs" -- Renamed from ClassWA for clarity in separate page title

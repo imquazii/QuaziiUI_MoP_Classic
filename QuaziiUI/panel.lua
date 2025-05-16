@@ -143,7 +143,7 @@ local function createPanel()
     panel.Title:SetTextColor(unpack(QuaziiUI.textColorRGBA))
     panel.Title:SetPoint("CENTER", panel.TitleBar, "CENTER", 0, 1)
     -- Explicitly set the desired title text
-    panel.Title:SetText("Quazii UI Installer (2025.04.22)")
+    panel.Title:SetText("Quazii UI Installer (2025.05.04)")
 
     -- Panel Options
     panel:ClearAllPoints()
@@ -187,6 +187,40 @@ local function createPanel()
 
     panel.frameContent = panelContentFrame
     QuaziiUI.panel = panel
+
+    -- Create a hidden EditBox for copying text
+    local copyBox = CreateFrame("EditBox", "QuaziiUICopyBox", panel, "InputBoxTemplate")
+    copyBox:SetSize(400, 30)
+    copyBox:SetPoint("TOP", panel, "BOTTOM", 0, -10) -- Position below the panel
+    copyBox:SetFrameStrata("DIALOG") -- Keep strata same as panel
+    copyBox:SetFrameLevel(panel:GetFrameLevel()) -- No longer needs higher level
+    copyBox:SetAutoFocus(false)
+    copyBox:SetMultiLine(false)
+    copyBox:SetFontObject(ChatFontNormal)
+    copyBox:SetTextInsets(8, 8, 0, 0)
+    copyBox:SetScript("OnEscapePressed", function(self) self:Hide(); if self.label then self.label:Hide() end; self:ClearFocus() end) -- Also hide label
+    copyBox:SetScript("OnEnterPressed", function(self) self:Hide(); if self.label then self.label:Hide() end; self:ClearFocus() end) -- Also hide label
+    copyBox:Hide()
+    panel.copyBox = copyBox -- Attach to the main panel for access
+
+    -- Create a label for the copy box
+    local copyLabel = copyBox:CreateFontString(nil, "OVERLAY", "GameFontNormalSmall")
+    copyLabel:SetPoint("BOTTOM", copyBox, "TOP", 0, 5)
+    copyLabel:SetText(L["PressCtrlCToCopy"] or "Press Ctrl+C to copy") -- Use localization if available
+    copyLabel:Hide()
+    copyBox.label = copyLabel
+
+    -- Create a close button for the copy box
+    local closeButton = CreateFrame("Button", "QuaziiUICopyBoxCloseButton", copyBox, "UIPanelCloseButton")
+    closeButton:SetSize(24, 24)
+    closeButton:SetPoint("TOPRIGHT", copyBox, "TOPRIGHT", 2, 2)
+    closeButton:SetScript("OnClick", function(self)
+        local parentBox = self:GetParent()
+        parentBox:Hide()
+        if parentBox.label then parentBox.label:Hide() end
+        parentBox:ClearFocus()
+    end)
+    copyBox.closeButton = closeButton -- Attach for potential future use
 
     createPages(panel) -- Keep page creation linked to panel creation
 end
