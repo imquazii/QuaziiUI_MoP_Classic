@@ -46,7 +46,7 @@ jobs:
                   # Fetch all tags from remote to ensure we're checking against them
                   git fetch --tags
 
-                  DATE=$(date +'%Y.%m.%d')
+                  DATE=$(date +'%Y%m%d')
                   EXISTING_TAGS=$(git tag --list "$DATE.*")
                   echo "Debug: Existing Tags: $EXISTING_TAGS"
 
@@ -55,7 +55,7 @@ jobs:
                       TAG_TO_USE="$DATE.1"
                   else
                       # Get the highest existing suffix
-                      LAST_TAG_SUFFIX=$(echo "$EXISTING_TAGS" | grep -oP "$DATE\.\K[0-9]+" | sort -n | tail -n1)
+                      LAST_TAG_SUFFIX=$(echo "$EXISTING_TAGS" | grep -oP "$DATE\\.\\K[0-9]+" | sort -n | tail -n1)
                       NEW_SUFFIX=$((LAST_TAG_SUFFIX+1))
                       TAG_TO_USE="$DATE.$NEW_SUFFIX"
                   fi
