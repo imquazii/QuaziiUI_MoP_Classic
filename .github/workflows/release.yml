@@ -31,40 +31,22 @@ jobs:
             # Step 2: Checkout the code
             - name: Checkout code
               uses: actions/checkout@v3
+              with:
+                  fetch-depth: 0 # Fetch all history for changelog generation
 
             # Step 3: Install GitHub CLI (gh)
             - name: Install GitHub CLI
-              run: sudo apt-get install gh
+              run: sudo apt-get install gh -y
 
-            # Step 4: Check if tag already exists without a release
-            - name: Check existing tags
-              id: tag_check
+            # Step 4: Set Version based on run number
+            - name: Set Version
+              id: set_version
               run: |
-                  git config --global user.email "github-actions[bot]@users.noreply.github.com"
-                  git config --global user.name "github-actions[bot]"
+                  VERSION="1.0.${{ github.run_number }}"
+                  echo "TAG=v$VERSION" >> $GITHUB_ENV
+                  echo "NEW_VERSION=$VERSION" >> $GITHUB_ENV
+                  echo "ZIP_NAME=QuaziiUI-$VERSION.zip" >> $GITHUB_ENV
 
-                  # Fetch all tags from remote to ensure we're checking against them
-                  git fetch --tags
-
-                  DATE=$(date +'%Y%m%d')
-                  EXISTING_TAGS=$(git tag --list "$DATE.*")
-                  echo "Debug: Existing Tags: $EXISTING_TAGS"
-
-                  # Start the first tag with .1
-                  if [[ -z "$EXISTING_TAGS" ]]; then
-                      TAG_TO_USE="v$DATE.1"
-                  else
-                      # Get the highest existing suffix
-                      LAST_TAG_SUFFIX=$(echo "$EXISTING_TAGS" | grep -oP "v$DATE\\.\\K[0-9]+" | sort -n | tail -n1)
-                      NEW_SUFFIX=$((LAST_TAG_SUFFIX+1))
-                      TAG_TO_USE="v$DATE.$NEW_SUFFIX"
-                  fi
-
-                  echo "Debug: Using Tag: $TAG_TO_USE"
-
-                  echo "tag=$TAG_TO_USE" >> $GITHUB_ENV
-
-            
             # Step 5: Modify QuaziiUI/init.lua if DEBUG_MODE is true
             - name: Check and update QuaziiUI.DEBUG_MODE in init.lua
               run: |
@@ -81,24 +63,20 @@ jobs:
             - name: Update version in QuaziiUI.toc
               run: |
                   TOC_FILE="./QuaziiUI/QuaziiUI.toc"
-                  # Use the github.run_number for a simple, always-incrementing version number
-                  NEW_VERSION="1.0.${{ github.run_number }}"
-                  
-                  echo "Debug: Updating .toc version to $NEW_VERSION."
-                  # Use sed to replace the placeholder. It's more portable than the gawk -i inplace extension.
-                  sed -i "s/@project-version@/$NEW_VERSION/g" "$TOC_FILE"
+                  echo "Debug: Updating .toc version to ${{ env.NEW_VERSION }}."
+                  sed -i "s/@project-version@/${{ env.NEW_VERSION }}/g" "$TOC_FILE"
 
-            # Step 5: Run build.py
+            # Step 7: Run build.py
             - name: Run build.py
               run: python tools/build.py
 
-            # Step 6: Zip the QuaziiUI directory
+            # Step 8: Zip the QuaziiUI directory
             - name: Zip QuaziiUI directory
               run: |
-                  echo "Debug: Zipping QuaziiUI directory with tag ${{ env.tag }}"
-                  zip -r QuaziiUI.zip QuaziiUI
+                  echo "Debug: Zipping QuaziiUI directory to ${{ env.ZIP_NAME }}"
+                  zip -r ${{ env.ZIP_NAME }} QuaziiUI
 
-            # Step 7: Generate changelog from commit messages since last tag
+            # Step 9: Generate changelog
             - name: Generate changelog
               run: |
                   # Check if there are any tags
@@ -120,34 +98,14 @@ jobs:
                   echo "Debug: Generated changelog content"
                   cat CHANGELOG.md
 
-            # Step 8: Check if the release already exists
-            - name: Check if Release Exists
-              id: release_check
-              run: |
-                  echo "Debug: Checking if the release exists for tag ${{ env.tag }}"
-                  if git tag --list | grep -q "${{ env.tag }}"; then
-                      echo "Debug: Tag ${{ env.tag }} exists."
-                      if gh release view ${{ env.tag }} > /dev/null 2>&1; then
-                          echo "Debug: Release for tag ${{ env.tag }} already exists."
-                          echo "release_exists=true" >> $GITHUB_ENV
-                      else
-                          echo "Debug: Release for tag ${{ env.tag }} does not exist."
-                          echo "release_exists=false" >> $GITHUB_ENV
-                      fi
-                  else
-                      echo "Debug: Tag ${{ env.tag }} does not exist."
-                      echo "release_exists=false" >> $GITHUB_ENV
-                  fi
-
-            # Step 10: Create or update a GitHub Release using gh CLI
-            - name: Create or Update GitHub Release
-              if: env.release_exists == 'false'
+            # Step 10: Create GitHub Release
+            - name: Create GitHub Release
               env:
-                  GH_TOKEN: ${{ secrets.GITHUB_TOKEN }} # Set GH_TOKEN here
+                  GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
               run: |
-                  echo "Debug: Creating release for tag ${{ env.tag }}"
-                  gh release create ${{ env.tag }} \
-                    QuaziiUI.zip \
-                    --title "QuaziiUI ${{ env.tag }}" \
+                  echo "Debug: Creating release for tag ${{ env.TAG }}"
+                  gh release create ${{ env.TAG }} \
+                    ${{ env.ZIP_NAME }} \
+                    --title "QuaziiUI ${{ env.TAG }}" \
                     --notes-file CHANGELOG.md \
                     --target main
