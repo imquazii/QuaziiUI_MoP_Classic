@@ -83,18 +83,14 @@ jobs:
                       echo "Debug: DEBUG_MODE is already false or not found."
                   fi
 
-            # Step 6: Ensure the version matches the current date in QuaziiUI.toc
-            - name: Check and update version in QuaziiUI.toc
+            # Step 6: Ensure the version matches the release tag in QuaziiUI.toc
+            - name: Update version in QuaziiUI.toc
               run: |
                   TOC_FILE="./QuaziiUI/QuaziiUI.toc"
-                  DATE=$(date +'%Y%m%d')
+                  NEW_VERSION="${{ env.tag }}"
                   
-                  if grep -q "## Version: $DATE" "$TOC_FILE"; then
-                      echo "Debug: Version is already up to date ($DATE)."
-                  else
-                      echo "Debug: Updating version to $DATE."
-                      sed -i "s/## Version:.*/## Version: $DATE/" "$TOC_FILE"
-                  fi
+                  echo "Debug: Updating .toc version to $NEW_VERSION."
+                  sed -i "s/## Version:.*/## Version: $NEW_VERSION/" "$TOC_FILE"
 
             # Step 5: Run build.py
             - name: Run build.py
