@@ -38,14 +38,41 @@ jobs:
             - name: Install GitHub CLI
               run: sudo apt-get install gh -y
 
-            # Step 4: Set Version based on run number
-            - name: Set Version
+            # Step 4: Set Version from Git Tags
+            - name: Set Version from Git Tags
               id: set_version
               run: |
-                  VERSION="1.0.${{ github.run_number }}"
-                  echo "TAG=v$VERSION" >> $GITHUB_ENV
-                  echo "NEW_VERSION=$VERSION" >> $GITHUB_ENV
-                  echo "ZIP_NAME=QuaziiUI-$VERSION.zip" >> $GITHUB_ENV
+                  # Fetch all tags to ensure we have the latest version information
+                  git fetch --tags
+                  
+                  # Get the latest tag name across all branches
+                  LATEST_TAG=$(git describe --tags $(git rev-list --tags --max-count=1) 2>/dev/null)
+
+                  if [ -z "$LATEST_TAG" ]; then
+                    # If no tags exist, start with v1.0.1
+                    NEW_VERSION="1.0.1"
+                  else
+                    # Increment the patch version of the last tag
+                    # Remove 'v' prefix for version manipulation
+                    LATEST_VERSION=${LATEST_TAG#v}
+                    
+                    # Split version into parts
+                    MAJOR=$(echo $LATEST_VERSION | cut -d. -f1)
+                    MINOR=$(echo $LATEST_VERSION | cut -d. -f2)
+                    PATCH=$(echo $LATEST_VERSION | cut -d. -f3)
+                    
+                    # Increment patch version
+                    NEW_PATCH=$((PATCH + 1))
+                    
+                    # Assemble new version string
+                    NEW_VERSION="$MAJOR.$MINOR.$NEW_PATCH"
+                  fi
+                  
+                  echo "TAG=v$NEW_VERSION" >> $GITHUB_ENV
+                  echo "NEW_VERSION=$NEW_VERSION" >> $GITHUB_ENV
+                  echo "ZIP_NAME=QuaziiUI-v$NEW_VERSION.zip" >> $GITHUB_ENV
+                  echo "Latest tag was: $LATEST_TAG"
+                  echo "New version will be: v$NEW_VERSION"
             
             # Step 5: Modify QuaziiUI/init.lua if DEBUG_MODE is true
             - name: Check and update QuaziiUI.DEBUG_MODE in init.lua
@@ -79,9 +106,11 @@ jobs:
             # Step 9: Generate changelog
             - name: Generate changelog
               run: |
+                  # Get the latest tag name across all branches
+                  LAST_TAG=$(git describe --tags $(git rev-list --tags --max-count=1) 2>/dev/null)
+                  
                   # Check if there are any tags
-                  if git describe --tags --abbrev=0 > /dev/null 2>&1; then
-                      LAST_TAG=$(git describe --tags --abbrev=0)
+                  if [ -n "$LAST_TAG" ]; then
                       echo "Debug: Last tag found: $LAST_TAG"
                       echo "Changes since $LAST_TAG:" > CHANGELOG.md
                       git log $LAST_TAG..HEAD --oneline >> CHANGELOG.md
