@@ -52,12 +52,12 @@ jobs:
 
                   # Start the first tag with .1
                   if [[ -z "$EXISTING_TAGS" ]]; then
-                      TAG_TO_USE="$DATE.1"
+                      TAG_TO_USE="v$DATE.1"
                   else
                       # Get the highest existing suffix
-                      LAST_TAG_SUFFIX=$(echo "$EXISTING_TAGS" | grep -oP "$DATE\\.\\K[0-9]+" | sort -n | tail -n1)
+                      LAST_TAG_SUFFIX=$(echo "$EXISTING_TAGS" | grep -oP "v$DATE\\.\\K[0-9]+" | sort -n | tail -n1)
                       NEW_SUFFIX=$((LAST_TAG_SUFFIX+1))
-                      TAG_TO_USE="$DATE.$NEW_SUFFIX"
+                      TAG_TO_USE="v$DATE.$NEW_SUFFIX"
                   fi
 
                   echo "Debug: Using Tag: $TAG_TO_USE"
