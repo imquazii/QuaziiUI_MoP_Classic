@@ -87,9 +87,11 @@ jobs:
             - name: Update version in QuaziiUI.toc
               run: |
                   TOC_FILE="./QuaziiUI/QuaziiUI.toc"
-                  NEW_VERSION="${{ env.tag }}"
+                  # Use the github.run_number for a simple, always-incrementing version number
+                  NEW_VERSION="1.0.${{ github.run_number }}"
                   
                   echo "Debug: Updating .toc version to $NEW_VERSION."
+                  # Use gsub to replace the placeholder. {print} or 1 at the end is awk's way of printing every line.
                   awk -i inplace -v new_version="$NEW_VERSION" '{gsub("@project-version@", new_version)}1' "$TOC_FILE"
 
             # Step 5: Run build.py
