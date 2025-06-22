@@ -5,14 +5,14 @@
 ## AddonCompartmentFuncOnEnter: QuaziiUI_CompartmentOnEnter
 ## AddonCompartmentFuncOnLeave: QuaziiUI_CompartmentOnLeave
 ## Notes: Installer for |cFF30D1FFQuazii|r UI
-## Author: Chats
-## Version: 20241101
+## Author: Quazii
+## Version: 20250622
 ## DefaultState: Enabled
 ## LoadOnDemand: 0
 ## SavedVariables: QuaziiUI_DB
 ## OptionalDeps: ElvUI, Cell, BigWigs, OmniCD, WeakAuras, Details, Plater, MythicDungeonTools
 
-## X-Contributors: Quazii, Knuffelpanda
+## X-Contributors: Quazii
 ## X-License: GPLv3
 ## X-Website: https://quazii.com
 
