@@ -90,7 +90,7 @@ jobs:
                   NEW_VERSION="${{ env.tag }}"
                   
                   echo "Debug: Updating .toc version to $NEW_VERSION."
-                  sed -i "s/## Version:.*/## Version: $NEW_VERSION/" "$TOC_FILE"
+                  awk -i inplace -v new_version="$NEW_VERSION" '/^## Version:/ {$0="## Version: " new_version} {print}' "$TOC_FILE"
 
             # Step 5: Run build.py
             - name: Run build.py
