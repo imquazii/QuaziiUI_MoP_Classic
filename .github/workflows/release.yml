@@ -91,8 +91,8 @@ jobs:
                   NEW_VERSION="1.0.${{ github.run_number }}"
                   
                   echo "Debug: Updating .toc version to $NEW_VERSION."
-                  # Use gsub to replace the placeholder. {print} or 1 at the end is awk's way of printing every line.
-                  awk -i inplace -v new_version="$NEW_VERSION" '{gsub("@project-version@", new_version)}1' "$TOC_FILE"
+                  # Use sed to replace the placeholder. It's more portable than the gawk -i inplace extension.
+                  sed -i "s/@project-version@/$NEW_VERSION/g" "$TOC_FILE"
 
             # Step 5: Run build.py
             - name: Run build.py
