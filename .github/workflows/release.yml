@@ -46,7 +46,7 @@ jobs:
                   echo "TAG=v$VERSION" >> $GITHUB_ENV
                   echo "NEW_VERSION=$VERSION" >> $GITHUB_ENV
                   echo "ZIP_NAME=QuaziiUI-$VERSION.zip" >> $GITHUB_ENV
-
+            
             # Step 5: Modify QuaziiUI/init.lua if DEBUG_MODE is true
             - name: Check and update QuaziiUI.DEBUG_MODE in init.lua
               run: |

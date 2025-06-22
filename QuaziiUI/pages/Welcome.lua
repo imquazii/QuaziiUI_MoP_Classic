@@ -5,20 +5,20 @@ table.insert(QuaziiUI.pages, page)
 
 function page:Create(parent)
     local frame = CreateFrame("Frame", nil, parent.frameContent)
-    self.rootFrame = frame
     frame:SetAllPoints()
 
     self:CreateHeader(frame)
     self:CreateText(frame)
     self:CreateImage(frame)
 
+    self.rootFrame = frame
     return frame
 end
 
 function page:CreateHeader(frame)
     local header =
-        QuaziiUI.DF:CreateLabel(frame, "|c" .. (QuaziiUI.highlightColorHex or "ffc700") .. L["WelcomeHeader"] .. "|r", QuaziiUI.PageHeaderSize)
-    header:SetFont(QuaziiUI.FontFace or "Fonts\\FRIZQT__.TTF", QuaziiUI.PageHeaderSize)
+        QuaziiUI.DF:CreateLabel(frame, "|c" .. QuaziiUI.highlightColorHex .. L["WelcomeHeader"] .. "|r", QuaziiUI.PageHeaderSize)
+    header:SetFont(QuaziiUI.FontFace, QuaziiUI.PageHeaderSize)
     header:SetPoint("TOP", frame, "TOP", 0, -10)
 end
 
@@ -34,7 +34,7 @@ function page:CreateText(frame)
     )
 
     local text = QuaziiUI.DF:CreateLabel(frame, textString, QuaziiUI.PageTextSize)
-    text:SetFont(QuaziiUI.FontFace or "Fonts\\FRIZQT__.TTF", QuaziiUI.PageTextSize)
+    text:SetFont(QuaziiUI.FontFace, QuaziiUI.PageTextSize)
     text:SetPoint("TOPLEFT", frame, "TOPLEFT", 10, -40)
     text:SetPoint("BOTTOMRIGHT", frame, "BOTTOMRIGHT", -10, -40)
     text:SetSpacing(5)
