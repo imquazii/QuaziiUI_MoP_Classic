@@ -145,24 +145,6 @@ jobs:
                       echo "release_exists=false" >> $GITHUB_ENV
                   fi
 
-            # Step 9: Check and Delete Existing Asset
-            - name: Check and Delete Existing Asset
-              if: env.release_exists == 'false'
-              env:
-                  GH_TOKEN: ${{ secrets.GITHUB_TOKEN }} # Set GH_TOKEN here
-              run: |
-                  ASSET_NAME="QuaziiUI.zip"
-                  echo "Debug: Checking for existing asset: $ASSET_NAME"
-                  EXISTING_ASSET_ID=$(gh release view ${{ env.tag }} --json assets --jq ".assets | .[] | select(.name == \"$ASSET_NAME\") | .id" || true)
-                  echo "Debug: Existing Asset ID: $EXISTING_ASSET_ID"
-
-                  if [ ! -z "$EXISTING_ASSET_ID" ]; then
-                    echo "Debug: Deleting existing asset: $ASSET_NAME"
-                    gh release delete-asset ${{ env.tag }} $EXISTING_ASSET_ID --yes
-                  else
-                    echo "Debug: No existing asset named $ASSET_NAME found in release ${{ env.tag }}."
-                  fi
-
             # Step 10: Create or update a GitHub Release using gh CLI
             - name: Create or Update GitHub Release
               if: env.release_exists == 'false'
