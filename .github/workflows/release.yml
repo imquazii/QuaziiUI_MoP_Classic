@@ -46,18 +46,18 @@ jobs:
                   # Fetch all tags from remote to ensure we're checking against them
                   git fetch --tags
 
-                  DATE=$(date +'%Y%m%d')
-                  EXISTING_TAGS=$(git tag --list "$DATE-*")
+                  DATE=$(date +'%Y.%m.%d')
+                  EXISTING_TAGS=$(git tag --list "$DATE.*")
                   echo "Debug: Existing Tags: $EXISTING_TAGS"
 
-                  # Start the first tag with -1
+                  # Start the first tag with .1
                   if [[ -z "$EXISTING_TAGS" ]]; then
-                      TAG_TO_USE="$DATE-1"
+                      TAG_TO_USE="$DATE.1"
                   else
                       # Get the highest existing suffix
-                      LAST_TAG_SUFFIX=$(echo "$EXISTING_TAGS" | grep -oP "$DATE-\K[0-9]+" | sort -n | tail -n1)
+                      LAST_TAG_SUFFIX=$(echo "$EXISTING_TAGS" | grep -oP "$DATE\.\K[0-9]+" | sort -n | tail -n1)
                       NEW_SUFFIX=$((LAST_TAG_SUFFIX+1))
-                      TAG_TO_USE="$DATE-$NEW_SUFFIX"
+                      TAG_TO_USE="$DATE.$NEW_SUFFIX"
                   fi
 
                   echo "Debug: Using Tag: $TAG_TO_USE"
@@ -90,7 +90,7 @@ jobs:
                   NEW_VERSION="${{ env.tag }}"
                   
                   echo "Debug: Updating .toc version to $NEW_VERSION."
-                  awk -i inplace -v new_version="$NEW_VERSION" '/^## Version:/ {$0="## Version: " new_version} {print}' "$TOC_FILE"
+                  awk -i inplace -v new_version="$NEW_VERSION" '{gsub("@project-version@", new_version)}1' "$TOC_FILE"
 
             # Step 5: Run build.py
             - name: Run build.py
