@@ -62,12 +62,6 @@ jobs:
 
                   echo "Debug: Using Tag: $TAG_TO_USE"
 
-                  # Check if the tag exists remotely and push if not
-                  if ! git ls-remote --tags origin | grep -q "refs/tags/$TAG_TO_USE"; then
-                      git tag $TAG_TO_USE
-                      git push origin $TAG_TO_USE
-                  fi
-
                   echo "tag=$TAG_TO_USE" >> $GITHUB_ENV
 
             
