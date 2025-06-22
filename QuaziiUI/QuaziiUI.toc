@@ -5,7 +5,7 @@
 ## AddonCompartmentFuncOnEnter: QuaziiUI_CompartmentOnEnter
 ## AddonCompartmentFuncOnLeave: QuaziiUI_CompartmentOnLeave
 ## Notes: Installer for |cFF30D1FFQuazii|r UI
-## Author: Chats
+## Author: Quazii
 ## Version: 20250622
 ## DefaultState: Enabled
 ## LoadOnDemand: 0
