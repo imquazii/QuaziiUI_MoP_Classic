@@ -139,7 +139,7 @@ local function createPanel()
     panel:SetBorderColor(unpack(QuaziiUI.highlightColorRGBA or {1, 0.8, 0, 1}))
 
     -- Panel Title Bar
-    panel.Title:SetFont(QuaziiUI.FontFace, 18)
+    panel.Title:SetFont(QuaziiUI.FontFace or "Fonts\\FRIZQT__.TTF", 18)
     panel.Title:SetTextColor(unpack(QuaziiUI.textColorRGBA or {1, 1, 1, 1}))
     panel.Title:SetPoint("CENTER", panel.TitleBar, "CENTER", 0, 1)
     -- Explicitly set the desired title text
@@ -156,21 +156,21 @@ local function createPanel()
     local previousButton =
         QuaziiUI.DF:CreateButton( panel, selectPreviousPage, 90, 40, "<- " .. L["Back"], nil, nil, nil, nil, nil, nil, QuaziiUI.ODT )
     previousButton:SetPoint("BOTTOMLEFT", panel, "BOTTOMLEFT", 10, 5)
-    previousButton.text_overlay:SetFont(QuaziiUI.FontFace, 18)
+    previousButton.text_overlay:SetFont(QuaziiUI.FontFace or "Fonts\\FRIZQT__.TTF", 18)
     previousButton:SetTextColor(unpack(QuaziiUI.textColorRGBA or {1, 1, 1, 1}))
 
     -- Index Button
     local indexButton =
         QuaziiUI.DF:CreateButton( panel, selectIndexPage, 90, 40, "- " .. L["Index"] .. " -", nil, nil, nil, nil, nil, nil, QuaziiUI.ODT )
     indexButton:SetPoint("BOTTOM", panel, "BOTTOM", 0, 5)
-    indexButton.text_overlay:SetFont(QuaziiUI.FontFace, 18)
+    indexButton.text_overlay:SetFont(QuaziiUI.FontFace or "Fonts\\FRIZQT__.TTF", 18)
     indexButton:SetTextColor(unpack(QuaziiUI.textColorRGBA or {1, 1, 1, 1}))
 
     -- Next Button
     local nextButton =
         QuaziiUI.DF:CreateButton( panel, selectNextPage, 90, 40, L["Next"] .. " ->", nil, nil, nil, nil, nil, nil, QuaziiUI.ODT )
     nextButton:SetPoint("BOTTOMRIGHT", panel, "BOTTOMRIGHT", -10, 5)
-    nextButton.text_overlay:SetFont(QuaziiUI.FontFace, 18)
+    nextButton.text_overlay:SetFont(QuaziiUI.FontFace or "Fonts\\FRIZQT__.TTF", 18)
     nextButton:SetTextColor(unpack(QuaziiUI.textColorRGBA or {1, 1, 1, 1}))
 
     -- Panel Content Frame
