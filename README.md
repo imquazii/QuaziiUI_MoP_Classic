@@ -1,6 +1,6 @@
 # QuaziiUI Addon
 
-QuaziiUI MoP Classic Installer is a World of Warcraft addon that allows community members to easily import UI profiles and WeakAuras from Quazii - [Twitch](https://twitch.tv/imquazii) and [YouTube](https://www.youtube.com/@quaziiwow). You need to install the following addons, BEFORE installing this QUI MoP Classic Installer.
+QuaziiUI MoP Classic Installer is a World of Warcraft addon that allows community members to easily import UI profiles and WeakAuras from Quazii - [Twitch](https://twitch.tv/quazii) and [YouTube](https://www.youtube.com/@quaziiwow). You need to install the following addons, BEFORE installing this QUI MoP Classic Installer.
 
 - ElvUI
 - WeakAuras
