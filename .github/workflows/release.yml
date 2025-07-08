@@ -40,13 +40,15 @@ jobs:
                   # Fetch all tags to ensure we have the latest version information
                   git fetch --tags
                   
-                  # Get the latest tag name across all branches
-                  LATEST_TAG=$(git describe --tags $(git rev-list --tags --max-count=1) 2>/dev/null)
+                  # Get the latest semantic version tag (v*.*.*)
+                  LATEST_TAG=$(git tag -l "v*.*.*" | sort -V | tail -1)
 
                   if [ -z "$LATEST_TAG" ]; then
-                    # If no tags exist, start with v1.0.1
+                    # If no semantic version tags exist, start with v1.0.1
                     NEW_VERSION="1.0.1"
+                    echo "No semantic version tags found, starting with v1.0.1"
                   else
+                    echo "Latest semantic version tag found: $LATEST_TAG"
                     # Increment the patch version of the last tag
                     # Remove 'v' prefix for version manipulation
                     LATEST_VERSION=${LATEST_TAG#v}
@@ -66,7 +68,7 @@ jobs:
                   echo "TAG=v$NEW_VERSION" >> $GITHUB_ENV
                   echo "NEW_VERSION=$NEW_VERSION" >> $GITHUB_ENV
                   echo "ZIP_NAME=QuaziiUI_MoP_Classic-v$NEW_VERSION.zip" >> $GITHUB_ENV
-                  echo "Latest tag was: $LATEST_TAG"
+                  echo "Latest semantic version tag was: $LATEST_TAG"
                   echo "New version will be: v$NEW_VERSION"
             
             # Step 4: Ensure the version matches the release tag in the .toc file
@@ -89,17 +91,17 @@ jobs:
             # Step 7: Generate changelog
             - name: Generate changelog
               run: |
-                  # Get the latest tag name across all branches
-                  LAST_TAG=$(git describe --tags $(git rev-list --tags --max-count=1) 2>/dev/null)
+                  # Get the latest semantic version tag (v*.*.*)
+                  LAST_TAG=$(git tag -l "v*.*.*" | sort -V | tail -1)
                   
-                  # Check if there are any tags
+                  # Check if there are any semantic version tags
                   if [ -n "$LAST_TAG" ]; then
-                      echo "Debug: Last tag found: $LAST_TAG"
+                      echo "Debug: Last semantic version tag found: $LAST_TAG"
                       echo "Changes since $LAST_TAG:" > CHANGELOG.md
                       git log $LAST_TAG..HEAD --oneline >> CHANGELOG.md
                   else
-                      # If no tags exist, generate changelog for all commits
-                      echo "Debug: No tags found, generating changelog for all commits."
+                      # If no semantic version tags exist, generate changelog for all commits
+                      echo "Debug: No semantic version tags found, generating changelog for all commits."
                       echo "Changes since the beginning:" > CHANGELOG.md
                       git log --oneline >> CHANGELOG.md
                   fi
