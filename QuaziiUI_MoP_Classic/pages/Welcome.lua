@@ -44,7 +44,7 @@ end
 
 function page:CreateImage(frame)
     local image = QuaziiUI.DF:CreateImage(frame, "Interface\\AddOns\\QuaziiUI_MoP_Classic\\assets\\quaziiLogo.tga", 256, 256)
-    image:SetPoint("CENTER", frame, "CENTER", 0, -80)
+    image:SetPoint("CENTER", frame, "CENTER", 0, -180)
 end
 
 function page:ShouldShow()

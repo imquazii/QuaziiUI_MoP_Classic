@@ -46,7 +46,7 @@ if L then
     L["WelcomeText2"] =
         "Reminder: The following 4 addons are needed for Quazii UI:\n• ElvUI\n• WeakAuras\n• Plater\n• Details\n"
     L["WelcomeText3"] =
-        "Watch the accompanying video installation guide if you have questions. Enjoy and support us at patreon.com/quazii to keep this UI FREE for you!"
+        "Watch the accompanying video installation guide if you have questions.\n\nEnjoy and support us at |cFF30D1FFpatreon.com/quazii|r to keep this UI FREE for you!"
 
     -- Supported Addon Check
     L["SupportedAddonsHeader"] = "Quazii UI Homepage"
@@ -100,7 +100,7 @@ if L then
     -- Finish Page
     L["FinishHeader"] = "Congratulations!"
     L["FinishedText"] = [[
-Keep Quazii UI FREE for you. Support at |cff00ffffpatreon.com/quazii|r
+Keep Quazii UI FREE for you. Support at |cFF30D1FFpatreon.com/quazii|r
 
 |cffffd700EXCLUSIVE PATREON PERKS|r
 • |cffffffffQuazii M+ Dungeon Pack:|r Clean text & audio alerts for M+ mechanics
