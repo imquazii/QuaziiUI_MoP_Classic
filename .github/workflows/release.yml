@@ -74,9 +74,11 @@ jobs:
             # Step 4: Ensure the version matches the release tag in the .toc file
             - name: Update version in .toc file
               run: |
-                  TOC_FILE="./QuaziiUI_MoP_Classic/QuaziiUI_MoP_Classic.toc"
                   echo "Debug: Updating .toc version to ${{ env.NEW_VERSION }}."
-                  sed -i "s/@project-version@/${{ env.NEW_VERSION }}/g" "$TOC_FILE"
+                  # Update main .toc file
+                  sed -i "s/@project-version@/${{ env.NEW_VERSION }}/g" "./QuaziiUI_MoP_Classic/QuaziiUI_MoP_Classic.toc"
+                  # Update MoP Classic specific .toc file
+                  sed -i "s/@project-version@/${{ env.NEW_VERSION }}/g" "./QuaziiUI_MoP_Classic/QuaziiUI_MoP_Classic_Mists.toc"
 
             # Step 5: Run build.py
             - name: Run build.py

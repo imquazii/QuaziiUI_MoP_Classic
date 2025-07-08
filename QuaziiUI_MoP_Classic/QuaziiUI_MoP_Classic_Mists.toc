@@ -1,10 +1,10 @@
 ## Interface: 50400
-## Title: |cFF30D1FFQuazii|r UI (MoP)
+## Title: |cFF30D1FFQuazii|r UI (MoP Classic)
 ## IconTexture: Interface\AddOns\QuaziiUI_MoP_Classic\assets\quaziiLogo
 ## AddonCompartmentFunc: QuaziiUI_CompartmentClick
 ## AddonCompartmentFuncOnEnter: QuaziiUI_CompartmentOnEnter
 ## AddonCompartmentFuncOnLeave: QuaziiUI_CompartmentOnLeave
-## Notes: Installer for |cFF30D1FFQuazii|r UI
+## Notes: Installer for |cFF30D1FFQuazii|r UI - Mists of Pandaria Classic Edition
 ## Author: Quazii
 ## Version: @project-version@
 ## DefaultState: Enabled
@@ -18,5 +18,6 @@
 ## X-Curse-Project-ID: QuaziiUI-MoP-Classic
 ## X-WoWI-ID: QuaziiUI-MoP-Classic
 ## X-Wago-ID: QuaziiUI-MoP-Classic
+## X-Compatible-With: Mists-of-Pandaria-Classic
 
-load.xml
+load.xml 
