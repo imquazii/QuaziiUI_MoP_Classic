@@ -1,7 +1,7 @@
 <Ui xmlns="http://www.blizzard.com/wow/ui/"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.blizzard.com/wow/ui/..\FrameXML\UI.xsd">
     <Script file="bigwigs.lua"/>
-    <Script file="cell.lua"/>
+    <!-- <Script file="cell.lua"/> Cell not supported in MoP Classic -->
     <Script file="details.lua"/>
     <Script file="omnicd.lua"/>
     <Script file="plater.lua"/>

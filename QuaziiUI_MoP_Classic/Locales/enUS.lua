@@ -32,7 +32,6 @@ if L then
 
     -- Addons
     L["ElvUI"] = "ElvUI"
-    L["Cell"] = "Cell"
     L["Details"] = "Details!"
     L["BigWigs"] = "BigWigs"
     L["OmniCD"] = "OmniCD"
@@ -60,7 +59,6 @@ if L then
     L["ElvUIHeader"] = "ElvUI Imports"
     L["ElvUIText"] =
         "Here you can import or update any of |cQHCHQuazii's|r ElvUI Profiles.\n|cQHCHNOTE:|r If you import multiple profiles, you can switch in ElvUI's profile settings."
-    L["CellNotice"] = "Cell users visit https://quazii.com\nfor the cell compatible profile."
     L["UIScaleHeader"] = "UI Scale"
     L["UIScaleText"] =
         "Adjust your UI Scaling below.\nIf the UI looks off or too big/small, you may wish to try a different setting."
@@ -75,7 +73,6 @@ if L then
     L["DetailsPrompt"] = "Insert a Name for the New Details Profile:"
     local AddonImportMessage = "Are you sure you want to import the ADDONNAME Profile?"
     L["OmniCDPrompt"] = AddonImportMessage:gsub("ADDONNAME", "OmnicD")
-    L["CellPrompt"] = AddonImportMessage:gsub("ADDONNAME", "Cell") .. "\n!- This will overwrite your current cell setup -!"
     L["PlaterPrompt"] = "Insert a Name for the New Plater Profile:"
 
     L["PressCtrlCToCopy"] = "Press Ctrl+C to copy" -- Added for Copy EditBox
