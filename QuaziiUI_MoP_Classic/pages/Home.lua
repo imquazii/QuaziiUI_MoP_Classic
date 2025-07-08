@@ -1,5 +1,12 @@
 local L = QuaziiUI.L
 
+QuaziiUI.supportedAddons = {
+    "ElvUI",
+    "WeakAuras",
+    "Details",
+    "Plater"
+}
+
 local page = {}
 table.insert(QuaziiUI.pages, page)
 
@@ -71,81 +78,7 @@ local function importHealerProfileFromHome()
     )
 end
 
--- Define the import function locally for Cell Tank/DPS profile
-local function importCellTankDPSProfileFromHome()
-    local F = Cell and Cell.funcs -- Ensure Cell and funcs exist
-    local Serializer = LibStub and LibStub:GetLibrary("LibSerialize", true)
-    local LibDeflate = LibStub and LibStub:GetLibrary("LibDeflate", true)
-
-    if not (Cell and F and Serializer and LibDeflate) then
-        print("QuaziiUI Error: Cell addon or required libraries (LibSerialize, LibDeflate) not loaded.")
-        return
-    end
-
-    local importString = QuaziiUI.imports.Cell.tankdps.data
-    if not importString or importString == "" then
-         print("QuaziiUI Error: Cell Tank/DPS import string is missing or empty.")
-         return
-    end
-
-    QuaziiUI.DF:ShowPromptPanel(
-        L["CellPrompt"]:gsub("ADDONNAME", "Cell (Tank/DPS/Heals)"), -- Modify prompt slightly
-        function()
-            local version, data = string.match(importString, "^!CELL:(%d+):ALL!(.+)$")
-            if not version or not data then
-                print("QuaziiUI Error: Invalid Cell import string format (Tank/DPS).")
-                return
-            end
-            version = tonumber(version)
-
-            if version >= Cell.MIN_VERSION and version <= Cell.versionNum then
-                local success_decode, decoded_data = pcall(LibDeflate.DecodeForPrint, LibDeflate, data)
-                if not success_decode then print("QuaziiUI Cell Import Error: DecodeForPrint failed.", decoded_data) return end
-
-                local success_decompress, decompressed_data = pcall(LibDeflate.DecompressDeflate, LibDeflate, decoded_data)
-                if not success_decompress then print("QuaziiUI Cell Import Error: DecompressDeflate failed.", decompressed_data) return end
-                
-                local success_deserialize, imported = Serializer:Deserialize(decompressed_data)
-                if not success_deserialize or not imported then print("QuaziiUI Cell Import Error: Deserialize failed.", imported) return end
-
-                -- Apply necessary filtering/defaults (adapted from original CellImport)
-                imported["raidDebuffs"] = nil -- Simplify: Assume raid debuffs are not kept from import
-                if Cell.isRetail then imported["appearance"]["useLibHealComm"] = false end
-                for _, layout in pairs(imported["layouts"] or {}) do
-                    for i = #layout["indicators"], 1, -1 do
-                        if layout["indicators"][i]["type"] == "built-in" then
-                            if not Cell.defaults.indicatorIndices[layout["indicators"][i]["indicatorName"]] then tremove(layout["indicators"], i) end
-                        else F:FilterInvalidSpells(layout["indicators"][i]["auras"]) end
-                    end
-                    if Cell.flavor ~= imported.flavor then layout.powerFilters = F:Copy(Cell.defaults.layout.powerFilters) end
-                end
-                -- Simplified: Assume missing indicators are not added back
-                if Cell.isRetail then CellDB["clickCastings"] = imported["clickCastings"] end -- Only copy if retail
-                if Cell.isRetail and imported["layoutAutoSwitch"] then CellDB["layoutAutoSwitch"] = imported["layoutAutoSwitch"] end
-                imported["clickCastings"] = nil
-                imported["layoutAutoSwitch"] = nil
-                imported["characterDB"] = nil
-                F:FilterInvalidSpells(imported["debuffBlacklist"])
-                F:FilterInvalidSpells(imported["bigDebuffs"])
-                F:FilterInvalidSpells(imported["actions"])
-                F:FilterInvalidSpells(imported["customDefensives"])
-                F:FilterInvalidSpells(imported["customExternals"])
-                F:FilterInvalidSpells(imported["targetedSpellsList"])
-
-                -- Overwrite CellDB with imported data
-                for k, v in pairs(imported) do CellDB[k] = v end
-                
-                print("QuaziiUI: Cell Tank/DPS Profile imported successfully. Reloading UI.")
-                QuaziiUI.db.global.imports.CellTankDPS = { date = GetServerTime(), version = QuaziiUI.versionNumber } -- Update DB
-                ReloadUI()
-            else
-                 print("QuaziiUI Error: Cell import string version mismatch.", "Imported:", version, "Current:", Cell.versionNum)
-            end
-        end,
-        function() print("QuaziiUI: Cell Tank/DPS profile import cancelled.") end,
-        true
-    )
-end
+-- Cell references removed for MoP Classic
 
 -- Navigation function for Class WAs
 local function goToClassWAs()
@@ -153,44 +86,33 @@ local function goToClassWAs()
     QuaziiUI:selectPage(3)      -- Navigate to ClassWeakAuras page (index 3)
 end
 
--- Navigation function for Utility WAs
-local function goToUtilityWAs()
-    -- QuaziiUI.initialWACategory = 2 -- No longer needed
-    QuaziiUI:selectPage(4)      -- Navigate to UtilityWeakAuras page (index 4)
-end
 
--- Create a modified list for the Home page display, with Cell first and ElvUI last
+
+-- Create a modified list for the Home page display, with WeakAuras first and ElvUI last
 local homePageDisplayList = {}
 do
     local elvuiEntries = {}
-    local cellEntries = {}
     local weakAuraEntries = {}
     local otherEntries = {}
     for _, addonName in ipairs(QuaziiUI.supportedAddons) do
-        if addonName == "Cell" then
-            table.insert(cellEntries, { addonName = addonName, profileType = "TankDPS" })
-        elseif addonName == "ElvUI" then
+        if addonName == "ElvUI" then
             table.insert(elvuiEntries, { addonName = addonName, profileType = "TankDPS" })
             table.insert(elvuiEntries, { addonName = addonName, profileType = "Healer" })
         elseif addonName == "WeakAuras" then
              -- Store WeakAura entries separately
              table.insert(weakAuraEntries, { addonName = addonName, profileType = "Class" })
-             table.insert(weakAuraEntries, { addonName = addonName, profileType = "Utility" })
         else
             table.insert(otherEntries, { addonName = addonName })
         end
     end
-    -- Construct the final list order: Cell -> WeakAuras -> Others -> ElvUI
-    for _, entry in ipairs(cellEntries) do
+    -- Construct the final list order: ElvUI -> WeakAuras -> Others
+    for _, entry in ipairs(elvuiEntries) do
         table.insert(homePageDisplayList, entry)
     end
     for _, entry in ipairs(weakAuraEntries) do
         table.insert(homePageDisplayList, entry)
     end
     for _, entry in ipairs(otherEntries) do
-        table.insert(homePageDisplayList, entry)
-    end
-    for _, entry in ipairs(elvuiEntries) do
         table.insert(homePageDisplayList, entry)
     end
 end
@@ -215,17 +137,10 @@ local function addonScrollBoxUpdate(self, data, offset, totalLines)
             line.versionLabel:SetTextColor(1, 1, 1, 1)
             line.enabledLabel:SetTextColor(1, 1, 1, 1)
 
-            if addonName == "Cell" then
-                line.addonLabel:SetTextColor(1, 0.647, 0, 1)
-                line.versionLabel:SetTextColor(1, 0.647, 0, 1)
-                line.enabledLabel:SetTextColor(1, 0.647, 0, 1)
-                if profileType == "TankDPS" then
-                    addonLabelBaseText = addonTitle .. " (" .. L["Tank"] .. "/" .. L["DPS"] .. "/" .. L["Heals"] .. ")"
-                end
-            elseif addonName == "ElvUI" then
-                line.addonLabel:SetTextColor(1, 0, 1, 1)
-                line.versionLabel:SetTextColor(1, 0, 1, 1)
-                line.enabledLabel:SetTextColor(1, 0, 1, 1)
+            if addonName == "ElvUI" then
+                line.addonLabel:SetTextColor(1, 1, 1, 1)
+                line.versionLabel:SetTextColor(1, 1, 1, 1)
+                line.enabledLabel:SetTextColor(1, 1, 1, 1)
                 if profileType == "TankDPS" then
                     addonLabelBaseText = addonTitle .. " (" .. L["Tank"] .. "/" .. L["DPS"] .. "/" .. L["Heals"] .. ")"
                 elseif profileType == "Healer" then
@@ -235,8 +150,6 @@ local function addonScrollBoxUpdate(self, data, offset, totalLines)
                  -- Keep default white color
                  if profileType == "Class" then
                     addonLabelBaseText = addonTitle .. " (" .. L["Class WAs"] .. ")" 
-                 elseif profileType == "Utility" then
-                    addonLabelBaseText = addonTitle .. " (" .. L["Utility WAs"] .. ")"
                  end
             else -- Default white for other addons
                 addonLabelBaseText = addonLabelBaseText
@@ -247,20 +160,7 @@ local function addonScrollBoxUpdate(self, data, offset, totalLines)
             line.enabledLabel:SetText(enabledStatusText)
 
             -- Configure buttons
-            if addonName == "Cell" then
-                 if addonEnabled then
-                     line.importButton:SetText(L["Import"])
-                     if profileType == "TankDPS" then
-                         line.importButton:SetClickFunction(importCellTankDPSProfileFromHome)
-                     else
-                        line.importButton:Disable()
-                        line.importButton:SetText(L["NA"])
-                     end
-                 else
-                     line.importButton:Disable()
-                     line.importButton:SetText(L["NA"])
-                 end
-            elseif addonName == "ElvUI" then
+            if addonName == "ElvUI" then
                  if addonEnabled then
                      if profileType == "TankDPS" then
                          line.importButton:SetText(L["Tank"] .. "/" .. L["DPS"] .. " " .. L["Import"])
@@ -281,8 +181,6 @@ local function addonScrollBoxUpdate(self, data, offset, totalLines)
                      line.importButton:SetText(L["GoToPage"]) -- Keep text as Go To Page
                      if profileType == "Class" then
                         line.importButton:SetClickFunction(goToClassWAs)
-                     elseif profileType == "Utility" then
-                        line.importButton:SetClickFunction(goToUtilityWAs)
                      else
                         line.importButton:Disable()
                         line.importButton:SetText(L["NA"])

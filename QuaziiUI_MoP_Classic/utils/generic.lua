@@ -11,9 +11,13 @@ end -- Makes the installer UI hidden
 
 ---@param inputVersion integer|string "string|integer in the format of YYYYMMDD"
 ---@return string
-function QuaziiUI.VersionToString(inputVersion) -- I
-    local Y, M, D = string.match(tostring(inputVersion), "(%d%d%d%d)(%d%d)(%d%d)")
-    return " v" .. Y .. "." .. M .. "." .. D
+function QuaziiUI.VersionToString(inputVersion)
+    local Y, M, D = string.match(tostring(inputVersion or ""), "(%d%d%d%d)(%d%d)(%d%d)")
+    if Y and M and D then
+        return " v" .. Y .. "." .. M .. "." .. D
+    else
+        return " vUnknown"
+    end
 end
 
 function QuaziiUI:DebugPrint(...)

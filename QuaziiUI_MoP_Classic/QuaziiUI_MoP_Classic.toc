@@ -1,12 +1,12 @@
-## Interface: 110005
-## Title: |cFF30D1FFQuazii|r UI (Retail)
-## IconTexture: Interface\AddOns\QuaziiUI\assets\quaziiLogo
+## Interface: 50400
+## Title: |cFF30D1FFQuazii|r UI (MoP)
+## IconTexture: Interface\AddOns\QuaziiUI_MoP_Classic\assets\quaziiLogo
 ## AddonCompartmentFunc: QuaziiUI_CompartmentClick
 ## AddonCompartmentFuncOnEnter: QuaziiUI_CompartmentOnEnter
 ## AddonCompartmentFuncOnLeave: QuaziiUI_CompartmentOnLeave
 ## Notes: Installer for |cFF30D1FFQuazii|r UI
 ## Author: Quazii
-## Version: 20250622
+## Version: @project-version@
 ## DefaultState: Enabled
 ## LoadOnDemand: 0
 ## SavedVariables: QuaziiUI_DB

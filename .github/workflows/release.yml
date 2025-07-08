@@ -23,22 +23,17 @@ jobs:
             cancel-in-progress: true
 
         steps:
-            # Step 1: Add a delay (sleep for 15 minutes = 900 seconds), only for push events
-            - name: Wait for 15 minutes (only on push)
-              if: github.event_name == 'push'
-              run: sleep 900
-
-            # Step 2: Checkout the code
+            # Step 1: Checkout the code
             - name: Checkout code
               uses: actions/checkout@v3
               with:
                   fetch-depth: 0 # Fetch all history for changelog generation
 
-            # Step 3: Install GitHub CLI (gh)
+            # Step 2: Install GitHub CLI (gh)
             - name: Install GitHub CLI
               run: sudo apt-get install gh -y
 
-            # Step 4: Set Version from Git Tags
+            # Step 3: Set Version from Git Tags
             - name: Set Version from Git Tags
               id: set_version
               run: |
@@ -70,40 +65,28 @@ jobs:
                   
                   echo "TAG=v$NEW_VERSION" >> $GITHUB_ENV
                   echo "NEW_VERSION=$NEW_VERSION" >> $GITHUB_ENV
-                  echo "ZIP_NAME=QuaziiUI-v$NEW_VERSION.zip" >> $GITHUB_ENV
+                  echo "ZIP_NAME=QuaziiUI_MoP_Classic-v$NEW_VERSION.zip" >> $GITHUB_ENV
                   echo "Latest tag was: $LATEST_TAG"
                   echo "New version will be: v$NEW_VERSION"
             
-            # Step 5: Modify QuaziiUI/init.lua if DEBUG_MODE is true
-            - name: Check and update QuaziiUI.DEBUG_MODE in init.lua
+            # Step 4: Ensure the version matches the release tag in the .toc file
+            - name: Update version in .toc file
               run: |
-                  INIT_FILE="./QuaziiUI/init.lua"
-                  
-                  if grep -q "QuaziiUI.DEBUG_MODE = true" "$INIT_FILE"; then
-                      echo "Debug: DEBUG_MODE is set to true. Updating to false."
-                      sed -i 's/QuaziiUI.DEBUG_MODE = true/QuaziiUI.DEBUG_MODE = false/' "$INIT_FILE"
-                  else
-                      echo "Debug: DEBUG_MODE is already false or not found."
-                  fi
-
-            # Step 6: Ensure the version matches the release tag in QuaziiUI.toc
-            - name: Update version in QuaziiUI.toc
-              run: |
-                  TOC_FILE="./QuaziiUI/QuaziiUI.toc"
+                  TOC_FILE="./QuaziiUI_MoP_Classic/QuaziiUI_MoP_Classic.toc"
                   echo "Debug: Updating .toc version to ${{ env.NEW_VERSION }}."
                   sed -i "s/@project-version@/${{ env.NEW_VERSION }}/g" "$TOC_FILE"
 
-            # Step 7: Run build.py
+            # Step 5: Run build.py
             - name: Run build.py
               run: python tools/build.py
 
-            # Step 8: Zip the QuaziiUI directory
-            - name: Zip QuaziiUI directory
+            # Step 6: Zip the QuaziiUI_MoP_Classic directory
+            - name: Zip QuaziiUI_MoP_Classic directory
               run: |
-                  echo "Debug: Zipping QuaziiUI directory to ${{ env.ZIP_NAME }}"
-                  zip -r ${{ env.ZIP_NAME }} QuaziiUI
+                  echo "Debug: Zipping QuaziiUI_MoP_Classic directory to ${{ env.ZIP_NAME }}"
+                  zip -r ${{ env.ZIP_NAME }} QuaziiUI_MoP_Classic
 
-            # Step 9: Generate changelog
+            # Step 7: Generate changelog
             - name: Generate changelog
               run: |
                   # Get the latest tag name across all branches
@@ -127,7 +110,7 @@ jobs:
                   echo "Debug: Generated changelog content"
                   cat CHANGELOG.md
 
-            # Step 10: Create GitHub Release
+            # Step 8: Create GitHub Release
             - name: Create GitHub Release
               env:
                   GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -135,6 +118,6 @@ jobs:
                   echo "Debug: Creating release for tag ${{ env.TAG }}"
                   gh release create ${{ env.TAG }} \
                     ${{ env.ZIP_NAME }} \
-                    --title "QuaziiUI ${{ env.TAG }}" \
+                    --title "QuaziiUI_MoP_Classic ${{ env.TAG }}" \
                     --notes-file CHANGELOG.md \
                     --target main

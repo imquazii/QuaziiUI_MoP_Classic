@@ -1,5 +1,10 @@
 ---@type table|AceAddon
-QuaziiUI = LibStub("AceAddon-3.0"):NewAddon("QuaziiUI", "AceConsole-3.0", "AceEvent-3.0")
+QuaziiUI = LibStub("AceAddon-3.0"):NewAddon("QuaziiUI_MoP_Classic", "AceConsole-3.0", "AceEvent-3.0")
+
+-- Initialize essential tables immediately
+QuaziiUI.imports = QuaziiUI.imports or {}
+QuaziiUI.pages = QuaziiUI.pages or {}
+
 ---@type table<string, string>
 QuaziiUI.L = LibStub("AceLocale-3.0"):GetLocale("QuaziiUI")
 
@@ -34,21 +39,21 @@ QuaziiUI.defaults = {
     }
 }
 
----@type table
-QuaziiUI.imports = QuaziiUI.imports or {}
----@type table
-QuaziiUI.pages = QuaziiUI.pages or {}
+-- Tables already initialized at the top of file
 
 function QuaziiUI:OnInitialize()
     ---@type AceDBObject-3.0
-    self.db = LibStub("AceDB-3.0"):New("QuaziiUI_DB", self.defaults, "Default")
+    self.db = LibStub("AceDB-3.0"):New("QuaziiUI_MoP_Classic_DB", self.defaults, "Default")
 
     self:RegisterChatCommand("qui", "SlashCommandOpen")
     self:RegisterChatCommand("quaziiui", "SlashCommandOpen")
     self:RegisterChatCommand("rl", "SlashCommandReload")
     
     -- Register our media files with LibSharedMedia
-    self:CheckMediaRegistration()
+    self:RegisterMedia()
+    
+    -- Initialize DetailsFramework templates now that DF is available
+    self:InitializeDetailsFrameworkTemplates()
 end
 
 function QuaziiUI:SlashCommandOpen(input)
@@ -56,7 +61,7 @@ function QuaziiUI:SlashCommandOpen(input)
         self.db.char.debug.reload = true
         ReloadUI()
     end
-    self:InitializePanel() -- Ensure panel is created before showing
+    self:InitializePanel()
     QuaziiUI_CompartmentClick()
 end
 
@@ -112,4 +117,16 @@ end
 
 function QuaziiUI_CompartmentOnLeave()
     GameTooltip:Hide()
+end
+
+function QuaziiUI:InitializePanel()
+    if self.panelInitialized then return end -- Only run once
+    self:DebugPrint("Initializing Panel UI...")
+    createPanel() -- Call the actual creation function
+    if self.panel then
+        self.panelInitialized = true
+        self:DebugPrint("Panel UI Initialized.")
+    else
+        self:DebugPrint("Panel UI Initialization failed - panel object not created.")
+    end
 end

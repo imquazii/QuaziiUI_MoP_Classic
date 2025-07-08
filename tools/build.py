@@ -8,7 +8,7 @@ wa_non_class_list: list = []
 
 
 def get_import_files():
-    path = "./tools/imports"
+    path = "./imports"
     for subdir, dirs, files in os.walk(path):
         for file in files:
             if file.endswith(".txt"):
@@ -49,13 +49,13 @@ def get_import_files():
 
 
 def get_template():
-    path: Path = Path.cwd().joinpath("tools/imports_template.lua")
+    path: Path = Path.cwd().joinpath("imports_template.lua")
     with path.open() as template:
         return template.read()
 
 
 def write_template(input):
-    path: Path = Path.cwd().joinpath("QuaziiUI/imports.lua")
+    path: Path = Path.cwd().joinpath("../QuaziiUI_MoP_Classic/imports.lua")
     with open(path, "w") as template:
         template.write(input)
 
