@@ -43,7 +43,7 @@ if L then
     L["WelcomeText1"] =
         "Click 'Next' to begin installation, or 'Home' at any time to return to the main menu.\n"
     L["WelcomeText2"] =
-        "Reminder: The following 4 addons are needed for Quazii UI:\n• ElvUI\n• WeakAuras\n• Plater\n• Details\n"
+        "Reminder: The following 5 addons are needed for Quazii UI:\n• ElvUI\n• WeakAuras\n• Plater\n• Details\n• SharedMedia\n"
     L["WelcomeText3"] =
         "Watch the accompanying video installation guide if you have questions.\n\nEnjoy and support us at |cFF30D1FFpatreon.com/quazii|r to keep this UI FREE for you!"
 
