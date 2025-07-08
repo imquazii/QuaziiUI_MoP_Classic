@@ -11,17 +11,8 @@ function QuaziiUI:importElvUIProfile()
                 }
                 local Profile = ElvUI[1].Distributor
                 if Profile and Profile.ImportProfile then
-                    local success, error = pcall(function()
-                        Profile:ImportProfile(QuaziiUI.imports.ElvUI.tankdps.data)
-                    end)
-                    
-                    if success then
-                        QuaziiUI.db.char.openPage = 1
-                        print("QuaziiUI: ElvUI profile imported successfully!")
-                    else
-                        print("QuaziiUI Error: Failed to import ElvUI profile - " .. tostring(error))
-                        print("The profile data may be incompatible with your ElvUI version.")
-                    end
+                    Profile:ImportProfile(QuaziiUI.imports.ElvUI.tankdps.data)
+                    QuaziiUI.db.char.openPage = 1
                 else
                     print("QuaziiUI Error: ElvUI Distributor or ImportProfile method not found.")
                 end

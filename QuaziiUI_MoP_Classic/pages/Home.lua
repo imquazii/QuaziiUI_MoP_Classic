@@ -61,7 +61,7 @@ local function importHealerProfileFromHome()
                 }
                 local Profile = ElvUI[1].Distributor
                 if Profile and Profile.ImportProfile then
-                    Profile:ImportProfile(QuaziiUI.imports.ElvUI.healer.data) -- Use healer data
+                    Profile:ImportProfile(QuaziiUI.imports.ElvUI.healer.data)
                     print("QuaziiUI: ElvUI Healer profile imported successfully.")
                     QuaziiUI.db.char.openPage = 1
                 else
