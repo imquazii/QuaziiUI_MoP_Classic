@@ -6,9 +6,29 @@ raw_import_data: dict = {}
 wa_class_list: list = []
 wa_non_class_list: list = []
 
+# Get the directory where this script is located
+SCRIPT_DIR = Path(__file__).parent
+
+def read_file_with_fallback_encoding(filepath):
+    """Try to read a file with different encodings"""
+    encodings = ['utf-8', 'utf-8-sig', 'latin-1', 'cp1252']
+    
+    for encoding in encodings:
+        try:
+            with open(filepath, "r", encoding=encoding) as f:
+                return f.read().strip()
+        except UnicodeDecodeError:
+            continue
+        except Exception as e:
+            print(f"Error reading {filepath}: {e}")
+            continue
+    
+    # If all encodings fail, skip this file
+    print(f"Warning: Could not read {filepath} with any encoding, skipping...")
+    return ""
 
 def get_import_files():
-    path = "./imports"
+    path = SCRIPT_DIR / "imports"
     for subdir, dirs, files in os.walk(path):
         for file in files:
             if file.endswith(".txt"):
@@ -25,38 +45,43 @@ def get_import_files():
                     .replace("elvui_", "")
                     .replace("weakauras_non-class_", "")
                 )[1:][:-4]
-                with open(txt_path, "r", encoding="utf-8") as import_file:
-                    if "routes" in txt_path:
-                        if "PUG" in txt_path:
-                            mdt_w_routes_list.append(
-                                import_file.read().strip().join(('"', '"'))
-                            )
-                        elif "Adv" in txt_path:
-                            mdt_adv_routes_list.append(
-                                import_file.read().strip().join(('"', '"'))
-                            )
-                    elif "weakauras" in txt_path:
-                        if "class" in txt_path:
-                            wa_class_list.append(
-                                import_file.read().strip().join(('"', '"'))
-                            )
-                        elif "utility" in txt_path:
-                            wa_non_class_list.append(
-                                import_file.read().strip().join(('"', '"'))
-                            )
-                    else:
-                        raw_import_data[txt_split] = import_file.read().strip()
+                
+                # Use the new function to read files with fallback encoding
+                file_content = read_file_with_fallback_encoding(txt_path)
+                if not file_content:
+                    continue
+                
+                if "routes" in txt_path:
+                    if "PUG" in txt_path:
+                        mdt_w_routes_list.append(
+                            file_content.join(('"', '"'))
+                        )
+                    elif "Adv" in txt_path:
+                        mdt_adv_routes_list.append(
+                            file_content.join(('"', '"'))
+                        )
+                elif "weakauras" in txt_path:
+                    if "class" in txt_path:
+                        wa_class_list.append(
+                            file_content.join(('"', '"'))
+                        )
+                    elif "utility" in txt_path:
+                        wa_non_class_list.append(
+                            file_content.join(('"', '"'))
+                        )
+                else:
+                    raw_import_data[txt_split] = file_content
 
 
 def get_template():
-    path: Path = Path.cwd().joinpath("imports_template.lua")
-    with path.open() as template:
+    path = SCRIPT_DIR / "imports_template.lua"
+    with path.open(encoding='utf-8') as template:
         return template.read()
 
 
 def write_template(input):
-    path: Path = Path.cwd().joinpath("../QuaziiUI_MoP_Classic/imports.lua")
-    with open(path, "w") as template:
+    path = SCRIPT_DIR.parent / "QuaziiUI_MoP_Classic" / "imports.lua"
+    with open(path, "w", encoding='utf-8') as template:
         template.write(input)
 
 
