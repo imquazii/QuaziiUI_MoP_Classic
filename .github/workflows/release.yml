@@ -121,3 +121,10 @@ jobs:
                     --title "QuaziiUI_MoP_Classic ${{ env.TAG }}" \
                     --notes-file CHANGELOG.md \
                     --target main
+
+            # Step 9: Clean up temporary files
+            - name: Clean up temporary files
+              run: |
+                  echo "Debug: Cleaning up temporary files"
+                  rm -f ${{ env.ZIP_NAME }}
+                  rm -f CHANGELOG.md
