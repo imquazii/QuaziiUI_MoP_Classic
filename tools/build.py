@@ -33,18 +33,6 @@ def get_import_files():
         for file in files:
             if file.endswith(".txt"):
                 txt_path = os.path.join(subdir, file)
-                txt_base = txt_path.replace("./src/data/json", "")
-                txt_base = txt_base.replace("/", "_")
-                txt_base = txt_base.replace("\\", "_")[1:]
-                txt_split = txt_base.split(".")[0][1:]
-                txt_split = (
-                    txt_base.replace("tools_", "")
-                    .replace("imports_", "")
-                    .replace("addons_", "")
-                    .replace("weakauras_class_", "")
-                    .replace("elvui_", "")
-                    .replace("weakauras_non-class_", "")
-                )[1:][:-4]
                 
                 # Use the new function to read files with fallback encoding
                 file_content = read_file_with_fallback_encoding(txt_path)
@@ -70,7 +58,9 @@ def get_import_files():
                             file_content.join(('"', '"'))
                         )
                 else:
-                    raw_import_data[txt_split] = file_content
+                    # Simple key extraction: just use the filename without .txt extension
+                    key = os.path.splitext(file)[0].upper()
+                    raw_import_data[key] = file_content
 
 
 def get_template():

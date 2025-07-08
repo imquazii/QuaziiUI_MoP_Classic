@@ -11,7 +11,8 @@ function QuaziiUI:importElvUIProfile()
                 }
                 local Profile = ElvUI[1].Distributor
                 if Profile and Profile.ImportProfile then
-                    Profile:ImportProfile(QuaziiUI.imports.ElvUI.tankdps.data)
+                    local importString = QuaziiUI.imports.ElvUI.tankdps.data
+                    Profile:ImportProfile(importString)
                     QuaziiUI.db.char.openPage = 1
                 else
                     print("QuaziiUI Error: ElvUI Distributor or ImportProfile method not found.")

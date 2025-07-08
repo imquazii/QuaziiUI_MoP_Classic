@@ -3,6 +3,7 @@
     <Script file="bigwigs.lua"/>
     <!-- <Script file="cell.lua"/> Cell not supported in MoP Classic -->
     <Script file="details.lua"/>
+    <Script file="elvui.lua"/>
     <Script file="omnicd.lua"/>
     <Script file="plater.lua"/>
     <Script file="weakauras.lua"/>
