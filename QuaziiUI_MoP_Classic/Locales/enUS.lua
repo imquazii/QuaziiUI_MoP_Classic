@@ -39,7 +39,7 @@ if L then
     L["MDT"] = "MDT"
 
     -- Welcome Page
-    L["WelcomeHeader"] = "Quazii UI"
+    L["WelcomeHeader"] = "Quazii UI - MoP Classic"
     L["WelcomeText1"] =
         "Click 'Next' to begin installation, or 'Home' at any time to return to the main menu.\n"
     L["WelcomeText2"] =

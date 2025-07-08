@@ -156,21 +156,21 @@ local function createPanel()
     local previousButton =
         QuaziiUI.DF:CreateButton( panel, selectPreviousPage, 90, 40, "<- " .. L["Back"], nil, nil, nil, nil, nil, nil, QuaziiUI.ODT )
     previousButton:SetPoint("BOTTOMLEFT", panel, "BOTTOMLEFT", 10, 5)
-    previousButton.text_overlay:SetFont(QuaziiUI.FontFace, 18)
+    previousButton.text_overlay:SetFont(QuaziiUI.FontFace, 22)
     previousButton:SetTextColor(unpack(QuaziiUI.textColorRGBA))
 
     -- Index Button
     local indexButton =
         QuaziiUI.DF:CreateButton( panel, selectIndexPage, 90, 40, "- " .. L["Index"] .. " -", nil, nil, nil, nil, nil, nil, QuaziiUI.ODT )
     indexButton:SetPoint("BOTTOM", panel, "BOTTOM", 0, 5)
-    indexButton.text_overlay:SetFont(QuaziiUI.FontFace, 18)
+    indexButton.text_overlay:SetFont(QuaziiUI.FontFace, 22)
     indexButton:SetTextColor(unpack(QuaziiUI.textColorRGBA))
 
     -- Next Button
     local nextButton =
         QuaziiUI.DF:CreateButton( panel, selectNextPage, 90, 40, L["Next"] .. " ->", nil, nil, nil, nil, nil, nil, QuaziiUI.ODT )
     nextButton:SetPoint("BOTTOMRIGHT", panel, "BOTTOMRIGHT", -10, 5)
-    nextButton.text_overlay:SetFont(QuaziiUI.FontFace, 18)
+    nextButton.text_overlay:SetFont(QuaziiUI.FontFace, 22)
     nextButton:SetTextColor(unpack(QuaziiUI.textColorRGBA))
 
     -- Panel Content Frame
