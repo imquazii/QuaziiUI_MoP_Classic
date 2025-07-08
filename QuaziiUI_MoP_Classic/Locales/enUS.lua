@@ -82,6 +82,7 @@ if L then
 
     -- WeakAuras
     L["WeakAuraText"] = "Note: Scroll down if you cannot find what you want."
+    L["UtilityWAText"] = "Utility WeakAuras provide additional functionality such as consumables tracking, castbar, cursor, interrupts, and more."
     L["Class WAs"] = "Class WAs" -- Renamed from ClassWA for clarity in separate page title
     L["Utility WAs"] = "Utility WAs" -- Added for separate page title
     L["NonClassWA"] = "Non-Class WeakAuras" -- Kept for potential backend use, though page title uses Utility WAs
