@@ -42,11 +42,11 @@ if L then
     -- Welcome Page
     L["WelcomeHeader"] = "Quazii UI"
     L["WelcomeText1"] =
-        "Quazii UI comes in non-ElvUI OR ElvUI versions. More details on next page.\n"
+        "Click 'Next' to begin installation, or 'Home' at any time to return to the main menu.\n"
     L["WelcomeText2"] =
-        "Note for Non-ElvUI version: Some addon profiles must be imported manually into your WoW folders. Please see the accompanying video guide for instructions.\n"
+        "Reminder: The following 4 addons are needed for Quazii UI:\n• ElvUI\n• WeakAuras\n• Plater\n• Details\n"
     L["WelcomeText3"] =
-        "Click 'Next' to begin installation, or 'Home' at any time to return to the main menu."
+        "Watch the accompanying video installation guide if you have questions. Enjoy and support us at patreon.com/quazii to keep this UI FREE for you!"
 
     -- Supported Addon Check
     L["SupportedAddonsHeader"] = "Quazii UI Homepage"
