@@ -86,6 +86,11 @@ local function goToClassWAs()
     QuaziiUI:selectPage(3)      -- Navigate to ClassWeakAuras page (index 3)
 end
 
+-- Navigation function for Utility WAs
+local function goToUtilityWAs()
+    QuaziiUI:selectPage(4)      -- Navigate to UtilityWeakAuras page (index 4)
+end
+
 
 
 -- Create a modified list for the Home page display, with WeakAuras first and ElvUI last
@@ -101,6 +106,7 @@ do
         elseif addonName == "WeakAuras" then
              -- Store WeakAura entries separately
              table.insert(weakAuraEntries, { addonName = addonName, profileType = "Class" })
+             table.insert(weakAuraEntries, { addonName = addonName, profileType = "Utility" })
         else
             table.insert(otherEntries, { addonName = addonName })
         end
@@ -150,6 +156,8 @@ local function addonScrollBoxUpdate(self, data, offset, totalLines)
                  -- Keep default white color
                  if profileType == "Class" then
                     addonLabelBaseText = addonTitle .. " (" .. L["Class WAs"] .. ")" 
+                 elseif profileType == "Utility" then
+                    addonLabelBaseText = addonTitle .. " (" .. L["Utility WAs"] .. ")"
                  end
             else -- Default white for other addons
                 addonLabelBaseText = addonLabelBaseText
@@ -181,6 +189,8 @@ local function addonScrollBoxUpdate(self, data, offset, totalLines)
                      line.importButton:SetText(L["GoToPage"]) -- Keep text as Go To Page
                      if profileType == "Class" then
                         line.importButton:SetClickFunction(goToClassWAs)
+                     elseif profileType == "Utility" then
+                        line.importButton:SetClickFunction(goToUtilityWAs)
                      else
                         line.importButton:Disable()
                         line.importButton:SetText(L["NA"])
