@@ -49,9 +49,8 @@ if L then
 
     -- Supported Addon Check
     L["SupportedAddonsHeader"] = "Quazii UI Homepage"
-    L["SupportedAddonsText"] =
-        "|cffFFA500Imports in Orange are a MUST for non-ElvUI version.|r\n|cffFF00FFImports in Pink are a MUST for ElvUI version.|r\n|cffffffffImports in White apply to BOTH versions.|r"
-    L["SupportedAddonsTable1stHeader"] = "Supported|r Addons"
+    L["SupportedAddonsText"] = ""
+    L["SupportedAddonsTable1stHeader"] = "Supported Addons"
     L["SupportedAddonsTable2ndHeader"] = "Enabled"
     L["SupportedAddonsTable3rdHeader"] = "Installed Version"
 

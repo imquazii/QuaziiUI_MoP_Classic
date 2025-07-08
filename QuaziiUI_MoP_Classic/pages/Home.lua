@@ -318,7 +318,7 @@ end
 
 function page:CreateAddonList(frame)
     local headerTable = {
-        {text = "|c" .. QuaziiUI.highlightColorHex .. L["SupportedAddonsTable1stHeader"], width = 221, offset = 2},
+        {text = L["SupportedAddonsTable1stHeader"], width = 221, offset = 2},
         {text = L["SupportedAddonsTable2ndHeader"], width = 70},
         {text = L["SupportedAddonsTable3rdHeader"], width = 150},
         {text = L["Import"], width = 110}
