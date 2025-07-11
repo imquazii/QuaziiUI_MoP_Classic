@@ -99,13 +99,14 @@ if L then
 Keep Quazii UI FREE for you. Support at |cFF30D1FFpatreon.com/quazii|r
 
 |cffffd700EXCLUSIVE PATREON PERKS|r
+• |cffffffff1-Click Updates:|r Auto-update all Quazii UI profiles
+• |cffffffffPriority UI Hotline:|r Private same-day support from Quazii
 • |cffffffffQuazii M+ Dungeon Pack:|r Clean text & audio alerts for M+ mechanics
 • |cffffffffQuazii Tankbuster Pack:|r Instant alerts for tank hits
 • |cffffffffQuazii AoE CC Shotcaller:|r Shows next 3 party CCs for mob lockdown
 • |cffffffffQuazii Mob Tankbuster CD:|r Exact countdown for tankbusters
 • |cffffffffQuazii Mob AoE CD:|r Precise timer for party-wide AoE
 • |cffffffffEarly Access:|r Alpha/Beta/PTR access to Plater & Class WAs
-• |cffffffffPriority Quazii UI Hotline:|r Private Discord help from Quazii
-• |cffffffffExtras:|r Ad-free podcast, credits, Discord roles & more
+• |cffffffffExtras:|r Credits in every video, Discord roles & more
 ]]
 end
