@@ -16,14 +16,14 @@ function QuaziiUI:BackwardsCompat()
             table.remove(self.db.char, 1)
         end
     end
-    if QuaziiUI_DB.profiles and QuaziiUI_DB.profiles.Default then
-        self:DebugPrint("Profiles.Default.imports Exists: " .. tostring(not (not QuaziiUI_DB.profiles.Default.imports)))
+    if QuaziiUI_MoP_Classic_DB and QuaziiUI_MoP_Classic_DB.profiles and QuaziiUI_MoP_Classic_DB.profiles.Default then
+        self:DebugPrint("Profiles.Default.imports Exists: " .. tostring(not (not QuaziiUI_MoP_Classic_DB.profiles.Default.imports)))
         self:DebugPrint("global.imports Exists: " .. tostring(not (not self.db.global.imports)))
         self:DebugPrint("global.imports is {}: " .. tostring(self.db.global.imports == {}))
         -- if imports are in defualt profile db, and not in global, move them over, and remove imports from profile.
-        if QuaziiUI_DB.profiles.Default.imports and (not self.db.global.imports or next(self.db.global.imports) == nil) then
+        if QuaziiUI_MoP_Classic_DB.profiles.Default.imports and (not self.db.global.imports or next(self.db.global.imports) == nil) then
             self:DebugPrint("Import Data found in profile imports but not global imports.")
-            self.db.global.imports = QuaziiUI_DB.profiles.Default.imports
+            self.db.global.imports = QuaziiUI_MoP_Classic_DB.profiles.Default.imports
             table.remove(self.db.profiles, 1)
         end
     end
